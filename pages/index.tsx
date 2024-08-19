@@ -13,6 +13,7 @@ type Theme = {
 
 export default function Home() {
   const [themes, setThemes] = useState<{ [key: number]: Theme }>({});
+  const [displayDay, setDisplayDay] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchAllData() {
@@ -29,11 +30,11 @@ export default function Home() {
           dayOfWeek = 7;
         }
 
-        let displayDay: number;
+        let calculatedDisplayDay: number;
         if (hours < 11) {
-          displayDay = dayOfWeek === 1 ? 7 : dayOfWeek - 1;
+          calculatedDisplayDay = dayOfWeek === 1 ? 7 : dayOfWeek - 1;
         } else {
-          displayDay = dayOfWeek;
+          calculatedDisplayDay = dayOfWeek;
         }
 
         const dayMap: { [key: number]: string } = {
@@ -59,17 +60,7 @@ export default function Home() {
         }
 
         setThemes(themeData);
-
-        const listItems = document.querySelectorAll<HTMLDivElement>('#theme-list > div');
-
-        listItems.forEach((item) => {
-          const day = parseInt(item.getAttribute('data-day') || '', 10);
-          if (day === displayDay) {
-            item.setAttribute('aria-current', 'true');
-          } else {
-            item.removeAttribute('aria-current');
-          }
-        });
+        setDisplayDay(calculatedDisplayDay);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -86,19 +77,24 @@ export default function Home() {
       <div id="theme-list">
         {Object.keys(themes).map((key) => {
           const theme = themes[parseInt(key)];
-          if (!theme) return null;
           return (
-            <div key={key} data-day={key}>
-              <h2>{theme.title}</h2>
-              <dl>
-                {theme.rewards.map((reward, index) => (
-                  <div key={index}>
-                    <dt>{reward.item}</dt>
-                    <dd>{reward.reward.toLocaleString()}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            <>
+              {theme ? (
+                <div key={key} data-day={key} aria-current={displayDay === parseInt(key) ? 'true' : undefined}>
+                  <h2>{theme.title}</h2>
+                  <dl>
+                    {theme.rewards.map((reward, index) => (
+                      <div key={index}>
+                        <dt>{reward.item}</dt>
+                        <dd>{reward.reward.toLocaleString()}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ) : (
+                <p>데이터를 불러오는 중입니다 :)</p>
+              )}
+            </>
           );
         })}
       </div>
