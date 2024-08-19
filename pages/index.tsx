@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from '@/styles/Home.module.sass';
+import Head from 'next/head';
 
 type Reward = {
   item: string;
@@ -81,6 +82,9 @@ export default function Home() {
 
   return (
     <main className={styles.home}>
+      <Head>
+        <title>라스트워 - 오늘의 테마 (연맹대전)</title>
+      </Head>
       <h1>
         오늘의 테마 <span>(라스트워 연맹대결)</span>
       </h1>
