@@ -24,10 +24,10 @@ export default function Document() {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <link href="/manifest.json" rel="manifest" />
-        <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-        <link href="/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-        <link href="/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-        <link href="/favicon/favicon.ico" rel="shortcut icon" />
+        <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+        <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+        <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+        <link href="/favicon.ico" rel="shortcut icon" />
         <link rel="canonical" href="https://lawar.dev1stud.io" />
         <link rel="alternate" href="https://lawar.dev1stud.io" hrefLang="ko-KR" />
       </Head>
