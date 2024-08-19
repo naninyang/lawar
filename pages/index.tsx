@@ -67,6 +67,16 @@ export default function Home() {
     }
 
     fetchAllData();
+
+    const handleFocus = () => {
+      fetchAllData();
+    };
+
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   return (
