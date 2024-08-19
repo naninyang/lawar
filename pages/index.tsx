@@ -74,30 +74,29 @@ export default function Home() {
       <h1>
         오늘의 테마 <span>(라스트워 연맹대결)</span>
       </h1>
-      <div id="theme-list">
-        {Object.keys(themes).map((key) => {
-          const theme = themes[parseInt(key)];
-          return (
-            <>
-              {theme ? (
-                <div key={key} data-day={key} aria-current={displayDay === parseInt(key) ? 'true' : undefined}>
-                  <h2>{theme.title}</h2>
-                  <dl>
-                    {theme.rewards.map((reward, index) => (
-                      <div key={index}>
-                        <dt>{reward.item}</dt>
-                        <dd>{reward.reward.toLocaleString()}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              ) : (
-                <p>데이터를 불러오는 중입니다 :)</p>
-              )}
-            </>
-          );
-        })}
-      </div>
+      {Object.keys(themes).length === 0 ? (
+        <p>데이터를 불러오는 중입니다 :)</p>
+      ) : (
+        <div id="theme-list">
+          {Object.keys(themes).map((key) => {
+            const theme = themes[parseInt(key)];
+            if (!theme) return null;
+            return (
+              <div key={key} data-day={key} aria-current={displayDay === parseInt(key) ? 'true' : undefined}>
+                <h2>{theme.title}</h2>
+                <dl>
+                  {theme.rewards.map((reward, index) => (
+                    <div key={index}>
+                      <dt>{reward.item}</dt>
+                      <dd>{reward.reward.toLocaleString()}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </main>
   );
 }
