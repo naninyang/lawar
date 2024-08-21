@@ -25,7 +25,8 @@
 
     > div
       &:last-of-type
-        +screen-reader-only
+        h3, dl
+          +screen-reader-only
 
       &[aria-current]
         background-color: rgba($hex-black, .5)
