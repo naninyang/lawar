@@ -34,7 +34,7 @@ export default function Header() {
                 <span>오늘의 테마</span>
               </Anchor>
             </li>
-            <li
+            {/* <li
               className={router.pathname === '/arms' ? styles.current : undefined}
               onClick={() => handleMenuClick('/arms', 1)}
             >
@@ -49,10 +49,10 @@ export default function Header() {
               <Anchor href="/showdown">
                 <span>테마 + 군비</span>
               </Anchor>
-            </li>
+            </li> */}
             <li
               className={router.pathname === '/base' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/base', 3)}
+              onClick={() => handleMenuClick('/base', 1)}
             >
               <Anchor href="/base">
                 <span>기지 레벨업</span>

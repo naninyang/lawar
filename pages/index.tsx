@@ -18,7 +18,7 @@ export default function Home() {
             <span>오늘의 테마</span>
           </Anchor>
         </li>
-        <li>
+        {/* <li>
           <Anchor href="/arms">
             <span>군비 경쟁</span>
           </Anchor>
@@ -27,7 +27,7 @@ export default function Home() {
           <Anchor href="/showdown">
             <span>테마 + 군비</span>
           </Anchor>
-        </li>
+        </li> */}
         <li>
           <Anchor href="/base">
             <span>기지 레벨업</span>
