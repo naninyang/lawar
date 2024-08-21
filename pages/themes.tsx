@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Seo, { originTitle } from '@/components/Seo';
-import styles from '@/styles/themes.module.sass';
+import styles from '@/styles/Themes.module.sass';
 
 type Reward = {
   item: string;
