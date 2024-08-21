@@ -1,3 +1,58 @@
 @import './designSystem'
 
 .base
+  .table
+    overflow: auto
+
+    table
+      caption-side: bottom
+      border-collapse: collapse
+      width: 100%
+      vertical-align: top
+
+      tr
+        &.current
+          td
+            background-color: $hex-black
+            font-size: rem(18)
+            font-weight: 900
+
+        &:hover
+          td
+            background-color: rgba($hex-black, .5)
+            font-weight: 700
+
+        th, td
+          text-align: center
+          white-space: nowrap
+          padding: rem(12)
+
+        th
+          background-color: rgba($hex-white, .7)
+          font-weight: 900
+          color: $hex-black
+
+        td
+          vertical-align: top
+          border-bottom: 1px solid rgba($hex-white, .5)
+
+          &:first-of-type
+            font-weight: 700
+
+  ul
+    padding: rem(23)
+
+    li
+      margin: rem(7) 0
+      padding-left: rem(12)
+      position: relative
+
+      &::before
+        position: absolute
+        top: rem(8)
+        left: 0
+        content: ''
+        width: rem(4)
+        height: rem(4)
+        background-color: $hex-white
+        border-radius: rem(4)
