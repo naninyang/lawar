@@ -5,72 +5,44 @@
   flex-direction: column
   gap: rem(23)
 
-  h1
-    background-color: rgba($hex-white, .1)
-    padding: rem(17) rem(25)
-    font-size: rem(24)
-    font-weight: 900
-
-    +mq(maxSmall)
-      display: flex
-      flex-direction: column
-
   p
-    display: flex
-    justify-content: center
-    align-items: center
-    height: calc(100vh - rem(294))
     text-align: center
+    font-size: rem(22)
+    font-weight: 500
 
-  > div
+  ul
     display: flex
-    flex-direction: column
-    gap: rem(12)
-    background: linear-gradient(90deg, #1ECEFB -1.45%, #D8272E 100%)
+    flex-wrap: wrap
+    padding: 0 rem(23)
 
-    +mq(minMedium)
-      flex-direction: row
-      gap: 0
-      flex-wrap: wrap
-      padding-top: rem(3)
-
-    > div
-      &:last-of-type
-        +screen-reader-only
-
-      &[aria-current]
-        background-color: rgba($hex-black, .5)
-
-        h2::after
-          content: ' [오늘]'
+    li
+      width: 100%
+      padding: rem(7) 0
 
       +mq(minMedium)
-        margin-bottom: rem(23)
-        padding: 0 rem(3)
         width: 50%
 
+        &:nth-of-type(odd)
+          padding-right: rem(7)
+
+        &:nth-of-type(even)
+          padding-left: rem(7)
+
       +mq(minExtraLarge)
-        width: 33.33%
+        width: 25%
 
-      h2
-        background-color: rgba($hex-black, .72)
-        padding: rem(7) rem(24)
-        font-size: rem(18)
-        font-weight: 700
+        &:nth-of-type(odd), &:nth-of-type(even)
+          padding-right: rem(7)
+          padding-left: rem(7)
 
-      dl
+      a
         display: flex
-        flex-direction: column
-        padding: rem(7) 0
-
-        +mq(minMedium)
-          padding: 0
-
-        div
-          display: flex
-          justify-content: space-between
-          gap: rem(12)
-          padding: rem(7) rem(24)
-
-          &:nth-of-type(odd)
-            background-color: rgba($hex-black, .27)
+        justify-content: center
+        align-items: center
+        background-color: $hex-black
+        border-radius: rem(2)
+        width: 100%
+        height: rem(52)
+        color: $hex-white
+        font-size: rem(27)
+        font-weight: 700

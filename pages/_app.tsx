@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import '@/styles/globals.sass';
 
 const font = Noto_Sans_KR({
@@ -53,6 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
+      <Header />
       <div className="font-controller">
         <button type="button" onClick={increaseFontSize}>
           크게
@@ -65,14 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </button>
       </div>
       <Component {...pageProps} />
-      <div className="footer">
-        <p>본 웹사이트는 482서버 ycl 연맹 클로에(본캐 N1W 연맹 빛이나)가 만든 웹사이트입니다.</p>
-        <p>본 웹사이트는 ycl 연맹에서 사용할 목적으로 제작되었습니다.</p>
-        <p>
-          본 웹사이트는 타 서버 또는 타 연맹의 맹원들도 이용이 가능하나, KST 시간대가 아닌 디바이스에서는 [오늘]
-          텍스트가 오작동할 수 있습니다.
-        </p>
-      </div>
+      <Footer />
     </div>
   );
 }

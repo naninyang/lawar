@@ -1,0 +1,55 @@
+@import './designSystem'
+
+header.header
+  display: flex
+  flex-direction: column
+  gap: rem(23)
+  margin-bottom: rem(-23)
+
+  h1
+    background-color: rgba($hex-white, .1)
+    padding: rem(17) rem(25)
+    font-size: rem(24)
+    font-weight: 900
+
+    +mq(maxSmall)
+      display: flex
+      flex-direction: column
+
+  nav
+    .menu
+      display: flex
+      overflow-x: auto
+      gap: rem(7)
+      margin: 0
+      padding-bottom: rem(23)
+      scroll-behavior: smooth
+
+      &:-webkit-scrollbar
+        display: none
+
+      li
+        flex: 0 0 auto
+
+        &:first-of-type
+          padding-left: rem(23)
+
+        &:last-of-type
+          padding-right: rem(23)
+
+        a
+          display: flex
+          align-items: center
+          background-color: rgba($hex-black, .7)
+          padding: 0 rem(12)
+          height: rem(32)
+          color: $hex-white
+          font-size: rem(18)
+          font-weight: 400
+
+        &.current
+          a
+            background-color: rgba($hex-white, .7)
+            font-size: rem(22)
+            font-weight: 700
+            color: $hex-black

@@ -1,0 +1,65 @@
+@import './designSystem'
+
+.themes
+  display: flex
+  flex-direction: column
+
+  p
+    display: flex
+    justify-content: center
+    align-items: center
+    height: calc(100vh - rem(294))
+    text-align: center
+
+  > div
+    display: flex
+    flex-direction: column
+    gap: rem(12)
+    background: linear-gradient(90deg, #1ECEFB -1.45%, #D8272E 100%)
+
+    +mq(minMedium)
+      flex-direction: row
+      gap: 0
+      flex-wrap: wrap
+      padding-top: rem(3)
+
+    > div
+      &:last-of-type
+        +screen-reader-only
+
+      &[aria-current]
+        background-color: rgba($hex-black, .5)
+
+        h2::after
+          content: ' [오늘]'
+
+      +mq(minMedium)
+        margin-bottom: rem(23)
+        padding: 0 rem(3)
+        width: 50%
+
+      +mq(minExtraLarge)
+        width: 33.33%
+
+      h2
+        background-color: rgba($hex-black, .72)
+        padding: rem(7) rem(24)
+        font-size: rem(18)
+        font-weight: 700
+
+      dl
+        display: flex
+        flex-direction: column
+        padding: rem(7) 0
+
+        +mq(minMedium)
+          padding: 0
+
+        div
+          display: flex
+          justify-content: space-between
+          gap: rem(12)
+          padding: rem(7) rem(24)
+
+          &:nth-of-type(odd)
+            background-color: rgba($hex-black, .27)

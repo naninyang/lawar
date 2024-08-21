@@ -1,0 +1,20 @@
+@import './designSystem'
+
+footer.footer
+  display: flex
+  flex-direction: column
+  gap: rem(3)
+  padding: 0 rem(23) rem(23)
+  font-size: rem(14)
+
+  ul
+    li
+      margin: rem(7) 0
+      padding-left: rem(7)
+      position: relative
+
+      &::before
+        position: absolute
+        top: 0
+        left: 0
+        content: '- '

@@ -98,26 +98,22 @@ a, button, select, input
 
 .content
   position: relative
+  display: flex
+  flex-direction: column
+  gap: rem(32)
 
   .font-controller
-    position: absolute
-    top: rem(7)
-    right: rem(7)
+    position: sticky
+    top: rem(25)
     display: flex
-    flex-direction: column
+    justify-content: flex-end
     gap: rem(7)
-
-    +mq(minMedium)
-      flex-direction: row
+    padding-right: rem(23)
 
     button
       background-color: rgba($hex-black, .72)
       border-radius: rem(3)
       padding: rem(3) rem(7)
 
-.footer
-  display: flex
-  flex-direction: column
-  gap: rem(3)
-  padding: rem(23)
-  font-size: rem(14)
+  h2
+    +screen-reader-only
