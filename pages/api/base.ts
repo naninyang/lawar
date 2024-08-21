@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const baseData = [
-    { level: '10 👉 11', building: '베리어', time: '7.4 시간', steel: '1.9 M', gold: '0.6 M' },
+    { level: '10 👉 11', building: '베리어', time: '7.4 시간', steel: '1.9 M', gold: '600 K' },
     { level: '11 👉 12', building: '병영', time: '9.6 시간', steel: '3.2 M', gold: '1 M' },
     { level: '12 👉 13', building: '탱크센터', time: '12.5 시간', steel: '3.5 M', gold: '1.1 M' },
     { level: '13 👉 14', building: '연병장', time: '16.2 시간', steel: '4.9 M', gold: '1.6 M' },
