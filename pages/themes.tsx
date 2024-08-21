@@ -99,7 +99,7 @@ export default function Themes() {
             if (!theme) return null;
             return (
               <div key={key} data-day={key} aria-current={displayDay === parseInt(key) ? 'true' : undefined}>
-                <h2>{theme.title}</h2>
+                <h3>{theme.title}</h3>
                 <dl>
                   {theme.rewards.map((reward, index) => (
                     <div key={index}>

@@ -30,7 +30,7 @@
       &[aria-current]
         background-color: rgba($hex-black, .5)
 
-        h2::after
+        h3::after
           content: ' [오늘]'
 
       +mq(minMedium)
@@ -41,7 +41,7 @@
       +mq(minExtraLarge)
         width: 33.33%
 
-      h2
+      h3
         background-color: rgba($hex-black, .72)
         padding: rem(7) rem(24)
         font-size: rem(18)
@@ -61,5 +61,5 @@
           gap: rem(12)
           padding: rem(7) rem(24)
 
-          &:nth-of-type(odd)
+          &:nth-of-type(even)
             background-color: rgba($hex-black, .27)
