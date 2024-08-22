@@ -34,7 +34,7 @@ export default function Header() {
                 <span>오늘의 테마</span>
               </Anchor>
             </li>
-            {/* <li
+            <li
               className={router.pathname === '/arms' ? styles.current : undefined}
               onClick={() => handleMenuClick('/arms', 1)}
             >
@@ -42,7 +42,7 @@ export default function Header() {
                 <span>군비 경쟁</span>
               </Anchor>
             </li>
-            <li
+            {/* <li
               className={router.pathname === '/showdown' ? styles.current : undefined}
               onClick={() => handleMenuClick('/showdown', 2)}
             >

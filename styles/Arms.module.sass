@@ -1,3 +1,197 @@
 @import './designSystem'
 
 .arms
+  .tabs
+    +row
+    border-bottom: rem(2) solid rgba($hex-black, .07)
+
+    li
+      +col
+
+      button
+        background-color: rgba($hex-white, .5)
+        padding: rem(7) 0
+        width: 100%
+        font-weight: 700
+        color: rgba($hex-black, .5)
+
+      &.current
+        button
+          background-color: $hex-light
+          color: $hex-black
+
+  .notice
+    padding: rem(23)
+
+    li
+      margin: rem(7) 0
+      padding-left: rem(12)
+      position: relative
+
+      &::before
+        position: absolute
+        top: rem(8)
+        left: 0
+        content: ''
+        width: rem(4)
+        height: rem(4)
+        background-color: $hex-white
+        border-radius: rem(4)
+
+.contents
+  background-color: $hex-light
+  color: $hex-black
+
+  .current-container
+    +row
+    gap: rem(23)
+
+    > div
+      display: flex
+      flex-direction: column
+      gap: rem(23)
+
+      +mq(minMedium)
+        +col
+
+      .headline
+        display: flex
+        padding: rem(23) rem(23) 0
+
+        +mq(maxSmall)
+          flex-direction: column
+          gap: rem(7)
+
+        +mq(minMedium)
+          justify-content: space-between
+          align-items: flex-end
+
+      h3
+        display: flex
+        align-items: flex-end
+        gap: rem(7)
+        font-size: rem(24)
+        font-weight: 500
+        color: rgba($hex-black, .7)
+
+        strong
+          font-size: rem(32)
+          font-weight: 700
+          color: $hex-black
+
+      > h3
+        padding: rem(23) rem(23) 0
+
+      dl
+        display: flex
+        flex-direction: column
+        padding: rem(7) 0
+
+        +mq(minMedium)
+          padding: 0
+
+        div
+          display: flex
+          justify-content: space-between
+          gap: rem(12)
+          padding: rem(7) rem(24)
+
+          &:nth-of-type(odd)
+            background-color: rgba($hex-black, .27)
+
+  .all-container
+    +row
+
+    +mq(maxSmall)
+      flex-direction: column
+
+    .theme-item
+      border-bottom: 1px solid rgba($hex-black, .2)
+
+      &[aria-current]
+        background-color: rgba($hex-accent, .5)
+
+      p
+        padding-top: rem(7)
+        padding-bottom: rem(7)
+        text-align: center
+
+      .detail-content
+        border: 5px solid #D8272E
+
+      +mq(minMedium)
+        width: 60%
+
+        .detail
+          padding-left: 33.33%
+
+        &:nth-of-type(even)
+          width: 40%
+
+          button, h3
+            span:first-of-type
+              display: none
+
+          .detail
+            padding-left: 0
+
+      +mq(minExtraLarge)
+        width: 28.57%!important
+
+        button, h3
+          span:first-of-type
+            display: none
+
+        .detail
+          padding-left: 0
+
+        &:nth-of-type(3n+1)
+          width: 42.86%!important
+
+          button, h3
+            span:first-of-type
+              display: flex
+
+          .detail
+            padding-left: 33.33%
+
+      dl
+        display: flex
+        flex-direction: column
+        padding: rem(7) 0
+
+        +mq(minMedium)
+          padding: 0
+
+        div
+          display: flex
+          justify-content: space-between
+          gap: rem(12)
+          padding: rem(7) rem(24)
+
+          &:nth-of-type(odd)
+            background-color: rgba($hex-black, .27)
+
+    .controller, h3
+      border-bottom: 1px solid rgba($hex-black, .2)
+
+    button.current
+      background-color: rgba($hex-black, .1)
+      font-weight: 700
+
+    button, h3
+      display: flex
+      justify-content: space-between
+      background-color: transparent
+      color: $hex-black
+      width: 100%
+      height: rem(50)
+
+      span
+        display: flex
+        justify-content: center
+        align-items: center
+        +col
+        height: rem(50)
+        border-left: 1px solid rgba($hex-black, .2)
+        text-align: center
