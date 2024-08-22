@@ -26,7 +26,7 @@ export default function ThemeDisplay() {
           <p>
             남은 시간{' '}
             <strong>
-              {remainingTime.hours}시 {remainingTime.minutes}분 {remainingTime.seconds}초
+              {remainingTime.hours}시간 {remainingTime.minutes}분 {remainingTime.seconds}초
             </strong>
           </p>
         </div>
