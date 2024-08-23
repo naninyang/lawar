@@ -1,3 +1,84 @@
 @import './designSystem'
 
 .showdown
+  .tabs
+    +row
+    border-bottom: rem(2) solid rgba($hex-black, .07)
+
+    li
+      +col
+
+      button
+        background-color: rgba($hex-white, .5)
+        padding: rem(7) 0
+        width: 100%
+        font-weight: 700
+        color: rgba($hex-black, .5)
+
+      &.current
+        button
+          background-color: $hex-light
+          color: $hex-black
+
+  .contents
+    +row
+
+    +mq(maxLarge)
+      gap: rem(27)
+
+    dl
+      display: flex
+      flex-direction: column
+      padding: rem(7) 0
+
+      +mq(minMedium)
+        padding: 0
+
+      div
+        display: flex
+        justify-content: space-between
+        gap: rem(12)
+        padding: rem(7) rem(24)
+
+        &:nth-of-type(odd)
+          background-color: rgba($hex-black, .27)
+
+    section
+      display: flex
+
+      +mq(maxSmall)
+        flex-direction: column
+
+      +mq(minExtraLarge)
+        +col
+
+      > div
+        +col
+
+        h3
+          background-color: rgba($hex-black, .72)
+          padding: rem(7) rem(23)
+          font-size: rem(18)
+          font-weight: 700
+
+        p
+          padding: rem(7) rem(23)
+          text-align: center
+
+        h4
+          display: flex
+          justify-content: space-between
+          background-color: $hex-black
+          padding: rem(7) rem(23)
+          font-size: rem(20)
+          font-weight: 800
+
+      .themes
+        background: linear-gradient(90deg, #1ECEFB -1.45%, #D8272E 100%)
+
+      .arms
+        > div
+          opacity: .1
+
+        .active
+          opacity: 1

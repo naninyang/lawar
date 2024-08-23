@@ -63,7 +63,7 @@ export default function FullThemeList() {
           </>
         ) : (
           <div className={styles.controller}>
-            <button onClick={handleToggle} className={expandedIndex === i ? styles.current : undefined}>
+            <button type="button" onClick={handleToggle} className={expandedIndex === i ? styles.current : undefined}>
               <span>{displayDayInfo}</span> <span>{formatTime(themeTime)}</span> <span>{currentTheme}</span>
             </button>
           </div>

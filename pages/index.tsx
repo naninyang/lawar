@@ -23,11 +23,11 @@ export default function Home() {
             <span>군비 경쟁</span>
           </Anchor>
         </li>
-        {/* <li>
+        <li>
           <Anchor href="/showdown">
             <span>테마 + 군비</span>
           </Anchor>
-        </li> */}
+        </li>
         <li>
           <Anchor href="/base">
             <span>기지 레벨업</span>

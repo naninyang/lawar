@@ -53,7 +53,7 @@ export default function Themes() {
 
         for (let i = 1; i <= 7; i++) {
           const dayName = dayMap[i];
-          const response = await fetch(`/api/themes/${dayName}`);
+          const response = await fetch(`/api/${dayName}`);
           if (!response.ok) {
             throw new Error(`Failed to fetch data for ${dayName}`);
           }
