@@ -87,34 +87,21 @@ export default function Showdown() {
   >([]);
 
   useEffect(() => {
-    const calculateTime = async () => {
+    const calculateCompetitionRotation = () => {
       const now = new Date();
       const kstOffset = 9 * 60 * 60 * 1000;
       const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
       const kstDate = new Date(utcTime + kstOffset);
 
-      const dayOfWeek = kstDate.getDay();
-      const hourOfDay = kstDate.getHours();
-      const minuteOfHour = kstDate.getMinutes();
-      const secondOfMinute = kstDate.getSeconds();
+      const startOfCompetition = new Date(kstDate);
+      startOfCompetition.setDate(kstDate.getDate() - ((kstDate.getDay() + 2) % 7));
+      startOfCompetition.setHours(11, 0, 0, 0);
 
-      const competitionDay = dayOfWeek === 0 ? 7 : dayOfWeek;
-      setCurrentDay(competitionDay);
-
-      const calculatedNextThemeDay = (competitionDay % 7) + 1;
-      setNextThemeDay(calculatedNextThemeDay);
-
-      const startOfWeek = new Date(kstDate);
-      startOfWeek.setDate(kstDate.getDate() - ((kstDate.getDay() + 6) % 7));
-      startOfWeek.setHours(11, 0, 0, 0);
-
-      const elapsedSeconds = Math.floor((kstDate.getTime() - startOfWeek.getTime()) / 1000);
+      const elapsedSeconds = Math.floor((kstDate.getTime() - startOfCompetition.getTime()) / 1000);
       const currentThemeDuration = 14400;
       const totalThemes = competitions.length;
 
       const currentRotationIndex = Math.floor(elapsedSeconds / currentThemeDuration) % totalThemes;
-      setThemeIndex(currentRotationIndex);
-
       const timeInCurrentTheme = elapsedSeconds % currentThemeDuration;
       const timeLeft = currentThemeDuration - timeInCurrentTheme;
       const hoursLeft = Math.floor(timeLeft / 3600);
@@ -184,8 +171,44 @@ export default function Showdown() {
         });
       }
       setNextDayCompetitionRotation(nextDayRotationList);
+    };
 
-      const dayMap: { [key: number]: string } = {
+    calculateCompetitionRotation();
+    const interval = setInterval(calculateCompetitionRotation, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const calculateTheme = async () => {
+      const now = new Date();
+      const kstOffset = 9 * 60 * 60 * 1000;
+      const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
+      const kstDate = new Date(utcTime + kstOffset);
+
+      const startOfWeek = new Date(kstDate);
+      startOfWeek.setDate(kstDate.getDate() - ((kstDate.getDay() + 6) % 7));
+      startOfWeek.setHours(11, 0, 0, 0);
+
+      const elapsedSeconds = Math.floor((kstDate.getTime() - startOfWeek.getTime()) / 1000);
+      const daysElapsed = Math.floor(elapsedSeconds / (24 * 3600));
+
+      const todayDayIndex = daysElapsed % 7;
+      const nextDayIndex = (todayDayIndex + 1) % 7;
+
+      setCurrentDay(todayDayIndex + 1);
+      setNextThemeDay(nextDayIndex + 1);
+
+      const secondsSinceStartOfDay = elapsedSeconds % (24 * 3600);
+      const remainingSecondsToday = 24 * 3600 - secondsSinceStartOfDay;
+      const hoursLeft = Math.floor(remainingSecondsToday / 3600);
+      const minutesLeft = Math.floor((remainingSecondsToday % 3600) / 60);
+      const secondsLeft = remainingSecondsToday % 60;
+
+      setTimeRemaining(
+        `${hoursLeft.toString().padStart(2, '0')}시간 ${minutesLeft.toString().padStart(2, '0')}분 ${secondsLeft.toString().padStart(2, '0')}초`,
+      );
+
+      const dayMap = {
         1: 'monday',
         2: 'tuesday',
         3: 'wednesday',
@@ -195,19 +218,19 @@ export default function Showdown() {
         7: 'sunday',
       };
 
-      const todayThemeApi = `/api/${dayMap[competitionDay]}`;
+      const todayThemeApi = `/api/${dayMap[(todayDayIndex + 1) as keyof typeof dayMap]}`;
       const response = await fetch(todayThemeApi);
-      const data: Theme = await response.json();
+      const data = await response.json();
       setCurrentTheme(data);
 
-      const nextThemeApi = `/api/${dayMap[(competitionDay % 7) + 1]}`;
+      const nextThemeApi = `/api/${dayMap[(nextDayIndex + 1) as keyof typeof dayMap]}`;
       const nextResponse = await fetch(nextThemeApi);
-      const nextData: Theme = await nextResponse.json();
+      const nextData = await nextResponse.json();
       setNextTheme(nextData);
     };
 
-    calculateTime();
-    const interval = setInterval(calculateTime, 1000);
+    calculateTheme();
+    const interval = setInterval(calculateTheme, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -262,11 +285,11 @@ export default function Showdown() {
                       <h4>
                         <strong>{competition.theme.name}</strong> <span>{competition.startTime}</span>
                       </h4>
-                      {/* {index === themeIndex && (
+                      {index === themeIndex && (
                         <p>
                           남은 시간 <strong>{competition.remainingTime}</strong>
                         </p>
-                      )} */}
+                      )}
                       <dl>
                         {competition.theme.rewards.map((reward, idx) => (
                           <div key={idx}>
