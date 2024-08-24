@@ -8,8 +8,15 @@
     display: flex
     justify-content: center
     align-items: center
+    gap: rem(17)
     height: calc(100vh - rem(294))
     text-align: center
+
+    &.rest
+      flex-direction: column
+      padding: rem(23) 0
+      width: 100%
+      height: auto
 
   > div
     display: flex
@@ -25,8 +32,7 @@
 
     > div
       &:last-of-type
-        h3, dl
-          +screen-reader-only
+        +screen-reader-only
 
       &[aria-current]
         background-color: rgba($hex-black, .5)

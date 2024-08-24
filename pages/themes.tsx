@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import { nowTimeState } from '@/atoms/timeState';
 import Seo, { originTitle } from '@/components/Seo';
@@ -104,32 +104,48 @@ export default function Themes() {
       {Object.keys(themes).length === 0 ? (
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
-        <div id="theme-list">
+        <>
           {Object.keys(themes).map((key) => {
             const theme = themes[parseInt(key)];
             if (!theme) return null;
-
-            const isCurrentDay = displayDay === parseInt(key);
+            const isLastDay = displayDay === 7;
             return (
-              <div
-                key={key}
-                ref={isCurrentDay ? currentDayRef : null}
-                data-day={key}
-                aria-current={isCurrentDay ? 'true' : undefined}
-              >
-                <h3>{theme.title}</h3>
-                <dl>
-                  {theme.rewards.map((reward, index) => (
-                    <div key={index}>
-                      <dt>{reward.item}</dt>
-                      <dd>{reward.reward.toLocaleString()}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
+              <React.Fragment key={key}>
+                {isLastDay && (
+                  <p className={styles.rest}>
+                    <span>오늘은 연맹 대결이 없어요 :)</span>
+                    <span>일주일간 수고 많았어요!</span>
+                  </p>
+                )}
+              </React.Fragment>
             );
           })}
-        </div>
+          <div id="theme-list">
+            {Object.keys(themes).map((key) => {
+              const theme = themes[parseInt(key)];
+              if (!theme) return null;
+              const isCurrentDay = displayDay === parseInt(key);
+              return (
+                <div
+                  key={key}
+                  ref={isCurrentDay ? currentDayRef : null}
+                  data-day={key}
+                  aria-current={isCurrentDay ? 'true' : undefined}
+                >
+                  <h3>{theme.title}</h3>
+                  <dl>
+                    {theme.rewards.map((reward, index) => (
+                      <div key={index}>
+                        <dt>{reward.item}</dt>
+                        <dd>{reward.reward.toLocaleString()}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              );
+            })}
+          </div>
+        </>
       )}
     </main>
   );
