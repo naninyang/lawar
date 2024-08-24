@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { nowTimeState } from '@/atoms/timeState';
 import { getWeekStartTime, THEME_INTERVAL, themes } from '@/utils/time';
 import RewardList from './RewardList';
 import styles from '@/styles/Arms.module.sass';
 
 export default function FullThemeList() {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const nowTime = useRecoilValue(nowTimeState);
+  const [currentTime, setCurrentTime] = useState<Date | null>(nowTime);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    if (currentTime) {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date(currentTime.getTime() + 1000));
+      }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [currentTime]);
 
-  const startOfWeek = getWeekStartTime();
+  if (!nowTime || !currentTime) {
+    return null;
+  }
+
+  const startOfWeek = getWeekStartTime(nowTime);
   const themeElements = [];
   let currentDay = 0;
 
