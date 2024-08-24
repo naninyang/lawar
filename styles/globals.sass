@@ -120,3 +120,19 @@ main
 
   h2
     +screen-reader-only
+
+.move-to-top
+  position: fixed
+  bottom: rem(23)
+  right: rem(23)
+  z-index: 1000
+  background-color: $hex-white
+  border-radius: rem(3)
+  width: rem(52)
+  height: rem(52)
+  opacity: 0
+  font-size: rem(23)
+  transition: opacity 270ms ease-in-out
+
+  &.show
+    opacity: 1

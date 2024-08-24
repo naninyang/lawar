@@ -3,9 +3,10 @@ import type { AppProps, AppContext } from 'next/app';
 import NextApp from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
-import { nowTimeState, serverTimeState, serverTimezoneState } from '@/atoms/timeState';
+import { nowTimeState, serverTimeState } from '@/atoms/timeState';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MoveToTop from '@/components/MoveToTop';
 import '@/styles/globals.sass';
 
 const font = Noto_Sans_KR({
@@ -34,12 +35,7 @@ function RecoilInitializer({ initialServerTime }: { initialServerTime: string })
   return null;
 }
 
-export default function LastwarApp({
-  Component,
-  pageProps,
-  initialServerTime,
-  initialServerTimezone,
-}: LastwarAppProps) {
+export default function LastwarApp({ Component, pageProps, initialServerTime }: LastwarAppProps) {
   const [fontSize, setFontSize] = useState<number>(16);
 
   useEffect(() => {
@@ -100,6 +96,7 @@ export default function LastwarApp({
         </div>
         <Component {...pageProps} />
         <Footer />
+        <MoveToTop />
       </div>
     </RecoilRoot>
   );
