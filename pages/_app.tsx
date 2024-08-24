@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { AppProps, AppContext } from 'next/app';
 import NextApp from 'next/app';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { Noto_Sans_KR } from 'next/font/google';
-import { serverTimeState, serverTimezoneState } from '@/atoms/timeState';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { nowTimeState, serverTimeState, serverTimezoneState } from '@/atoms/timeState';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import '@/styles/globals.sass';
@@ -18,37 +18,18 @@ type LastwarAppProps = AppProps & {
   initialServerTimezone: string;
 };
 
-function TimeInitializer() {
+function LastwarApp({ Component, pageProps, initialServerTime, initialServerTimezone }: LastwarAppProps) {
+  const [fontSize, setFontSize] = useState<number>(16);
+
   const setServerTime = useSetRecoilState(serverTimeState);
   const setServerTimezone = useSetRecoilState(serverTimezoneState);
-
-  useEffect(() => {
-    const storedTime = localStorage.getItem('serverTime');
-    const storedTimezone = localStorage.getItem('serverTimezone');
-
-    if (storedTime) {
-      setServerTime(new Date(storedTime));
-    }
-
-    if (storedTimezone) {
-      setServerTimezone(storedTimezone);
-    }
-  }, [setServerTime, setServerTimezone]);
-
-  return null;
-}
-
-export default function LastwarApp({
-  Component,
-  pageProps,
-  initialServerTime,
-  initialServerTimezone,
-}: LastwarAppProps) {
-  const [fontSize, setFontSize] = useState<number>(16);
+  const setNowTime = useSetRecoilState(nowTimeState);
 
   useEffect(() => {
     localStorage.setItem('serverTime', initialServerTime);
     localStorage.setItem('serverTimezone', initialServerTimezone);
+    setServerTime(new Date(initialServerTime));
+    setServerTimezone(initialServerTimezone);
 
     const storedFontSize = localStorage.getItem('fontSize');
     if (storedFontSize) {
@@ -57,29 +38,19 @@ export default function LastwarApp({
     } else {
       document.documentElement.style.fontSize = `16px`;
     }
-  }, [initialServerTime, initialServerTimezone]);
 
-  const handleFontSizeChange = (newFontSize: number) => {
-    if (newFontSize !== fontSize) {
-      setFontSize(newFontSize);
-      localStorage.setItem('fontSize', newFontSize.toString());
-      document.documentElement.style.fontSize = `${newFontSize}px`;
-    }
-  };
+    const nowUTC = new Date();
+    const targetTime = new Date(nowUTC.getTime() - 11 * 60 * 60 * 1000);
 
-  const increaseFontSize = () => handleFontSizeChange(fontSize + 8);
-  const decreaseFontSize = () => {
-    if (fontSize > 16) {
-      handleFontSizeChange(fontSize - 8);
-    } else {
-      alert('더 이상 작게 글씨를 줄일 수 없습니다');
-    }
-  };
-  const resetFontSize = () => handleFontSizeChange(16);
+    console.log('UTC 시간: ', nowUTC.toISOString());
+    console.log('UTC 기준으로 11시간 늦은 시간: ', targetTime.toISOString());
+
+    localStorage.setItem('nowTime', targetTime.toISOString());
+    setNowTime(targetTime);
+  }, [initialServerTime, initialServerTimezone, setServerTime, setServerTimezone, setNowTime]);
 
   return (
     <RecoilRoot>
-      <TimeInitializer />
       <div className="content">
         <style jsx global>
           {`
@@ -94,17 +65,6 @@ export default function LastwarApp({
           `}
         </style>
         <Header />
-        <div className="font-controller">
-          <button type="button" onClick={increaseFontSize}>
-            크게
-          </button>
-          <button type="button" onClick={decreaseFontSize}>
-            작게
-          </button>
-          <button type="button" onClick={resetFontSize}>
-            초기화
-          </button>
-        </div>
         <Component {...pageProps} />
         <Footer />
       </div>
@@ -124,3 +84,5 @@ LastwarApp.getInitialProps = async (appContext: AppContext) => {
     initialServerTimezone: serverTimezone,
   };
 };
+
+export default LastwarApp;

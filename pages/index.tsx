@@ -1,15 +1,17 @@
 import { useRecoilValue } from 'recoil';
-import { serverTimeState, serverTimezoneState } from '@/atoms/timeState';
+import { nowTimeState, serverTimeState, serverTimezoneState } from '@/atoms/timeState';
 import Anchor from '@/components/Anchor';
 import Seo from '@/components/Seo';
 import styles from '@/styles/Home.module.sass';
 
 export default function Home() {
   const timestamp = Date.now();
+  const nowTime = useRecoilValue(nowTimeState);
   const serverTime = useRecoilValue(serverTimeState);
   const serverTimezone = useRecoilValue(serverTimezoneState);
   console.log('서버 시간대: ', serverTimezone);
   console.log('서버 시간: ', serverTime?.toLocaleString());
+  console.log('게임서버 시간: ', nowTime?.toLocaleString());
   return (
     <main className={styles.home}>
       <Seo
