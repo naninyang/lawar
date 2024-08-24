@@ -18,29 +18,18 @@ type LastwarAppProps = AppProps & {
   initialServerTimezone: string;
 };
 
-function RecoilInitializer({
-  initialServerTime,
-  initialServerTimezone,
-}: {
-  initialServerTime: string;
-  initialServerTimezone: string;
-}) {
+function RecoilInitializer({ initialServerTime }: { initialServerTime: string }) {
   const setServerTime = useSetRecoilState(serverTimeState);
-  const setServerTimezone = useSetRecoilState(serverTimezoneState);
   const setNowTime = useSetRecoilState(nowTimeState);
 
   useEffect(() => {
-    localStorage.setItem('serverTime', initialServerTime);
-    localStorage.setItem('serverTimezone', initialServerTimezone);
+    const serverTime = new Date(initialServerTime);
+    localStorage.setItem('serverTime', serverTime.toISOString());
+    setServerTime(serverTime);
 
-    const nowUTC = new Date();
-    const targetTime = new Date(nowUTC.getTime() - 11 * 60 * 60 * 1000);
-    localStorage.setItem('nowTime', targetTime.toISOString());
-
-    setServerTime(new Date(initialServerTime));
-    setServerTimezone(initialServerTimezone);
-    setNowTime(targetTime);
-  }, [initialServerTime, initialServerTimezone, setServerTime, setServerTimezone, setNowTime]);
+    setNowTime(serverTime);
+    localStorage.setItem('nowTime', serverTime.toISOString());
+  }, [initialServerTime, setServerTime, setNowTime]);
 
   return null;
 }
@@ -83,7 +72,7 @@ export default function LastwarApp({
 
   return (
     <RecoilRoot>
-      <RecoilInitializer initialServerTime={initialServerTime} initialServerTimezone={initialServerTimezone} />
+      <RecoilInitializer initialServerTime={initialServerTime} />
       <div className="content">
         <style jsx global>
           {`
@@ -118,13 +107,11 @@ export default function LastwarApp({
 
 LastwarApp.getInitialProps = async (appContext: AppContext) => {
   const serverTime = new Date().toISOString();
-  const serverTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   const appProps = await NextApp.getInitialProps(appContext);
 
   return {
     ...appProps,
     initialServerTime: serverTime,
-    initialServerTimezone: serverTimezone,
   };
 };

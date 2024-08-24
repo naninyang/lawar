@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import { nowTimeState } from '@/atoms/timeState';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Themes.module.sass';
 
@@ -13,16 +15,19 @@ type Theme = {
 };
 
 export default function Themes() {
+  const timestamp = Date.now();
+  const nowTime = useRecoilValue(nowTimeState) as Date;
   const [themes, setThemes] = useState<{ [key: number]: Theme }>({});
   const [displayDay, setDisplayDay] = useState<number | null>(null);
-  const timestamp = Date.now();
+  const currentDayRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!nowTime) return;
+
     async function fetchAllData() {
       try {
         const kstOffset = 9 * 60;
-        const now = new Date();
-        const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
+        const utcTime = nowTime.getTime();
         const kstDate = new Date(utcTime + kstOffset * 60000);
 
         let dayOfWeek = kstDate.getDay();
@@ -79,7 +84,13 @@ export default function Themes() {
     return () => {
       window.removeEventListener('focus', handleFocus);
     };
-  }, []);
+  }, [nowTime]);
+
+  useEffect(() => {
+    if (Object.keys(themes).length > 0 && currentDayRef.current) {
+      currentDayRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [themes, displayDay]);
 
   return (
     <main className={styles.themes}>
@@ -97,8 +108,15 @@ export default function Themes() {
           {Object.keys(themes).map((key) => {
             const theme = themes[parseInt(key)];
             if (!theme) return null;
+
+            const isCurrentDay = displayDay === parseInt(key);
             return (
-              <div key={key} data-day={key} aria-current={displayDay === parseInt(key) ? 'true' : undefined}>
+              <div
+                key={key}
+                ref={isCurrentDay ? currentDayRef : null}
+                data-day={key}
+                aria-current={isCurrentDay ? 'true' : undefined}
+              >
                 <h3>{theme.title}</h3>
                 <dl>
                   {theme.rewards.map((reward, index) => (

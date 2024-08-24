@@ -6,12 +6,6 @@ import styles from '@/styles/Home.module.sass';
 
 export default function Home() {
   const timestamp = Date.now();
-  const nowTime = useRecoilValue(nowTimeState);
-  const serverTime = useRecoilValue(serverTimeState);
-  const serverTimezone = useRecoilValue(serverTimezoneState);
-  console.log('서버 시간대: ', serverTimezone);
-  console.log('서버 시간: ', serverTime?.toLocaleString());
-  console.log('게임서버 시간: ', nowTime?.toLocaleString());
   return (
     <main className={styles.home}>
       <Seo
