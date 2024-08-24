@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 
 export default function MoveToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleScroll = () => {
-    if (window.scrollY > 100) {
-      if (!isMounted) {
-        setIsVisible(true);
-      } else {
-        setIsMounted(true);
-        setTimeout(() => setIsVisible(true), 0);
-      }
-    } else {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY >= 72 && currentScrollY >= lastScrollY) {
+      setTimeout(() => setIsVisible(true), 270);
+      setIsMounted(false);
+    } else if (currentScrollY < 72 && currentScrollY < lastScrollY) {
       setIsVisible(false);
-      setTimeout(() => setIsMounted(false), 270);
+      setTimeout(() => setIsMounted(true), 270);
     }
+
+    setLastScrollY(currentScrollY);
   };
 
   const scrollToTop = () => {
@@ -30,11 +31,11 @@ export default function MoveToTop() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [lastScrollY]);
 
   return (
     !isMounted && (
-      <button type="button" onClick={scrollToTop} className={isVisible ? 'move-to-top show' : 'move-to-top'}>
+      <button type="button" onClick={scrollToTop} className={isVisible ? 'move-to-top show' : 'move-to-top hide'}>
         🔝
       </button>
     )

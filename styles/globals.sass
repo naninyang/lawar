@@ -130,9 +130,11 @@ main
   border-radius: rem(3)
   width: rem(52)
   height: rem(52)
-  opacity: 0
   font-size: rem(23)
   transition: opacity 270ms ease-in-out
+
+  &.hide
+    opacity: 0
 
   &.show
     opacity: 1
