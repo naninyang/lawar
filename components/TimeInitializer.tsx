@@ -1,29 +1,32 @@
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { nowTimeState, serverTimeState, serverTimezoneState } from '@/atoms/timeState';
+import { nowTimeState, serverTimeState } from '@/atoms/timeState';
 
-function TimeInitializer() {
+function TimeInitializer({ initialServerTime }: { initialServerTime: string }) {
   const setServerTime = useSetRecoilState(serverTimeState);
-  const setServerTimezone = useSetRecoilState(serverTimezoneState);
   const setNowTime = useSetRecoilState(nowTimeState);
 
   useEffect(() => {
-    const storedTime = localStorage.getItem('serverTime');
-    const storedTimezone = localStorage.getItem('serverTimezone');
-    const storedNowTime = localStorage.getItem('nowTime');
+    const serverTime = new Date(initialServerTime);
+    localStorage.setItem('serverTime', serverTime.toISOString());
+    setServerTime(serverTime);
 
-    if (storedTime) {
-      setServerTime(new Date(storedTime));
-    }
+    const utcMinus2Offset = -2 * 60 * 60 * 1000;
+    const utcMinus2Time = new Date(serverTime.getTime() + utcMinus2Offset);
 
-    if (storedTimezone) {
-      setServerTimezone(storedTimezone);
-    }
+    setNowTime(utcMinus2Time);
+    localStorage.setItem('nowTime', utcMinus2Time.toISOString());
 
-    if (storedNowTime) {
-      setNowTime(new Date(storedNowTime));
-    }
-  }, [setServerTime, setServerTimezone, setNowTime]);
+    const interval = setInterval(() => {
+      setNowTime((prevTime) => {
+        const newTime = prevTime ? new Date(prevTime.getTime() + 1000) : new Date();
+        localStorage.setItem('nowTime', newTime.toISOString());
+        return newTime;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [initialServerTime, setServerTime, setNowTime]);
 
   return null;
 }

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import type { AppProps, AppContext } from 'next/app';
 import NextApp from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
-import { nowTimeState, serverTimeState } from '@/atoms/timeState';
+import { RecoilRoot } from 'recoil';
+import TimeInitializer from '@/components/TimeInitializer';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MoveToTop from '@/components/MoveToTop';
@@ -18,22 +18,6 @@ type LastwarAppProps = AppProps & {
   initialServerTime: string;
   initialServerTimezone: string;
 };
-
-function RecoilInitializer({ initialServerTime }: { initialServerTime: string }) {
-  const setServerTime = useSetRecoilState(serverTimeState);
-  const setNowTime = useSetRecoilState(nowTimeState);
-
-  useEffect(() => {
-    const serverTime = new Date(initialServerTime);
-    localStorage.setItem('serverTime', serverTime.toISOString());
-    setServerTime(serverTime);
-
-    setNowTime(serverTime);
-    localStorage.setItem('nowTime', serverTime.toISOString());
-  }, [initialServerTime, setServerTime, setNowTime]);
-
-  return null;
-}
 
 export default function LastwarApp({ Component, pageProps, initialServerTime }: LastwarAppProps) {
   const [fontSize, setFontSize] = useState<number>(16);
@@ -68,7 +52,7 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
 
   return (
     <RecoilRoot>
-      <RecoilInitializer initialServerTime={initialServerTime} />
+      <TimeInitializer initialServerTime={initialServerTime} />
       <div className="content">
         <style jsx global>
           {`
