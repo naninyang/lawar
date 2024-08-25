@@ -111,7 +111,7 @@ export default function Themes() {
             const isLastDay = displayDay === 7;
             return (
               <React.Fragment key={key}>
-                {isLastDay && (
+                {isLastDay && key === '7' && (
                   <p className={styles.rest}>
                     <span>오늘은 연맹 대결이 없어요 :)</span>
                     <span>일주일간 수고 많았어요!</span>
