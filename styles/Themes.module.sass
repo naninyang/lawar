@@ -4,19 +4,13 @@
   display: flex
   flex-direction: column
 
-  p
+  > p
     display: flex
     justify-content: center
     align-items: center
     gap: rem(17)
     height: calc(100vh - rem(294))
     text-align: center
-
-    &.rest
-      flex-direction: column
-      padding: rem(23) 0
-      width: 100%
-      height: auto
 
   > div
     display: flex
@@ -31,14 +25,17 @@
       padding-top: rem(3)
 
     > div
-      &:last-of-type
-        +screen-reader-only
-
       &[aria-current]
         background-color: rgba($hex-black, .5)
 
         h3::after
           content: ' [오늘]'
+
+      &:last-of-type
+        width: 100%
+
+        dl
+          +screen-reader-only
 
       +mq(minMedium)
         margin-bottom: rem(23)
@@ -70,3 +67,13 @@
 
           &:nth-of-type(even)
             background-color: rgba($hex-black, .27)
+
+      p
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        gap: rem(7)
+        width: 100%
+        padding: rem(72) 0
+        text-align: center

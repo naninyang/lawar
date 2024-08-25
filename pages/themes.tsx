@@ -105,26 +105,12 @@ export default function Themes() {
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <>
-          {Object.keys(themes).map((key) => {
-            const theme = themes[parseInt(key)];
-            if (!theme) return null;
-            const isLastDay = displayDay === 7;
-            return (
-              <React.Fragment key={key}>
-                {isLastDay && key === '7' && (
-                  <p className={styles.rest}>
-                    <span>오늘은 연맹 대결이 없어요 :)</span>
-                    <span>일주일간 수고 많았어요!</span>
-                  </p>
-                )}
-              </React.Fragment>
-            );
-          })}
           <div id="theme-list">
             {Object.keys(themes).map((key) => {
               const theme = themes[parseInt(key)];
               if (!theme) return null;
               const isCurrentDay = displayDay === parseInt(key);
+              const isLastDay = displayDay === 7;
               return (
                 <div
                   key={key}
@@ -141,6 +127,12 @@ export default function Themes() {
                       </div>
                     ))}
                   </dl>
+                  {isLastDay && key === '7' && (
+                    <p className={styles.rest}>
+                      <span>오늘은 연맹 대결이 없어요 :)</span>
+                      <span>일주일간 수고 많았어요!</span>
+                    </p>
+                  )}
                 </div>
               );
             })}
