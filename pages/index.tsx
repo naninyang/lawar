@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-import { nowTimeState, serverTimeState, serverTimezoneState } from '@/atoms/timeState';
 import Anchor from '@/components/Anchor';
 import Seo from '@/components/Seo';
 import styles from '@/styles/Home.module.sass';

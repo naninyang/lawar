@@ -16,7 +16,6 @@ const font = Noto_Sans_KR({
 
 type LastwarAppProps = AppProps & {
   initialServerTime: string;
-  initialServerTimezone: string;
 };
 
 export default function LastwarApp({ Component, pageProps, initialServerTime }: LastwarAppProps) {

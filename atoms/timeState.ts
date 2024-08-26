@@ -5,12 +5,7 @@ export const serverTimeState = atom<Date | null>({
   default: null,
 });
 
-export const serverTimezoneState = atom<string | null>({
-  key: 'serverTimezoneState',
-  default: null,
-});
-
-export const nowTimeState = atom<Date | null>({
-  key: 'nowTimeState',
+export const koreanTimeState = atom<Date | null>({
+  key: 'koreanTimeState;',
   default: null,
 });
