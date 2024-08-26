@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { nowTimeState } from '@/atoms/timeState';
+import { serverTimeState } from '@/atoms/timeState';
 import { getWeekStartTime, THEME_INTERVAL, themes } from '@/utils/time';
 import RewardList from './RewardList';
 import styles from '@/styles/Arms.module.sass';
 
 export default function FullThemeList() {
-  const nowTime = useRecoilValue(nowTimeState);
-  const [currentTime, setCurrentTime] = useState<Date | null>(nowTime);
+  const serverTime = useRecoilValue(serverTimeState);
+  const [currentTime, setCurrentTime] = useState<Date | null>(serverTime);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -20,11 +20,11 @@ export default function FullThemeList() {
     }
   }, [currentTime]);
 
-  if (!nowTime || !currentTime) {
+  if (!serverTime || !currentTime) {
     return null;
   }
 
-  const startOfWeek = getWeekStartTime(nowTime);
+  const startOfWeek = getWeekStartTime(serverTime);
   const themeElements = [];
   let currentDay = 0;
 

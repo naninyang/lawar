@@ -41,7 +41,7 @@ interface RewardListProps {
   theme: string;
 }
 
-const RewardList: React.FC<RewardListProps> = ({ theme }) => {
+const RewardList = ({ theme }: RewardListProps) => {
   const currentRewards = rewards[theme] || [];
 
   return (

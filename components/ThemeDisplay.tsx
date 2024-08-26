@@ -1,32 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { nowTimeState } from '@/atoms/timeState';
+import { serverTimeState } from '@/atoms/timeState';
 import { getCurrentThemeAndTime, getWeekStartTime, THEME_INTERVAL } from '@/utils/time';
 import RewardList from './RewardList';
 import styles from '@/styles/Arms.module.sass';
 
 export default function ThemeDisplay() {
-  const nowTime = useRecoilValue(nowTimeState);
+  const serverTime = useRecoilValue(serverTimeState);
 
-  const [themeInfo, setThemeInfo] = useState(() => (nowTime ? getCurrentThemeAndTime(nowTime) : null));
+  const [themeInfo, setThemeInfo] = useState(() => (serverTime ? getCurrentThemeAndTime(serverTime) : null));
   const [remainingTime, setRemainingTime] = useState(() =>
-    nowTime ? calculateRemainingTime(nowTime) : { hours: 0, minutes: 0, seconds: 0 },
+    serverTime ? calculateRemainingTime(serverTime) : { hours: 0, minutes: 0, seconds: 0 },
   );
 
   useEffect(() => {
-    if (nowTime) {
-      const interval = setInterval(() => {
-        setThemeInfo(getCurrentThemeAndTime(nowTime));
-        setRemainingTime(calculateRemainingTime(nowTime));
-      }, 1000);
-
-      return () => clearInterval(interval);
+    if (serverTime) {
+      setThemeInfo(getCurrentThemeAndTime(serverTime));
+      setRemainingTime(calculateRemainingTime(serverTime));
     }
-  }, [nowTime]);
+  }, [serverTime]);
 
   return (
     <div className={styles['current-container']}>
-      {!nowTime || !themeInfo ? (
+      {!serverTime || !themeInfo ? (
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <>

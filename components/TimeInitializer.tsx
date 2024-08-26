@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { serverTimeState, koreanTimeState } from '@/atoms/timeState';
 
-function TimeInitializer({ initialServerTime }: { initialServerTime: string }) {
+export default function TimeInitializer({ initialServerTime }: { initialServerTime: string }) {
   const setServerTime = useSetRecoilState(serverTimeState);
   const setKoreanTime = useSetRecoilState(koreanTimeState);
 
@@ -37,5 +37,3 @@ function TimeInitializer({ initialServerTime }: { initialServerTime: string }) {
 
   return null;
 }
-
-export default TimeInitializer;
