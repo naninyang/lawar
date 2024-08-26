@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-import { nowTimeState } from '@/atoms/timeState';
+import { serverTimeState } from '@/atoms/timeState';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Themes.module.sass';
 
@@ -16,22 +16,22 @@ type Theme = {
 
 export default function Themes() {
   const timestamp = Date.now();
-  const nowTime = useRecoilValue(nowTimeState) as Date;
+  const serverTime = useRecoilValue(serverTimeState);
   const [themes, setThemes] = useState<{ [key: number]: Theme }>({});
   const [displayDay, setDisplayDay] = useState<number | null>(null);
-  const currentDayRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!nowTime) return;
+    if (!serverTime) return;
 
     async function fetchAllData() {
       try {
-        const kstOffset = 9 * 60;
-        const utcTime = nowTime.getTime();
-        const kstDate = new Date(utcTime + kstOffset * 60000);
+        if (!serverTime) return;
 
-        let dayOfWeek = kstDate.getDay();
-        const hours = kstDate.getHours();
+        const startDay = new Date(serverTime);
+        startDay.setUTCHours(2, 0, 0, 0);
+
+        let dayOfWeek = startDay.getDay();
+        const hours = startDay.getHours();
 
         if (dayOfWeek === 0) {
           dayOfWeek = 7;
@@ -74,23 +74,7 @@ export default function Themes() {
     }
 
     fetchAllData();
-
-    const handleFocus = () => {
-      fetchAllData();
-    };
-
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [nowTime]);
-
-  useEffect(() => {
-    if (Object.keys(themes).length > 0 && currentDayRef.current) {
-      currentDayRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [themes, displayDay]);
+  }, [serverTime]);
 
   return (
     <main className={styles.themes}>
@@ -104,40 +88,35 @@ export default function Themes() {
       {Object.keys(themes).length === 0 ? (
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
-        <>
-          <div id="theme-list">
-            {Object.keys(themes).map((key) => {
-              const theme = themes[parseInt(key)];
-              if (!theme) return null;
-              const isCurrentDay = displayDay === parseInt(key);
-              const isLastDay = displayDay === 7;
-              return (
-                <div
-                  key={key}
-                  ref={isCurrentDay ? currentDayRef : null}
-                  data-day={key}
-                  aria-current={isCurrentDay ? 'true' : undefined}
-                >
-                  <h3>{theme.title}</h3>
-                  <dl>
-                    {theme.rewards.map((reward, index) => (
-                      <div key={index}>
-                        <dt>{reward.item}</dt>
-                        <dd>{reward.reward.toLocaleString()}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  {isLastDay && key === '7' && (
-                    <p className={styles.rest}>
-                      <span>오늘은 연맹 대결이 없어요 :)</span>
-                      <span>일주일간 수고 많았어요!</span>
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </>
+        <div id="theme-list">
+          {Object.keys(themes).map((key) => {
+            const theme = themes[parseInt(key)];
+            if (!theme) return null;
+            const isCurrentDay = displayDay === parseInt(key);
+            const isLastDay = displayDay === 7;
+            return (
+              <div key={key} data-day={key} aria-current={isCurrentDay ? 'true' : undefined}>
+                <h3>
+                  {theme.title} {isCurrentDay && '[오늘]'}
+                </h3>
+                <dl>
+                  {theme.rewards.map((reward, index) => (
+                    <div key={index}>
+                      <dt>{reward.item}</dt>
+                      <dd>{reward.reward.toLocaleString()}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {isLastDay && key === '7' && (
+                  <p className={styles.rest}>
+                    <span>오늘은 연맹 대결이 없어요 :)</span>
+                    <span>일주일간 수고 많았어요!</span>
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
       )}
     </main>
   );
