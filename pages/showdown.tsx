@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { nowTimeState } from '@/atoms/timeState';
+import { serverTimeState } from '@/atoms/timeState';
 import Seo from '@/components/Seo';
-import ShowdownToday from '@/components/ShowdownToday';
-import ShowdownAll from '@/components/ShowdownAll';
+import ShowdownToday from '@/components/showdown/Today';
 import styles from '@/styles/Showdown.module.sass';
 
 export type Reward = {
@@ -81,8 +79,7 @@ const matchingThemes: { [key: number]: string[] } = {
 
 export default function Showdown() {
   const timestamp = Date.now();
-  const nowTime = useRecoilValue(nowTimeState);
-  const [viewMode, setViewMode] = useState<'today' | 'all'>('today');
+  const serverTime = useRecoilValue(serverTimeState);
 
   return (
     <main className={styles.showdown}>
@@ -92,26 +89,8 @@ export default function Showdown() {
         pageImg={`https://lawar.dev1stud.io/og-base.webp?ts=${timestamp}`}
       />
       <h2>오늘의 테마 및 군비 경쟁</h2>
-      {nowTime ? (
-        <>
-          <ul className={styles.tabs}>
-            <li className={viewMode === 'today' ? styles.current : undefined}>
-              <button type="button" onClick={() => setViewMode('today')}>
-                오늘 기준
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={() => setViewMode('all')}>
-                전체 보기
-              </button>
-            </li>
-          </ul>
-          {viewMode === 'today' ? (
-            <ShowdownToday competitions={competitions} matchingThemes={matchingThemes} />
-          ) : (
-            <ShowdownAll competitions={competitions} matchingThemes={matchingThemes} />
-          )}
-        </>
+      {serverTime ? (
+        <ShowdownToday competitions={competitions} matchingThemes={matchingThemes} />
       ) : (
         <p>데이터를 불러오는 중입니다 :)</p>
       )}
