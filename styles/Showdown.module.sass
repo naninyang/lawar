@@ -77,11 +77,22 @@
         background: linear-gradient(90deg, #1ECEFB -1.45%, #D8272E 100%)
 
       .arms
+        > p
+          display: flex
+          justify-content: center
+          align-items: center
+          gap: rem(17)
+          height: calc(100vh - rem(294))
+          text-align: center
+
         > div
-          opacity: .1
           border: 1px solid #D8272E
           border-left: 0
           border-right: 0
 
+          h4, dl
+            opacity: .1
+
         .active
-          opacity: 1
+          h4, dl
+            opacity: 1

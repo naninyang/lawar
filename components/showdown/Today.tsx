@@ -17,11 +17,11 @@ export default function ShowdownToday({
     <div className={styles.contents}>
       <section>
         <AllianceToday />
-        <ArmsToday competitions={competitions} matchingThemes={matchingThemes} />
+        <ArmsToday />
       </section>
       <section>
         <AllianceTomorrow />
-        <ArmsTomorrow competitions={competitions} matchingThemes={matchingThemes} />
+        <ArmsTomorrow />
       </section>
     </div>
   );

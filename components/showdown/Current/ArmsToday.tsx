@@ -1,121 +1,94 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import { Theme } from '@/pages/showdown';
 import styles from '@/styles/Showdown.module.sass';
 
-export default function ArmsToday({
-  competitions,
-  matchingThemes,
-}: {
-  competitions: Theme[];
-  matchingThemes: { [key: number]: string[] };
-}) {
+interface Theme {
+  name: string;
+  time: string;
+  rewards: { item: string; reward: number }[];
+}
+
+export default function ArmsToday() {
   const serverTime = useRecoilValue(serverTimeState);
-  const [currentDay, setCurrentDay] = useState(1);
-  const [themeIndex, setThemeIndex] = useState(0);
-  const [competitionRotation, setCompetitionRotation] = useState<
-    { theme: Theme; remainingTime: string; startTime: string }[]
-  >([]);
+  const [themes, setThemes] = useState<Theme[]>([]);
+  const [title, setTitle] = useState<string>('');
+  const [matching, setMatching] = useState<number[]>([]);
+  const [currentThemeIndex, setCurrentThemeIndex] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
 
   useEffect(() => {
-    const calculateCompetitionRotation = () => {
-      if (!serverTime || competitions.length === 0) return;
+    if (!serverTime) return;
 
-      // 주의 시작 날짜 (토요일)
-      const startOfWeek = new Date(serverTime);
-      startOfWeek.setUTCHours(2, 0, 0, 0);
-      startOfWeek.setUTCDate(startOfWeek.getUTCDate() - ((startOfWeek.getUTCDay() + 1) % 7));
+    const dayOfWeek = (serverTime.getUTCDay() + 1) % 7;
+    const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    const currentDay = days[dayOfWeek];
 
-      // 오늘의 시작 시간 (00:00:00)
-      const startOfToday = new Date(serverTime);
-      startOfToday.setUTCHours(2, 0, 0, 0);
+    fetch(`/api/competitions/${currentDay}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setThemes(data.themes);
+        setTitle(data.title);
+        setMatching(data.matching || []);
+      });
 
-      // 내일의 시작 시간 (오늘 00:00:00 + 24시간)
-      const startOfTomorrow = new Date(startOfToday);
-      startOfTomorrow.setUTCDate(startOfTomorrow.getUTCDate() + 1);
+    const startHour = 2;
+    const currentDate = new Date(serverTime);
+    currentDate.setUTCHours(startHour, 0, 0, 0);
 
-      const elapsedSeconds = Math.floor((serverTime.getTime() - startOfToday.getTime()) / 1000);
-      const currentThemeDuration = 14400; // 4시간 단위
-      const totalThemes = competitions.length;
+    const timeDifference = serverTime.getTime() - currentDate.getTime();
+    const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const themeIndex = Math.floor(elapsedHours / 4) % themes.length;
 
-      const correctedElapsedSeconds = elapsedSeconds % (totalThemes * currentThemeDuration);
-      const currentRotationIndex = Math.floor(correctedElapsedSeconds / currentThemeDuration) % totalThemes;
+    setCurrentThemeIndex(themeIndex);
 
-      const timeInCurrentTheme = correctedElapsedSeconds % currentThemeDuration;
+    const nextThemeTime = new Date(currentDate);
+    nextThemeTime.setUTCHours(startHour + (themeIndex + 1) * 4, 0, 0, 0);
+    const timeDiff = nextThemeTime.getTime() - serverTime.getTime();
 
-      const competitionRotationList = [];
-      for (let i = 0; i < 6; i++) {
-        const adjustedIndex = (i + currentRotationIndex) % totalThemes;
-        const rotatedIndex = (adjustedIndex + i) % totalThemes;
-
-        const startTimeOffset = 11 * 3600;
-        const startTimeInSeconds = (startTimeOffset + i * currentThemeDuration) % 86400;
-        const startHours = Math.floor(startTimeInSeconds / 3600);
-        const startMinutes = Math.floor((startTimeInSeconds % 3600) / 60);
-        const startSeconds = startTimeInSeconds % 60;
-
-        const startTimeFormatted = `${startHours.toString().padStart(2, '0')}:${startMinutes
-          .toString()
-          .padStart(2, '0')}:${startSeconds.toString().padStart(2, '0')}`;
-
-        const remainingTimeInTheme =
-          currentThemeDuration - ((timeInCurrentTheme + i * currentThemeDuration) % currentThemeDuration);
-        const rotationHoursLeft = Math.floor(remainingTimeInTheme / 3600);
-        const rotationMinutesLeft = Math.floor((remainingTimeInTheme % 3600) / 60);
-        const rotationSecondsLeft = Math.floor(remainingTimeInTheme % 60);
-
-        const remainingTimeFormatted = `${rotationHoursLeft.toString().padStart(2, '0')}시간 ${rotationMinutesLeft
-          .toString()
-          .padStart(2, '0')}분 ${rotationSecondsLeft.toString().padStart(2, '0')}초`;
-
-        competitionRotationList.push({
-          theme: competitions[rotatedIndex],
-          remainingTime: remainingTimeFormatted,
-          startTime: startTimeFormatted,
-        });
-
-        // 로그 출력
-        console.log(`군비 경쟁 아이템 ${i + 1}:`);
-        console.log(`시작 시간: ${startTimeFormatted}`);
-        console.log(`남은 시간: ${remainingTimeFormatted}`);
-      }
-      setCompetitionRotation(competitionRotationList);
-
-      // 오늘과 내일의 시작 시간을 로그로 출력
-      console.log(`오늘 군비 경쟁 시작 날짜 및 시간: ${startOfToday}`);
-      console.log(`내일 군비 경쟁 시작 날짜 및 시간: ${startOfTomorrow}`);
-    };
-
-    calculateCompetitionRotation();
-  }, [serverTime, competitions]);
+    const hoursLeft = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+    const minutesLeft = Math.floor((timeDiff / (1000 * 60)) % 60);
+    const secondsLeft = Math.floor((timeDiff / 1000) % 60);
+    setTimeLeft(
+      `${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`,
+    );
+  }, [serverTime, themes.length]);
 
   return (
     <div className={styles.arms}>
-      <h3>오늘의 군비 경쟁</h3>
-      {competitionRotation.map((competition, index) => (
-        <div
-          key={index}
-          className={matchingThemes[currentDay]?.includes(competition.theme.name) ? styles.active : undefined}
-        >
-          <h4>
-            <strong>{competition.theme.name}</strong> <span>{competition.startTime}</span>
-          </h4>
-          {index === themeIndex && (
-            <p>
-              남은 시간 <strong>{competition.remainingTime}</strong>
-            </p>
-          )}
-          <dl>
-            {competition.theme.rewards.map((reward, idx) => (
-              <div key={idx}>
-                <dt>{reward.item}</dt>
-                <dd>{reward.reward}</dd>
+      <h3>군비 경쟁 - {title} [오늘]</h3>
+      {Object.keys(themes).length === 0 ? (
+        <p>데이터를 불러오는 중입니다 :)</p>
+      ) : (
+        <>
+          {themes.map((theme, index) => {
+            const isActive = matching.includes(index);
+            return (
+              <div key={index} className={isActive ? styles.active : undefined}>
+                {index === currentThemeIndex && (
+                  <p>
+                    현재 테마 남은 시간 <strong>{timeLeft}</strong>
+                  </p>
+                )}
+                <h4>
+                  <strong>
+                    {theme.name} {index === currentThemeIndex && '[현재 테마]'}
+                  </strong>
+                  <span>{theme.time}</span>
+                </h4>
+                <dl>
+                  {theme.rewards.map((reward: any, idx: number) => (
+                    <div key={idx}>
+                      <dt>{reward.item}</dt>
+                      <dd>{reward.reward}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-            ))}
-          </dl>
-        </div>
-      ))}
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }

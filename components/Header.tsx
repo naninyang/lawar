@@ -42,14 +42,14 @@ export default function Header() {
                 <span>군비 경쟁</span>
               </Anchor>
             </li>
-            {/* <li
+            <li
               className={router.pathname === '/showdown' ? styles.current : undefined}
               onClick={() => handleMenuClick('/showdown', 2)}
             >
               <Anchor href="/showdown">
-                <span>테마 + 군비</span>
+                <span>오늘의 군비 경쟁</span>
               </Anchor>
-            </li> */}
+            </li>
             <li
               className={router.pathname === '/base' ? styles.current : undefined}
               onClick={() => handleMenuClick('/base', 1)}

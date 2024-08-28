@@ -1,88 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import { Theme } from '@/pages/showdown';
 import styles from '@/styles/Showdown.module.sass';
 
-export default function ArmsTomorrow({
-  competitions,
-  matchingThemes,
-}: {
-  competitions: Theme[];
-  matchingThemes: { [key: number]: string[] };
-}) {
+interface Theme {
+  name: string;
+  time: string;
+  rewards: { item: string; reward: number }[];
+}
+
+export default function ArmsTomorrow() {
   const serverTime = useRecoilValue(serverTimeState);
-  const [nextDayCompetitionRotation, setNextDayCompetitionRotation] = useState<{ theme: Theme; startTime: string }[]>(
-    [],
-  );
+  const [themes, setThemes] = useState<Theme[]>([]);
+  const [title, setTitle] = useState<string>('');
+  const [matching, setMatching] = useState<number[]>([]);
 
   useEffect(() => {
-    const calculateCompetitionRotation = () => {
-      if (!serverTime || competitions.length === 0) return;
+    if (!serverTime) return;
 
-      const startOffset = 11 * 3600;
-      const startOfWeek = new Date(serverTime);
-      startOfWeek.setDate(startOfWeek.getDate() - ((startOfWeek.getDay() + 1) % 7));
-      startOfWeek.setUTCHours(2, 0, 0, 0);
+    const tomorrow = new Date(serverTime);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
 
-      const elapsedSeconds = Math.floor((serverTime.getTime() - startOfWeek.getTime()) / 1000);
-      const currentThemeDuration = 14400;
-      const totalThemes = competitions.length;
+    const dayOfWeek = (tomorrow.getUTCDay() + 1) % 7;
+    const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    const currentDay = days[dayOfWeek];
 
-      const correctedElapsedSeconds = (elapsedSeconds + startOffset) % (totalThemes * currentThemeDuration);
-      const currentRotationIndex = Math.floor(correctedElapsedSeconds / currentThemeDuration) % totalThemes;
+    fetch(`/api/competitions/${currentDay}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setThemes(data.themes);
+        setTitle(data.title);
+        setMatching(data.matching || []);
+      });
 
-      const nextDayRotationList = [];
-      for (let i = 0; i < 6; i++) {
-        const adjustedIndex = (i + currentRotationIndex) % totalThemes;
-        const rotatedIndex = (adjustedIndex + i + 6) % totalThemes;
-        const startTimeInSeconds = (startOffset + i * currentThemeDuration) % 86400;
-        const startHours = Math.floor(startTimeInSeconds / 3600);
-        const startMinutes = Math.floor((startTimeInSeconds % 3600) / 60);
-        const startSeconds = startTimeInSeconds % 60;
+    const startHour = 2;
+    const currentUTCDate = new Date(serverTime);
+    currentUTCDate.setUTCHours(startHour, 0, 0, 0);
 
-        const startTimeFormatted = `${startHours.toString().padStart(2, '0')}:${startMinutes
-          .toString()
-          .padStart(2, '0')}:${startSeconds.toString().padStart(2, '0')}`;
+    const timeDifference = serverTime.getTime() - currentUTCDate.getTime();
+    const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const themeIndex = Math.floor(elapsedHours / 4) % themes.length;
 
-        nextDayRotationList.push({
-          theme: competitions[rotatedIndex],
-          startTime: startTimeFormatted,
-        });
-      }
-      setNextDayCompetitionRotation(nextDayRotationList);
-    };
-
-    calculateCompetitionRotation();
-    const intervalArms = setInterval(calculateCompetitionRotation, 1000);
-    return () => clearInterval(intervalArms);
-  }, [serverTime, competitions]);
+    const nextThemeTime = new Date(currentUTCDate);
+    nextThemeTime.setUTCHours(startHour + (themeIndex + 1) * 4, 0, 0, 0);
+  }, [serverTime]);
 
   return (
     <div className={styles.arms}>
-      <h3>내일의 군비 경쟁</h3>
-      {nextDayCompetitionRotation.map((competition, index) => (
-        <div
-          key={index}
-          className={
-            matchingThemes[nextDayCompetitionRotation.indexOf(competition) + 1]?.includes(competition.theme.name)
-              ? styles.active
-              : undefined
-          }
-        >
-          <h4>
-            <strong>{competition.theme.name}</strong> <span>{competition.startTime}</span>
-          </h4>
-          <dl>
-            {competition.theme.rewards.map((reward, idx) => (
-              <div key={idx}>
-                <dt>{reward.item}</dt>
-                <dd>{reward.reward}</dd>
+      <h3>군비 경쟁 - {title} [내일]</h3>
+      {Object.keys(themes).length === 0 ? (
+        <p>데이터를 불러오는 중입니다 :)</p>
+      ) : (
+        <>
+          {themes.map((theme, index) => {
+            const isActive = matching.includes(index);
+            return (
+              <div key={index} className={isActive ? styles.active : undefined}>
+                <h4>
+                  <strong>{theme.name}</strong>
+                  <span>{theme.time}</span>
+                </h4>
+                <dl>
+                  {theme.rewards.map((reward: any, idx: number) => (
+                    <div key={idx}>
+                      <dt>{reward.item}</dt>
+                      <dd>{reward.reward}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-            ))}
-          </dl>
-        </div>
-      ))}
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }
