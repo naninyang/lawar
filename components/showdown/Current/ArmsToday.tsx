@@ -24,7 +24,7 @@ export default function ArmsToday() {
     const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     const currentDay = days[dayOfWeek];
 
-    fetch(`/api/competitions/${currentDay}`)
+    fetch(`/api/arms/${currentDay}`)
       .then((response) => response.json())
       .then((data) => {
         setThemes(data.themes);
@@ -54,6 +54,19 @@ export default function ArmsToday() {
     );
   }, [serverTime, themes.length]);
 
+  const formatToLocalTime = (utcTime: string) => {
+    const [hours, minutes, seconds] = utcTime.slice(1, 9).split(':').map(Number);
+
+    const localDate = new Date();
+    localDate.setUTCHours(hours, minutes, seconds);
+
+    const localHours = localDate.getHours().toString().padStart(2, '0');
+    const localMinutes = localDate.getMinutes().toString().padStart(2, '0');
+    const localSeconds = localDate.getSeconds().toString().padStart(2, '0');
+
+    return `${localHours}:${localMinutes}:${localSeconds}`;
+  };
+
   return (
     <div className={styles.arms}>
       <h3>군비 경쟁 - {title} [오늘]</h3>
@@ -74,7 +87,7 @@ export default function ArmsToday() {
                   <strong>
                     {theme.name} {index === currentThemeIndex && '[현재 테마]'}
                   </strong>
-                  <span>{theme.time}</span>
+                  <span>{formatToLocalTime(theme.time)}</span>
                 </h4>
                 <dl>
                   {theme.rewards.map((reward: any, idx: number) => (

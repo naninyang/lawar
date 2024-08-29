@@ -25,7 +25,7 @@ export default function ArmsTomorrow() {
     const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     const currentDay = days[dayOfWeek];
 
-    fetch(`/api/competitions/${currentDay}`)
+    fetch(`/api/arms/${currentDay}`)
       .then((response) => response.json())
       .then((data) => {
         setThemes(data.themes);

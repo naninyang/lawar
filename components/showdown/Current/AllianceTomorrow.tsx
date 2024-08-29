@@ -31,7 +31,7 @@ export default function AllianceTomorrow() {
       try {
         const tomorrowDayIndex = startOfTomorrow.getUTCDay() === 0 ? 7 : startOfTomorrow.getUTCDay();
 
-        const nextThemeApi = `/api/${dayMap[tomorrowDayIndex as keyof typeof dayMap]}`;
+        const nextThemeApi = `/api/alliance/${dayMap[tomorrowDayIndex as keyof typeof dayMap]}`;
         const nextResponse = await fetch(nextThemeApi);
         if (!nextResponse.ok) {
           throw new Error(`Failed to fetch data from ${nextThemeApi}`);

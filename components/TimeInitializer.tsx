@@ -7,8 +7,8 @@ export default function TimeInitializer({ initialServerTime }: { initialServerTi
 
   useEffect(() => {
     let serverTime = new Date(initialServerTime);
-    console.log('UTC-2 시간 기준 현재 시간:', serverTime.toISOString());
-    console.log('로컬 시간 기준 현재 시간):', serverTime.toString());
+    console.log('UTC 시간 기준 현재 시간:', serverTime.toISOString());
+    console.log('로컬 시간 기준 현재 시간:', serverTime.toString());
     localStorage.setItem('serverTime', serverTime.toISOString());
     setServerTime(serverTime);
 

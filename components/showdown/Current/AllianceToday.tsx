@@ -42,7 +42,7 @@ export default function AllianceToday() {
       try {
         const todayDayIndex = startOfToday.getUTCDay() === 0 ? 7 : startOfToday.getUTCDay();
 
-        const todayThemeApi = `/api/${dayMap[todayDayIndex as keyof typeof dayMap]}`;
+        const todayThemeApi = `/api/alliance/${dayMap[todayDayIndex as keyof typeof dayMap]}`;
         const response = await fetch(todayThemeApi);
         if (!response.ok) {
           throw new Error(`Failed to fetch data from ${todayThemeApi}`);

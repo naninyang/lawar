@@ -6,13 +6,7 @@ import ArmsToday from './Current/ArmsToday';
 import ArmsTomorrow from './Current/ArmsTomorrow';
 import styles from '@/styles/Showdown.module.sass';
 
-export default function ShowdownToday({
-  competitions,
-  matchingThemes,
-}: {
-  competitions: Theme[];
-  matchingThemes: { [key: number]: string[] };
-}) {
+export default function ShowdownToday() {
   return (
     <div className={styles.contents}>
       <section>
