@@ -62,7 +62,7 @@ export default function ArmsAll() {
       const minutesLeft = Math.floor((timeDiff / (1000 * 60)) % 60);
       const secondsLeft = Math.floor((timeDiff / 1000) % 60);
       setTimeLeft(
-        `${hoursLeft.toString().padStart(2, '0')}:${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`,
+        `${hoursLeft.toString()}시간 ${minutesLeft.toString().padStart(2, '0')}분 ${secondsLeft.toString().padStart(2, '0')}초`,
       );
     });
   }, [serverTime]);
@@ -98,7 +98,9 @@ export default function ArmsAll() {
 
   return (
     <div className={styles['all-container']}>
-      {weeklyThemes.length > 0 && (
+      {weeklyThemes.length === 0 ? (
+        <p>데이터를 불러오는 중입니다 :)</p>
+      ) : (
         <>
           {weeklyThemes.map(({ themes, title, matching }, dayIndex) => (
             <div

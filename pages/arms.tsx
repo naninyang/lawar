@@ -49,7 +49,7 @@ export default function ArmsTemp() {
           </button>
         </li>
       </ul>
-      <div className={styles.contents}>{viewMode === 'current' ? <ArmsAll /> : <ArmsAll />}</div>
+      <div className={styles.contents}>{viewMode === 'current' ? <ArmsCurrent /> : <ArmsAll />}</div>
     </main>
   );
 }
