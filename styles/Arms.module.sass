@@ -106,10 +106,10 @@
   .all-container
     +row
 
-    +mq(maxSmall)
-      flex-direction: column
+    // +mq(maxSmall)
+    //   flex-direction: column
 
-    .theme-item
+    .theme-item-temp
       border-bottom: 1px solid rgba($hex-black, .2)
 
       &[aria-current]
@@ -176,20 +176,141 @@
           &:nth-of-type(odd)
             background-color: rgba($hex-black, .27)
 
+    .theme-item
+      +row
+
+      &.today
+        background-color: $hex-bg
+
+        dl
+          color: $hex-white
+
+        button, h3, h4
+          span
+            color: $hex-light
+
+        .current
+          dl
+            color: $hex-black
+
+      h3
+        width: 33.33%
+        height: 100%
+        border-right: 1px solid rgba($hex-black, .2)
+        border-bottom: 1px solid rgba($hex-black, .2)
+
+        +mq(minMedium)
+          width: 20%
+
+        +mq(minExtraLarge)
+          width: 14.28%
+
+      .themes
+        display: flex
+        flex-wrap: wrap
+        +col
+
+        .item
+          border-top: 1px solid rgba($hex-black, .2)
+          width: 100%
+
+        +mq(minMedium)
+          .item
+            width: 50%
+
+            &:nth-of-type(even)
+              button
+                span
+                  &:first-of-type
+                    border-left: 1px solid rgba($hex-black, .2)
+
+        +mq(minExtraLarge)
+          .item
+            width: 33.33%
+
+            &:nth-of-type(even)
+              button
+                span
+                  &:first-of-type
+                    border-left: 0!important
+
+            &:nth-of-type(3n+2), &:nth-of-type(3n+3)
+              button
+                span
+                  &:first-of-type
+                    border-left: 1px solid rgba($hex-black, .2)!important
+
+      .current
+        background-color: rgba($hex-accent, .5)
+
+        h4
+          span
+            font-weight: 700
+            color: $hex-black
+
+        &:not(.active)
+          opacity: .2
+
+      .active
+        .controller
+          opacity: 1
+
+          button
+            span
+              font-weight: 700
+
+      p
+        padding-top: rem(7)
+        padding-bottom: rem(7)
+        text-align: center
+
+      .detail-content
+        border: 5px solid #D8272E
+
+      dl
+        display: flex
+        flex-direction: column
+        padding: rem(7) 0
+
+        +mq(minMedium)
+          padding: 0
+
+        div
+          display: flex
+          justify-content: space-between
+          gap: rem(12)
+          padding: rem(7) rem(24)
+
+          &:nth-of-type(odd)
+            background-color: rgba($hex-black, .27)
+
+    .controller
+      opacity: .5
+
+      &.active
+        opacity: 1
+
+        button
+          background-color: $hex-bg
+          font-weight: 700
+          opacity: 1
+
+          span
+            font-weight: 700
+            color: $hex-white
+
     .controller, h3
       border-bottom: 1px solid rgba($hex-black, .2)
 
-    button.current
-      background-color: rgba($hex-black, .1)
-      font-weight: 700
+    h3, h4
+      height: rem(50)
 
-    button, h3
+    button, h3, h4
       display: flex
       justify-content: space-between
       background-color: transparent
       color: $hex-black
       width: 100%
-      height: rem(50)
 
       span
         display: flex
@@ -198,4 +319,9 @@
         +col
         height: rem(50)
         border-left: 1px solid rgba($hex-black, .2)
+        font-size: rem(16)
+        font-weight: 400
         text-align: center
+
+        &:first-of-type
+          border-left: 0

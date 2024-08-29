@@ -45,6 +45,19 @@ export default function ArmsTomorrow() {
     nextThemeTime.setUTCHours(startHour + (themeIndex + 1) * 4, 0, 0, 0);
   }, [serverTime]);
 
+  const formatToLocalTime = (utcTime: string) => {
+    const [hours, minutes, seconds] = utcTime.slice(1, 9).split(':').map(Number);
+
+    const localDate = new Date();
+    localDate.setUTCHours(hours, minutes, seconds);
+
+    const localHours = localDate.getHours().toString().padStart(2, '0');
+    const localMinutes = localDate.getMinutes().toString().padStart(2, '0');
+    const localSeconds = localDate.getSeconds().toString().padStart(2, '0');
+
+    return `${localHours}:${localMinutes}:${localSeconds}`;
+  };
+
   return (
     <div className={styles.arms}>
       <h3>군비 경쟁 - {title} [내일]</h3>
@@ -58,7 +71,7 @@ export default function ArmsTomorrow() {
               <div key={index} className={isActive ? styles.active : undefined}>
                 <h4>
                   <strong>{theme.name}</strong>
-                  <span>{theme.time}</span>
+                  <span>{formatToLocalTime(theme.time)}</span>
                 </h4>
                 <dl>
                   {theme.rewards.map((reward: any, idx: number) => (
