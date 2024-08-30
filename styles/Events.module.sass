@@ -1,0 +1,62 @@
+@import './designSystem'
+
+.events
+  display: flex
+  gap: rem(7)
+  padding: 0 rem(25) rem(17)
+
+  +mq(maxSmall)
+    flex-direction: column
+
+  +mq(minMedium)
+    gap: rem(27)
+
+  h3
+    font-size: rem(16)
+    font-weight: 700
+
+  ul
+    display: flex
+    flex-direction: column
+
+    +mq(maxSmall)
+      gap: rem(7)
+
+    li
+      display: flex
+
+      +mq(maxSmall)
+        flex-wrap: wrap
+        position: relative
+
+        time
+          text-align: right
+
+      +mq(minMedium)
+        gap: rem(23)
+
+      cite
+        width: rem(123)
+
+        +mq(maxSmall)
+          width: 100%
+
+      strong
+        width: rem(190)
+
+      time
+        +mq(maxSmall)
+          position: absolute
+          bottom: 0
+          right: 0
+
+        &.time
+          color: $hex-light
+
+        &.ing
+          color: $hex-accent
+          font-weight: 700
+
+        &.due
+          color: $hex-white
+          opacity: .5

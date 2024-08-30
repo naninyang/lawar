@@ -6,15 +6,17 @@ header.header
   gap: rem(23)
   margin-bottom: rem(-23)
 
-  h1
+  .headline
     background-color: rgba($hex-white, .1)
-    padding: rem(17) rem(25)
-    font-size: rem(24)
-    font-weight: 900
 
-    +mq(maxSmall)
-      display: flex
-      flex-direction: column
+    h1
+      padding: rem(17) rem(25)
+      font-size: rem(24)
+      font-weight: 900
+
+      +mq(maxSmall)
+        display: flex
+        flex-direction: column
 
   nav
     .menu

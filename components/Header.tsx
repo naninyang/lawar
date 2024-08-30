@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from './Anchor';
 import styles from '@/styles/Header.module.sass';
+import Events from './Events';
 
 export default function Header() {
   const router = useRouter();
@@ -22,7 +23,10 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <h1>라스트워 가이드북</h1>
+      <div className={styles.headline}>
+        <h1>라스트워 가이드북</h1>
+        <Events />
+      </div>
       {router.pathname !== '/' && (
         <nav>
           <ol ref={menuRef} className={styles.menu}>
