@@ -21,7 +21,7 @@ export default function ArmsCurrent() {
   const [weeklyThemes, setWeeklyThemes] = useState<DailyThemes[]>([]);
   const [currentThemeIndex, setCurrentThemeIndex] = useState<number>(0);
   const [nextThemeIndex, setNextThemeIndex] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
+  const [timeLeft, setTimeLeft] = useState<string>('T00:00:00.000Z');
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(0);
 
   useEffect(() => {
