@@ -25,6 +25,7 @@ function formatDateToLocal(dateString: string | null): string {
 
 export default function Events() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -32,9 +33,21 @@ export default function Events() {
         const response = await fetch('/api/todoist/tasks');
         const data: Task[] = await response.json();
         data.sort((a, b) => a.order - b.order);
-        setTasks(data);
+        setTasks(
+          data.filter((task) => {
+            const now = new Date();
+            const taskTime = new Date(task.due.datetime!);
+            const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
+            const sixHoursAfterEndTime = new Date(taskEndTime.getTime() + 6 * 60 * 60000);
+
+            // 종료된 후 6시간이 지나지 않은 작업만 유지
+            return now <= sixHoursAfterEndTime;
+          }),
+        );
+        setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch tasks', error);
+        setIsLoading(false);
       }
     };
 
@@ -44,8 +57,10 @@ export default function Events() {
   return (
     <div className={styles.events}>
       <h3>N1W 연맹 이벤트 알림</h3>
-      {tasks.length === 0 ? (
+      {isLoading ? (
         <p>이벤트를 불러오는 중입니다 :)</p>
+      ) : tasks.length === 0 ? (
+        <p>등록된 이벤트가 없습니다. 아리를 닥달해 보세요 (...)</p>
       ) : (
         <ul>
           {tasks.map((task) => {
