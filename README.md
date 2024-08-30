@@ -1,40 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 라스트워 가이드북
 
-## Getting Started
+482 서버 ycl 연맹에서 사용할 목적으로 만든 웹사이트입니다.
 
-First, run the development server:
+제작자는 클로에(본캐 N1W 빛이나)이며 시간대는 UTC 기준으로 작업되었습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+그러나 한국 외 국가에서 테스트되지 않았으므로 한국과 다른 시간대를 사용하는 국가에서 접속시 정상적인 동작을 보장하지 않습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+본캐가 N1W에 가입되어 있는 관계로 N1W 이벤트 공지를 보여주는 로직이 들어가 있습니다만,
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+이벤트 공지 정보는 데이터베이스로 관리가 되고 있기 때문에 이 저장소의 코드로는 알 수 없게 처리되어 있습니다.
