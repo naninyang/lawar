@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from './Anchor';
-import styles from '@/styles/Header.module.sass';
 import Events from './Events';
+import styles from '@/styles/Header.module.sass';
 
 export default function Header() {
   const router = useRouter();

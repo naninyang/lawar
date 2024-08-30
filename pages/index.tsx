@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Anchor from '@/components/Anchor';
 import Seo from '@/components/Seo';
 import styles from '@/styles/Home.module.sass';
