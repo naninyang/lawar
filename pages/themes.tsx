@@ -1,18 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Themes.module.sass';
-
-type Reward = {
-  item: string;
-  reward: number;
-};
-
-type Theme = {
-  title: string;
-  rewards: Reward[];
-};
+import { Theme } from '@/types';
 
 export default function Themes() {
   const timestamp = Date.now();

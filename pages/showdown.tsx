@@ -4,21 +4,6 @@ import Seo from '@/components/Seo';
 import ShowdownToday from '@/components/showdown/Today';
 import styles from '@/styles/Showdown.module.sass';
 
-export type Reward = {
-  item: string;
-  reward: number;
-};
-
-export type Theme = {
-  name: string;
-  rewards: Reward[];
-};
-
-export type Alliance = {
-  title: string;
-  rewards: Reward[];
-};
-
 export default function Showdown() {
   const timestamp = Date.now();
   const serverTime = useRecoilValue(serverTimeState);

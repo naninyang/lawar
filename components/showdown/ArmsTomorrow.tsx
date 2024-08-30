@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
+import { Themess } from '@/types';
 import styles from '@/styles/Showdown.module.sass';
-
-interface Theme {
-  name: string;
-  time: string;
-  rewards: { item: string; reward: number }[];
-}
 
 export default function ArmsTomorrow() {
   const serverTime = useRecoilValue(serverTimeState);
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [themes, setThemes] = useState<Themess[]>([]);
   const [title, setTitle] = useState<string>('');
   const [matching, setMatching] = useState<number[]>([]);
 

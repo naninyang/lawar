@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import { Alliance } from '@/pages/showdown';
+import { Alliance } from '@/types';
 import styles from '@/styles/Showdown.module.sass';
 
 export default function AllianceTomorrow() {

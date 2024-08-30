@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
+import { Themess } from '@/types';
 import styles from '@/styles/Showdown.module.sass';
-
-interface Theme {
-  name: string;
-  time: string;
-  rewards: { item: string; reward: number }[];
-}
 
 export default function ArmsToday() {
   const serverTime = useRecoilValue(serverTimeState);
-  const [themes, setThemes] = useState<Theme[]>([]);
+  const [themes, setThemes] = useState<Themess[]>([]);
   const [title, setTitle] = useState<string>('');
   const [matching, setMatching] = useState<number[]>([]);
   const [currentThemeIndex, setCurrentThemeIndex] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<string>('00:00:00');
+  const [timeLeft, setTimeLeft] = useState<string>('T00:00:00.000Z');
 
   useEffect(() => {
     if (!serverTime) return;
