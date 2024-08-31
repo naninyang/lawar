@@ -3,12 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Themes.module.sass';
-import { Theme } from '@/types';
+import { Alliance } from '@/types';
 
 export default function Themes() {
   const timestamp = Date.now();
   const serverTime = useRecoilValue(serverTimeState);
-  const [themes, setThemes] = useState<{ [key: number]: Theme }>({});
+  const [themes, setThemes] = useState<{ [key: number]: Alliance }>({});
   const [displayDay, setDisplayDay] = useState<number | null>(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Themes() {
           7: 'sunday',
         };
 
-        const themeData: { [key: number]: Theme } = {};
+        const themeData: { [key: number]: Alliance } = {};
 
         for (let i = 1; i <= 7; i++) {
           const dayName = dayMap[i];
@@ -52,7 +52,7 @@ export default function Themes() {
           if (!response.ok) {
             throw new Error(`Failed to fetch data for ${dayName}`);
           }
-          const data: Theme = await response.json();
+          const data: Alliance = await response.json();
           themeData[i] = data;
         }
 

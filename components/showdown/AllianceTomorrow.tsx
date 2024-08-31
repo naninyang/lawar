@@ -59,7 +59,7 @@ export default function AllianceTomorrow() {
         {nextTheme?.rewards.map((reward, index) => (
           <div key={index}>
             <dt>{reward.item}</dt>
-            <dd>{reward.reward}</dd>
+            <dd>{reward.reward.toLocaleString()}</dd>
           </div>
         ))}
       </dl>
