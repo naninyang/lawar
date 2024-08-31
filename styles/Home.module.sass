@@ -37,12 +37,23 @@
 
       a
         display: flex
-        justify-content: center
+        justify-content: space-between
         align-items: center
-        background-color: $hex-black
-        border-radius: rem(2)
+        padding: 0 rem(23)
+        border: rem(2) solid rgba($hex-white, .2)
+        border-radius: rem(3)
         width: 100%
-        height: rem(52)
+        height: rem(57)
         color: $hex-white
-        font-size: rem(27)
+        font-size: rem(20)
         font-weight: 700
+        text-align: center
+
+        > span
+          display: flex
+          align-items: center
+          gap: rem(7)
+
+        svg
+          width: rem(20)
+          height: rem(20)
