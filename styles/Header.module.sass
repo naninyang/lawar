@@ -11,20 +11,27 @@ header.header
 
     h1
       padding: rem(17) rem(25)
-      font-size: rem(24)
-      font-weight: 900
 
       +mq(maxSmall)
         display: flex
         flex-direction: column
+
+      svg
+        width: rem(203)
+        height: rem(24)
+
+      span
+        +screen-reader-only
 
   nav
     .menu
       display: flex
       overflow-x: auto
       gap: rem(7)
+      width: 100%
       margin: 0
-      padding-bottom: rem(23)
+      border-bottom: 1px solid rgba($hex-white, .5)
+      margin-bottom: rem(23)
       scroll-behavior: smooth
 
       &:-webkit-scrollbar

@@ -2,7 +2,7 @@
 
 .events
   display: flex
-  gap: rem(7)
+  gap: rem(12)
   padding: 0 rem(25) rem(17)
 
   +mq(maxSmall)
@@ -12,18 +12,24 @@
     gap: rem(27)
 
   h3
-    font-size: rem(16)
+    font-size: rem(18)
     font-weight: 700
 
   ul
     display: flex
     flex-direction: column
+    gap: rem(12)
+    border: 1px solid rgba($hex-white, .5)
+    border-radius: rem(3)
+    padding: rem(12)
 
-    +mq(maxSmall)
+    +mq(minMedium)
       gap: rem(7)
 
     li
       display: flex
+      border-top: 1px solid rgba($hex-white, .5)
+      padding-top: rem(7)
 
       +mq(maxSmall)
         flex-wrap: wrap
@@ -31,6 +37,10 @@
 
         time
           text-align: right
+
+      &:first-of-type
+        border-top: 0
+        padding-top: 0
 
       +mq(minMedium)
         gap: rem(23)
@@ -45,18 +55,29 @@
         width: rem(190)
 
       time
+        border-radius: rem(3)
+        padding: 0 rem(7)
+
         +mq(maxSmall)
           position: absolute
           bottom: 0
           right: 0
 
+        +mq(minMedium)
+          width: rem(65)
+          text-align: center
+
         &.time
-          color: $hex-light
+          background-color: $hex-light
+          color: $hex-black
 
         &.ing
+          background-color: $hex-red
           color: $hex-accent
           font-weight: 700
+          color: $hex-white
 
         &.due
-          color: $hex-white
           opacity: .5
+          background-color: $hex-white
+          color: $hex-black
