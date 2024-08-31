@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import { Themess } from '@/types';
 import styles from '@/styles/Showdown.module.sass';
+import { Themess } from '@/types';
 
 export default function ArmsToday() {
   const serverTime = useRecoilValue(serverTimeState);
@@ -15,7 +15,12 @@ export default function ArmsToday() {
   useEffect(() => {
     if (!serverTime) return;
 
-    const dayOfWeek = (serverTime.getUTCDay() + 1) % 7;
+    const adjustedServerTime = new Date(serverTime);
+    if (adjustedServerTime.getUTCHours() < 2) {
+      adjustedServerTime.setUTCDate(adjustedServerTime.getUTCDate() - 1);
+    }
+
+    const dayOfWeek = (adjustedServerTime.getUTCDay() + 1) % 7;
     const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     const currentDay = days[dayOfWeek];
 
@@ -28,10 +33,10 @@ export default function ArmsToday() {
       });
 
     const startHour = 2;
-    const currentDate = new Date(serverTime);
+    const currentDate = new Date(adjustedServerTime);
     currentDate.setUTCHours(startHour, 0, 0, 0);
 
-    const timeDifference = serverTime.getTime() - currentDate.getTime();
+    const timeDifference = adjustedServerTime.getTime() - currentDate.getTime();
     const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
     const themeIndex = Math.floor(elapsedHours / 4) % themes.length;
 
@@ -39,7 +44,7 @@ export default function ArmsToday() {
 
     const nextThemeTime = new Date(currentDate);
     nextThemeTime.setUTCHours(startHour + (themeIndex + 1) * 4, 0, 0, 0);
-    const timeDiff = nextThemeTime.getTime() - serverTime.getTime();
+    const timeDiff = nextThemeTime.getTime() - adjustedServerTime.getTime();
 
     const hoursLeft = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
     const minutesLeft = Math.floor((timeDiff / (1000 * 60)) % 60);

@@ -28,7 +28,13 @@ export default function ArmsCurrent() {
     if (!serverTime) return;
 
     const days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-    const currentDayIndex = (serverTime.getUTCDay() + 1) % 7;
+
+    const adjustedServerTime = new Date(serverTime);
+    if (adjustedServerTime.getUTCHours() < 2) {
+      adjustedServerTime.setUTCDate(adjustedServerTime.getUTCDate() - 1);
+    }
+
+    const currentDayIndex = (adjustedServerTime.getUTCDay() + 1) % 7;
     setCurrentDayIndex(currentDayIndex);
 
     const fetchThemesForDay = async (day: string) => {
@@ -46,10 +52,10 @@ export default function ArmsCurrent() {
       setWeeklyThemes(results);
 
       const startHour = 2;
-      const currentUTCDate = new Date(serverTime);
+      const currentUTCDate = new Date(adjustedServerTime);
       currentUTCDate.setUTCHours(startHour, 0, 0, 0);
 
-      const totalElapsedTime = currentDayIndex * 24 + serverTime.getUTCHours() - startHour;
+      const totalElapsedTime = currentDayIndex * 24 + adjustedServerTime.getUTCHours() - startHour;
       const themeIndex = Math.floor(totalElapsedTime / 4);
       const nextIndex = (themeIndex + 1) % (7 * 6);
 
@@ -58,7 +64,7 @@ export default function ArmsCurrent() {
 
       const nextThemeTime = new Date(currentUTCDate);
       nextThemeTime.setUTCHours(startHour + ((themeIndex % 6) + 1) * 4, 0, 0, 0);
-      const timeDiff = nextThemeTime.getTime() - serverTime.getTime();
+      const timeDiff = nextThemeTime.getTime() - adjustedServerTime.getTime();
 
       const hoursLeft = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
       const minutesLeft = Math.floor((timeDiff / (1000 * 60)) % 60);

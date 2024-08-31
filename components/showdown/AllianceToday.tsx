@@ -13,13 +13,18 @@ export default function AllianceToday() {
     const calculateTheme = async () => {
       if (!serverTime) return;
 
-      const startOfToday = new Date(serverTime);
+      const adjustedServerTime = new Date(serverTime);
+      if (adjustedServerTime.getUTCHours() < 2) {
+        adjustedServerTime.setUTCDate(adjustedServerTime.getUTCDate() - 1);
+      }
+
+      const startOfToday = new Date(adjustedServerTime);
       startOfToday.setUTCHours(2, 0, 0, 0);
 
       const startOfTomorrow = new Date(startOfToday);
       startOfTomorrow.setUTCDate(startOfToday.getUTCDate() + 1);
 
-      const remainingTimeToday = startOfTomorrow.getTime() - serverTime.getTime();
+      const remainingTimeToday = startOfTomorrow.getTime() - adjustedServerTime.getTime();
 
       const hoursLeft = Math.floor(remainingTimeToday / (1000 * 60 * 60));
       const minutesLeft = Math.floor((remainingTimeToday % (1000 * 60 * 60)) / (1000 * 60));

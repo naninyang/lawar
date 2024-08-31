@@ -18,22 +18,21 @@ export default function Themes() {
       try {
         if (!serverTime) return;
 
-        const startDay = new Date(serverTime);
-        startDay.setUTCHours(2, 0, 0, 0);
+        const currentDate = new Date(serverTime);
 
-        let dayOfWeek = startDay.getDay();
-        const hours = startDay.getHours();
+        if (currentDate.getUTCHours() < 2) {
+          currentDate.setUTCDate(currentDate.getUTCDate() - 1);
+        }
+
+        currentDate.setUTCHours(2, 0, 0, 0);
+
+        let dayOfWeek = currentDate.getUTCDay();
 
         if (dayOfWeek === 0) {
           dayOfWeek = 7;
         }
 
-        let calculatedDisplayDay: number;
-        if (hours < 11) {
-          calculatedDisplayDay = dayOfWeek === 1 ? 7 : dayOfWeek - 1;
-        } else {
-          calculatedDisplayDay = dayOfWeek;
-        }
+        const calculatedDisplayDay = dayOfWeek;
 
         const dayMap: { [key: number]: string } = {
           1: 'monday',

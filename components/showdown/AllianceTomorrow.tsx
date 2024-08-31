@@ -12,7 +12,12 @@ export default function AllianceTomorrow() {
     const calculateTheme = async () => {
       if (!serverTime) return;
 
-      const startOfToday = new Date(serverTime);
+      const adjustedServerTime = new Date(serverTime);
+      if (adjustedServerTime.getUTCHours() < 2) {
+        adjustedServerTime.setUTCDate(adjustedServerTime.getUTCDate() - 1);
+      }
+
+      const startOfToday = new Date(adjustedServerTime);
       startOfToday.setUTCHours(2, 0, 0, 0);
 
       const startOfTomorrow = new Date(startOfToday);

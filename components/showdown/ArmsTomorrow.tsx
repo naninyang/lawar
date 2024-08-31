@@ -13,7 +13,12 @@ export default function ArmsTomorrow() {
   useEffect(() => {
     if (!serverTime) return;
 
-    const tomorrow = new Date(serverTime);
+    const adjustedServerTime = new Date(serverTime);
+    if (adjustedServerTime.getUTCHours() < 2) {
+      adjustedServerTime.setUTCDate(adjustedServerTime.getUTCDate() - 1);
+    }
+
+    const tomorrow = new Date(adjustedServerTime);
     tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
 
     const dayOfWeek = (tomorrow.getUTCDay() + 1) % 7;
@@ -29,10 +34,10 @@ export default function ArmsTomorrow() {
       });
 
     const startHour = 2;
-    const currentUTCDate = new Date(serverTime);
+    const currentUTCDate = new Date(adjustedServerTime);
     currentUTCDate.setUTCHours(startHour, 0, 0, 0);
 
-    const timeDifference = serverTime.getTime() - currentUTCDate.getTime();
+    const timeDifference = adjustedServerTime.getTime() - currentUTCDate.getTime();
     const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
     const themeIndex = Math.floor(elapsedHours / 4) % themes.length;
 
