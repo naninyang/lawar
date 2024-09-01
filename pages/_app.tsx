@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import type { AppProps, AppContext } from 'next/app';
 import NextApp from 'next/app';
+import Script from 'next/script';
+import { useRouter } from 'next/router';
 import { Noto_Sans_KR } from 'next/font/google';
 import { RecoilRoot } from 'recoil';
+import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
 import TimeInitializer from '@/components/TimeInitializer';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -18,22 +22,44 @@ type LastwarAppProps = AppProps & {
 };
 
 export default function LastwarApp({ Component, pageProps, initialServerTime }: LastwarAppProps) {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: any) => {
+      pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
   return (
     <RecoilRoot>
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
+      <style jsx global>
+        {`
+          body,
+          pre,
+          input,
+          button,
+          textarea {
+            font-family: ${font.style.fontFamily}, sans-serif;
+            font-weight: 400;
+          }
+        `}
+      </style>
       <TimeInitializer initialServerTime={initialServerTime} />
       <div className="content">
-        <style jsx global>
-          {`
-            body,
-            pre,
-            input,
-            button,
-            textarea {
-              font-family: ${font.style.fontFamily}, sans-serif;
-              font-weight: 400;
-            }
-          `}
-        </style>
         <Header />
         <Component {...pageProps} />
         <Footer />
