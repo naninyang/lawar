@@ -92,7 +92,7 @@ export default function Events() {
             return (
               <li key={task.order}>
                 <cite>{task.content}</cite>
-                <strong>{formatDateToLocal(task.due.datetime)}</strong>
+                <strong>{formatDateToLocal(task.due.datetime)} 시작</strong>
                 <time
                   className={
                     now < taskTime ? styles.time : now >= taskTime && now <= taskEndTime ? styles.ing : styles.due

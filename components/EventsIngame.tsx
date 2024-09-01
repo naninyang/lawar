@@ -91,7 +91,7 @@ export default function EventsIngame() {
           {tasks.map((task) => (
             <li key={task.order}>
               <cite>{task.content}</cite>
-              <strong>{formatTimeRemaining(task.due.datetime)}</strong>
+              <strong>{formatTimeRemaining(task.due.datetime)} 남음</strong>
             </li>
           ))}
         </ul>
