@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from './Anchor';
 import Events from './Events';
@@ -7,6 +7,7 @@ import styles from '@/styles/Header.module.sass';
 export default function Header() {
   const router = useRouter();
   const menuRef = useRef<HTMLOListElement>(null);
+  const [fontSize, setFontSize] = useState<number>(16);
 
   const handleMenuClick = (path: string, index: number) => {
     router.push(path);
@@ -21,9 +22,37 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    const storedFontSize = localStorage.getItem('fontSize');
+    if (storedFontSize) {
+      setFontSize(parseInt(storedFontSize, 10));
+      document.documentElement.style.fontSize = `${parseInt(storedFontSize, 10)}px`;
+    } else {
+      document.documentElement.style.fontSize = `16px`;
+    }
+  }, []);
+
+  const handleFontSizeChange = (newFontSize: number) => {
+    if (newFontSize !== fontSize) {
+      setFontSize(newFontSize);
+      localStorage.setItem('fontSize', newFontSize.toString());
+      document.documentElement.style.fontSize = `${newFontSize}px`;
+    }
+  };
+
+  const increaseFontSize = () => handleFontSizeChange(fontSize + 8);
+  const decreaseFontSize = () => {
+    if (fontSize > 16) {
+      handleFontSizeChange(fontSize - 8);
+    } else {
+      alert('더 이상 작게 글씨를 줄일 수 없습니다');
+    }
+  };
+  const resetFontSize = () => handleFontSizeChange(16);
+
   return (
-    <header className={styles.header}>
-      <div className={styles.headline}>
+    <>
+      <header className={styles.header}>
         <h1>
           <svg width="191" height="23" viewBox="0 0 191 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -62,9 +91,20 @@ export default function Header() {
           <span>라스트워 가이드북</span>
         </h1>
         <Events />
-      </div>
+        <div className={styles['font-controller']}>
+          <button type="button" onClick={increaseFontSize}>
+            크게
+          </button>
+          <button type="button" onClick={decreaseFontSize}>
+            작게
+          </button>
+          <button type="button" onClick={resetFontSize}>
+            초기화
+          </button>
+        </div>
+      </header>
       {router.pathname !== '/' && (
-        <nav>
+        <nav className={styles.gnb}>
           <ol ref={menuRef} className={styles.menu}>
             <li
               className={router.pathname === '/themes' ? styles.current : undefined}
@@ -92,7 +132,7 @@ export default function Header() {
             </li>
             <li
               className={router.pathname === '/base' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/base', 1)}
+              onClick={() => handleMenuClick('/base', 3)}
             >
               <Anchor href="/base">
                 <span>기지 레벨업</span>
@@ -101,6 +141,6 @@ export default function Header() {
           </ol>
         </nav>
       )}
-    </header>
+    </>
   );
 }

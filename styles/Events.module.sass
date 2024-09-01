@@ -3,7 +3,8 @@
 .events
   display: flex
   gap: rem(12)
-  padding: 0 rem(25) rem(17)
+  background-color: rgba($hex-red, .5)
+  padding: rem(17) rem(25)
 
   +mq(maxSmall)
     flex-direction: column
@@ -32,13 +33,15 @@
         width: rem(18)
         height: rem(18)
 
+  p, ul
+    border: 1px solid rgba($hex-white, .5)
+    border-radius: rem(3)
+    padding: rem(12)
+
   ul
     display: flex
     flex-direction: column
     gap: rem(12)
-    border: 1px solid rgba($hex-white, .5)
-    border-radius: rem(3)
-    padding: rem(12)
 
     +mq(minMedium)
       gap: rem(7)
