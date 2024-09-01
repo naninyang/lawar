@@ -1,9 +1,14 @@
 @import './designSystem'
 
 .events
+  background-color: rgba($hex-red, .5)
+
+.special
+  background-color: rgba($hex-blue, .5)
+
+.events, .special
   display: flex
   gap: rem(12)
-  background-color: rgba($hex-red, .5)
   padding: rem(17) rem(25)
 
   +mq(maxSmall)
@@ -18,6 +23,7 @@
     gap: rem(2)
     font-size: rem(18)
     font-weight: 700
+    width: rem(200)
 
     +mq(minMedium)
       padding-top: rem(12)
@@ -66,7 +72,7 @@
         gap: rem(23)
 
       cite
-        width: rem(123)
+        width: rem(133)
 
         +mq(maxSmall)
           width: 100%

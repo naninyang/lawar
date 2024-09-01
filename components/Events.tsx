@@ -9,6 +9,7 @@ interface Task {
   content: string;
   due: TaskDue;
   order: number;
+  labels: string[];
 }
 
 function formatDateToLocal(dateString: string | null): string {
@@ -34,15 +35,16 @@ export default function Events() {
         const data: Task[] = await response.json();
         data.sort((a, b) => a.order - b.order);
         setTasks(
-          data.filter((task) => {
-            const now = new Date();
-            const taskTime = new Date(task.due.datetime!);
-            const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
-            const sixHoursAfterEndTime = new Date(taskEndTime.getTime() + 6 * 60 * 60000);
+          data
+            .filter((task) => !task.labels.includes('game'))
+            .filter((task) => {
+              const now = new Date();
+              const taskTime = new Date(task.due.datetime!);
+              const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
+              const sixHoursAfterEndTime = new Date(taskEndTime.getTime() + 6 * 60 * 60000);
 
-            // 종료된 후 6시간이 지나지 않은 작업만 유지
-            return now <= sixHoursAfterEndTime;
-          }),
+              return now <= sixHoursAfterEndTime;
+            }),
         );
         setIsLoading(false);
       } catch (error) {
@@ -60,7 +62,7 @@ export default function Events() {
         <span>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M6.66992 1.29688C4.34963 2.40178 2.40178 4.34963 1.29688 6.66992L3.10352 7.5293C3.39701 6.91295 3.87486 6.3847 4.3125 5.83594C2.94037 7.54756 2 9.62958 2 12C2 17.5333 6.46667 22 12 22C17.5333 22 22 17.5333 22 12C22 9.62958 21.0596 7.54756 19.6875 5.83594C20.1251 6.3847 20.603 6.91295 20.8965 7.5293L22.7031 6.66992C21.5982 4.34963 19.6504 2.40178 17.3301 1.29688L16.4707 3.10352C17.0871 3.39701 17.6153 3.87486 18.1641 4.3125C16.4524 2.94037 14.3704 2 12 2C9.62958 2 7.54756 2.94037 5.83594 4.3125C6.3847 3.87486 6.91295 3.39701 7.5293 3.10352L6.66992 1.29688ZM12 4C16.4667 4 20 7.53333 20 12C20 16.4667 16.4667 20 12 20C7.53333 20 4 16.4667 4 12C4 7.53333 7.53333 4 12 4ZM11 7V12.4141L14.293 15.707L15.707 14.293L13 11.5859V7H11Z"
+              d="M12 2C11.172 2 10.5 2.672 10.5 3.5V4.19531C7.91318 4.86209 6 7.2048 6 10V16L4 18V19H10.2695C10.0934 19.3039 10.0005 19.6488 10 20C10 20.5304 10.2107 21.0391 10.5858 21.4142C10.9609 21.7893 11.4696 22 12 22C12.5304 22 13.0391 21.7893 13.4142 21.4142C13.7893 21.0391 14 20.5304 14 20C13.9989 19.6486 13.9053 19.3037 13.7285 19H20V18L18 16V10C18 7.2048 16.0868 4.86209 13.5 4.19531V3.5C13.5 2.672 12.828 2 12 2ZM5.9082 2.08203C3.5352 3.91003 2 6.772 2 10H4C4 7.418 5.22895 5.12802 7.12695 3.66602L5.9082 2.08203ZM18.0918 2.08203L16.873 3.66602C18.771 5.12802 20 7.418 20 10H22C22 6.772 20.4648 3.91003 18.0918 2.08203ZM12 6C14.206 6 16 7.794 16 10V16V16.8281L16.1719 17H7.82812L8 16.8281V16V10C8 7.794 9.794 6 12 6Z"
               fill="white"
             />
           </svg>

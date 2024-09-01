@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Anchor from './Anchor';
 import Events from './Events';
 import styles from '@/styles/Header.module.sass';
+import EventsIngame from './EventsIngame';
 
 export default function Header() {
   const router = useRouter();
@@ -91,6 +92,7 @@ export default function Header() {
           <span>라스트워 가이드북</span>
         </h1>
         <Events />
+        <EventsIngame />
         <div className={styles['font-controller']}>
           <button type="button" onClick={increaseFontSize}>
             크게
