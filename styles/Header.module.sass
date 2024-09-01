@@ -42,11 +42,10 @@ nav.gnb
   .menu
     display: flex
     overflow-x: auto
-    gap: rem(7)
+    gap: rem(2)
     width: 100%
     height: rem(33)
     margin: 0
-    border-bottom: 1px solid rgba($hex-white, .5)
     margin-bottom: rem(23)
     scroll-behavior: smooth
 
@@ -65,16 +64,19 @@ nav.gnb
       a
         display: flex
         align-items: center
-        background-color: rgba($hex-black, .7)
+        border-bottom: rem(2) solid transparent
         padding: 0 rem(12)
         height: rem(32)
         color: $hex-white
         font-size: rem(18)
         font-weight: 400
+        opacity: .5
+
+        span
+          padding-bottom: rem(7)
 
       &.current
         a
-          background-color: rgba($hex-white, .7)
-          font-size: rem(22)
+          border-bottom-color: $hex-white
           font-weight: 700
-          color: $hex-black
+          opacity: 1
