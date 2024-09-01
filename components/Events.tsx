@@ -96,7 +96,7 @@ export default function Events() {
                     now < taskTime ? styles.time : now >= taskTime && now <= taskEndTime ? styles.ing : styles.due
                   }
                 >
-                  {status}
+                  <span>{status}</span>
                 </time>
               </li>
             );

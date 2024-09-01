@@ -75,9 +75,6 @@
         width: rem(190)
 
       time
-        border-radius: rem(3)
-        padding: 0 rem(7)
-
         +mq(maxSmall)
           position: absolute
           bottom: 0
@@ -87,17 +84,24 @@
           width: rem(65)
           text-align: center
 
+        span
+          border-radius: rem(3)
+          padding: 0 rem(7)
+
         &.time
-          background-color: $hex-light
-          color: $hex-black
+          span
+            background-color: $hex-light
+            color: $hex-black
 
         &.ing
-          background-color: $hex-red
-          color: $hex-accent
-          font-weight: 700
-          color: $hex-white
+          span
+            background-color: $hex-red
+            color: $hex-accent
+            font-weight: 700
+            color: $hex-white
 
         &.due
-          opacity: .5
-          background-color: $hex-white
-          color: $hex-black
+          span
+            opacity: .5
+            background-color: $hex-white
+            color: $hex-black
