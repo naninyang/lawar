@@ -30,6 +30,42 @@ header.header
       border-radius: rem(3)
       padding: rem(3) rem(7)
 
+  .group
+    +row
+
+    +mq(maxSmall)
+      flex-direction: column
+
+    > h3
+      padding: rem(23)
+
+    &:not(.show)
+      .button
+        width: 100%
+
+      > h3, > div:not(.button)
+        +screen-reader-only
+
+    .button
+      padding: rem(23)
+      text-align: right
+
+      +mq(minExtraLarge)
+        padding: 0 rem(23)
+        width: rem(160)
+
+      button
+        display: inline-flex
+        align-items: center
+        width: auto
+        background-color: transparent
+        border: 1px solid
+        border-radius: rem(3)
+        padding: rem(7)
+        font-weight: 700
+        color: $hex-white
+        line-height: 1
+
 nav.gnb
   position: sticky
   top: env(safe-area-inset-top)

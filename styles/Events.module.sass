@@ -7,15 +7,19 @@
   background-color: rgba($hex-blue, .5)
 
 .events, .special
+  +col
   display: flex
   gap: rem(12)
-  padding: rem(17) rem(25)
+  padding: rem(17) rem(23)
 
   +mq(maxSmall)
     flex-direction: column
 
   +mq(minMedium)
     gap: rem(27)
+
+  +mq(minExtraLarge)
+    flex-direction: column
 
   h3
     display: flex
@@ -51,6 +55,7 @@
 
     +mq(minMedium)
       gap: rem(7)
+      +col
 
     li
       display: flex
@@ -72,10 +77,11 @@
         gap: rem(23)
 
       cite
-        width: rem(133)
-
         +mq(maxSmall)
           width: 100%
+
+        +mq(minMedium)
+          +col
 
       strong
         width: rem(190)

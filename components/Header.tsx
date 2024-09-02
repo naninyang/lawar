@@ -8,6 +8,7 @@ import EventsIngame from './EventsIngame';
 export default function Header() {
   const router = useRouter();
   const menuRef = useRef<HTMLOListElement>(null);
+  const [eventsJekyll, setEventsJekyll] = useState<boolean>(true);
   const [fontSize, setFontSize] = useState<number>(16);
 
   const handleMenuClick = (path: string, index: number) => {
@@ -91,8 +92,16 @@ export default function Header() {
           </svg>
           <span>라스트워 가이드북</span>
         </h1>
-        <Events />
-        <EventsIngame />
+        <div className={`${styles.group} ${eventsJekyll ? styles.show : ''}`}>
+          {!eventsJekyll && <h3>이벤트를 닫았어요.</h3>}
+          <Events />
+          <EventsIngame />
+          <div className={styles.button}>
+            <button type="button" onClick={() => setEventsJekyll((prev) => !prev)}>
+              {eventsJekyll ? '이벤트 숨기기' : '이벤트 보기'}
+            </button>
+          </div>
+        </div>
         <div className={styles['font-controller']}>
           <button type="button" onClick={increaseFontSize}>
             크게
