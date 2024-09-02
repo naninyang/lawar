@@ -9,6 +9,7 @@ export const fetchEventsData = async () => {
       headers: {
         Authorization: `Bearer ${EVENTS_API_KEY}`,
         'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
       },
     });
 
