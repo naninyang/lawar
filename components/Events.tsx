@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
+import { LastEvents } from '@/types';
 import styles from '@/styles/Events.module.sass';
-
-interface TaskDue {
-  datetime: string | null;
-}
-
-interface Task {
-  content: string;
-  due: TaskDue;
-  order: number;
-  labels: string[];
-}
 
 function formatDateToLocal(dateString: string | null): string {
   if (!dateString) return '';
@@ -25,35 +15,100 @@ function formatDateToLocal(dateString: string | null): string {
 }
 
 export default function Events() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [eventsData, setEventsData] = useState<LastEvents[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchEventsData = async () => {
+    try {
+      const response = await fetch('/api/events');
+      const data = await response.json();
+
+      const filteredData = data.results.filter((item: any) => {
+        const datetime = item.properties.datetime.date?.start || 'N/A';
+        const datetimeObj = new Date(datetime);
+        const currentTime = new Date();
+        const timeDifference = currentTime.getTime() - datetimeObj.getTime();
+
+        return item.properties.type.select?.name === 'n1w' && timeDifference <= 12 * 60 * 60 * 1000;
+      });
+
+      const formattedData = filteredData.map((item: any) => {
+        const datetime = item.properties.datetime.date?.start || 'N/A';
+        const currentTime = new Date();
+        const datetimeObj = new Date(datetime);
+        const endTime = new Date(datetimeObj.getTime() + 30 * 60 * 1000);
+
+        let status = 'done';
+        if (currentTime < datetimeObj) {
+          status = 'before';
+        } else if (currentTime >= datetimeObj && currentTime <= endTime) {
+          status = 'ongoing';
+        }
+
+        return {
+          type: item.properties.type.select?.name || 'N/A',
+          summary: item.properties.summary.title[0]?.plain_text || 'N/A',
+          datetime: datetime,
+          status: status,
+        };
+      });
+
+      localStorage.setItem('n1wData', JSON.stringify(formattedData));
+
+      setEventsData(formattedData);
+    } catch (error) {
+      console.error('Error fetching Events API data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('/api/todoist/tasks');
-        const data: Task[] = await response.json();
-        data.sort((a, b) => a.order - b.order);
-        setTasks(
-          data
-            .filter((task) => !task.labels.includes('game'))
-            .filter((task) => {
-              const now = new Date();
-              const taskTime = new Date(task.due.datetime!);
-              const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
-              const sixHoursAfterEndTime = new Date(taskEndTime.getTime() + 6 * 60 * 60000);
+    const storedData = localStorage.getItem('n1wData');
 
-              return now <= sixHoursAfterEndTime;
-            }),
-        );
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch tasks', error);
-        setIsLoading(false);
+    if (storedData) {
+      setEventsData(JSON.parse(storedData));
+      setIsLoading(false);
+    } else {
+      fetchEventsData();
+    }
+
+    const intervalId = setInterval(() => {
+      const currentTime = new Date();
+      let shouldFetch = false;
+
+      setEventsData((prevEventsData) => {
+        const updatedEventsData = prevEventsData.map((event) => {
+          const datetimeObj = new Date(event.datetime);
+          const endTime = new Date(datetimeObj.getTime() + 30 * 60 * 1000);
+          let newStatus = event.status;
+
+          if (currentTime < datetimeObj && event.status !== 'before') {
+            newStatus = 'before';
+            shouldFetch = true;
+          } else if (currentTime >= datetimeObj && currentTime <= endTime && event.status !== 'ongoing') {
+            newStatus = 'ongoing';
+            shouldFetch = true;
+          } else if (currentTime > endTime && event.status !== 'done') {
+            newStatus = 'done';
+            shouldFetch = true;
+          }
+
+          return {
+            ...event,
+            status: newStatus,
+          };
+        });
+
+        return updatedEventsData;
+      });
+
+      if (shouldFetch) {
+        fetchEventsData();
       }
-    };
+    }, 1000);
 
-    fetchTasks();
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -71,38 +126,23 @@ export default function Events() {
       </h3>
       {isLoading ? (
         <p>이벤트를 불러오는 중입니다 :)</p>
-      ) : tasks.length === 0 ? (
+      ) : eventsData.length === 0 ? (
         <p>등록된 이벤트가 없습니다. 아리를 닥달해 보세요 (...)</p>
       ) : (
         <ul>
-          {tasks.map((task) => {
-            const now = new Date();
-            const taskTime = new Date(task.due.datetime!);
-            const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
-
-            let status;
-            if (now < taskTime) {
-              status = '진행 전';
-            } else if (now >= taskTime && now <= taskEndTime) {
-              status = '진행 중';
-            } else {
-              status = '종료';
-            }
-
-            return (
-              <li key={task.order}>
-                <cite>{task.content}</cite>
-                <strong>{formatDateToLocal(task.due.datetime)} 시작</strong>
-                <time
-                  className={
-                    now < taskTime ? styles.time : now >= taskTime && now <= taskEndTime ? styles.ing : styles.due
-                  }
-                >
-                  <span>{status}</span>
-                </time>
-              </li>
-            );
-          })}
+          {eventsData.map((event: any, index: number) => (
+            <li key={index}>
+              <cite>{event.summary}</cite>
+              <strong>{formatDateToLocal(event.datetime)} 시작</strong>
+              <time
+                className={
+                  event.status === 'before' ? styles.before : event.status === 'ongoing' ? styles.ongoing : styles.done
+                }
+              >
+                <span>{event.status === 'before' ? '시작 전' : event.status === 'ongoing' ? '진행 중' : '종료'}</span>
+              </time>
+            </li>
+          ))}
         </ul>
       )}
     </div>

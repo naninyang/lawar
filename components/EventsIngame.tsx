@@ -1,73 +1,94 @@
 import { useState, useEffect } from 'react';
+import { LastEvents } from '@/types';
 import styles from '@/styles/Events.module.sass';
-import { useRecoilValue } from 'recoil';
-import { serverTimeState } from '@/atoms/timeState';
 
-interface TaskDue {
-  datetime: string | null;
-}
+function calculateRemainingTime(endTime: Date): { text: string; milliseconds: number } {
+  const currentTime = new Date().getTime();
+  const timeDifference = endTime.getTime() - currentTime;
 
-interface Task {
-  content: string;
-  due: TaskDue;
-  order: number;
-  labels: string[];
-}
+  if (timeDifference <= 0) return { text: '0일 0시간 0분 0초 남음', milliseconds: 0 };
 
-function formatTimeRemaining(dateString: string | null): string {
-  if (!dateString) return '';
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-  const now = new Date();
-  const targetDate = new Date(dateString);
-  const diff = targetDate.getTime() - now.getTime();
-
-  if (diff <= 0) return '종료됨';
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  if (days > 0) return `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
-  if (hours > 0) return `0일 ${hours}시간 ${minutes}분 ${seconds}초`;
-  if (minutes > 0) return `0일 0시간 ${minutes}분 ${seconds}초`;
-
-  return `0일 0시간 0분 ${seconds}초`;
+  const text = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초 남음`;
+  return { text, milliseconds: timeDifference };
 }
 
 export default function EventsIngame() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [eventsData, setEventsData] = useState<LastEvents[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const serverTime = useRecoilValue(serverTimeState);
+
+  const fetchEventsData = async () => {
+    try {
+      const response = await fetch('/api/events');
+      const data = await response.json();
+
+      const filteredData = data.results.filter((item: any) => {
+        const datetime = item.properties.datetime.date?.start || 'N/A';
+        const datetimeObj = new Date(datetime);
+        const currentTime = new Date();
+
+        return item.properties.type.select?.name === 'game' && datetimeObj > currentTime;
+      });
+
+      const formattedData: LastEvents[] = filteredData.map((item: any) => {
+        const datetime = item.properties.datetime.date?.start || 'N/A';
+        const datetimeObj = new Date(datetime);
+        const remaining = calculateRemainingTime(datetimeObj);
+
+        return {
+          type: item.properties.type.select?.name || 'N/A',
+          summary: item.properties.summary.title[0]?.plain_text || 'N/A',
+          datetime: datetime,
+          remainingTime: remaining.text,
+          remainingMilliseconds: remaining.milliseconds,
+        };
+      });
+
+      const sortedData = formattedData.sort((a: LastEvents, b: LastEvents) => {
+        const remainingA = a.remainingMilliseconds ?? 0;
+        const remainingB = b.remainingMilliseconds ?? 0;
+        return remainingB - remainingA;
+      });
+
+      localStorage.setItem('eventsData', JSON.stringify(sortedData));
+
+      setEventsData(sortedData);
+    } catch (error) {
+      console.error('Error fetching Events API data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!serverTime) return;
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('/api/todoist/tasks');
-        const data: Task[] = await response.json();
-        data.sort((a, b) => a.order - b.order);
-        setTasks(
-          data
-            .filter((task) => task.labels.includes('game'))
-            .filter((task) => {
-              const now = new Date();
-              const taskTime = new Date(task.due.datetime!);
-              const taskEndTime = new Date(taskTime.getTime() + 30 * 60000);
-              const sixHoursAfterEndTime = new Date(taskEndTime.getTime() + 6 * 60 * 60000);
+    const storedData = localStorage.getItem('eventsData');
 
-              return now <= sixHoursAfterEndTime;
-            }),
-        );
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch tasks', error);
-        setIsLoading(false);
-      }
-    };
+    if (storedData) {
+      setEventsData(JSON.parse(storedData));
+      setIsLoading(false);
+    } else {
+      fetchEventsData();
+    }
 
-    fetchTasks();
-  }, [serverTime]);
+    const countdownInterval = setInterval(() => {
+      setEventsData((prevData) =>
+        prevData.map((event) => {
+          const remaining = calculateRemainingTime(new Date(event.datetime));
+          return {
+            ...event,
+            remainingTime: remaining.text,
+            remainingMilliseconds: remaining.milliseconds,
+          };
+        }),
+      );
+    }, 1000);
+
+    return () => clearInterval(countdownInterval);
+  }, []);
 
   return (
     <div className={`${styles.events} ${styles.special}`}>
@@ -84,14 +105,14 @@ export default function EventsIngame() {
       </h3>
       {isLoading ? (
         <p>이벤트를 불러오는 중입니다 :)</p>
-      ) : tasks.length === 0 ? (
+      ) : eventsData.length === 0 ? (
         <p>등록된 이벤트가 없습니다. 아리를 닥달해 보세요 (...)</p>
       ) : (
         <ul>
-          {tasks.map((task) => (
-            <li key={task.order}>
-              <cite>{task.content}</cite>
-              <strong>{formatTimeRemaining(task.due.datetime)} 남음</strong>
+          {eventsData.map((event: any, index: number) => (
+            <li key={index}>
+              <cite>{event.summary}</cite>
+              <strong>{event.remainingTime}</strong>
             </li>
           ))}
         </ul>

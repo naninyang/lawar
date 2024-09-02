@@ -13,8 +13,17 @@ export type Alliance = {
   rewards: Reward[];
 };
 
-export interface Themess {
+export interface Themes {
   name: string;
   time: string;
   rewards: { item: string; reward: number }[];
+}
+
+export interface LastEvents {
+  type: string;
+  summary: string;
+  datetime: string;
+  status?: string;
+  remainingTime?: string;
+  remainingMilliseconds?: number;
 }
