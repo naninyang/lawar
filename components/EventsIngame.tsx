@@ -55,6 +55,7 @@ export default function EventsIngame() {
       });
 
       localStorage.setItem('eventsData', JSON.stringify(sortedData));
+      localStorage.setItem('releaseDatetime', new Date().toISOString());
 
       setEventsData(sortedData);
     } catch (error) {
@@ -66,8 +67,12 @@ export default function EventsIngame() {
 
   useEffect(() => {
     const storedData = localStorage.getItem('eventsData');
+    const releaseDatetime = localStorage.getItem('releaseDatetime');
+    const currentTime = new Date().getTime();
 
-    if (storedData) {
+    const shouldFetch = !releaseDatetime || currentTime - new Date(releaseDatetime).getTime() > 10 * 60 * 1000;
+
+    if (storedData && !shouldFetch) {
       setEventsData(JSON.parse(storedData));
       setIsLoading(false);
     } else {

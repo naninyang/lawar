@@ -54,6 +54,7 @@ export default function Events() {
       });
 
       localStorage.setItem('n1wData', JSON.stringify(formattedData));
+      localStorage.setItem('releaseDatetime', new Date().toISOString());
 
       setEventsData(formattedData);
     } catch (error) {
@@ -65,8 +66,12 @@ export default function Events() {
 
   useEffect(() => {
     const storedData = localStorage.getItem('n1wData');
+    const releaseDatetime = localStorage.getItem('releaseDatetime');
+    const currentTime = new Date().getTime();
 
-    if (storedData) {
+    const shouldFetch = !releaseDatetime || currentTime - new Date(releaseDatetime).getTime() > 10 * 60 * 1000;
+
+    if (storedData && !shouldFetch) {
       setEventsData(JSON.parse(storedData));
       setIsLoading(false);
     } else {
