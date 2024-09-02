@@ -2,7 +2,17 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetchEventsData } from '@/lib/events';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://lawar.dev1stud.io');
+  const allowedOrigins = [
+    process.env.NEXT_PUBLIC_API_URL,
+    'https://lawar.dev1stud.io',
+    'https://vercel.com/dev1studio/lawar',
+  ];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin || '')) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '');
+  }
+
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
