@@ -1,0 +1,76 @@
+@import './designSystem'
+
+.error
+  padding: rem(72) 0
+
+  h2
+    +visually-hidden-focusable
+    position: static
+    text-align: center
+
+  p
+    display: flex
+    justify-content: center
+    gap: rem(52)
+    padding: rem(23) 0 rem(72)
+    text-align: center
+
+    +mq(maxLarge)
+      flex-direction: column
+      align-items: center
+
+    a, button
+      background-color: $hex-white
+      display: inline-flex
+      justify-content: center
+      align-items: center
+      gap: rem(7)
+      position: relative
+      border-radius: rem(3)
+      padding: rem(12) rem(23)
+      width: rem(270)
+      color: $hex-white
+      font-size: rem(20)
+      font-weight: 700
+      color: $hex-black
+      line-height: 1
+
+      svg
+        position: absolute
+        top: 50%
+        right: rem(23)
+        transform: translateY(-50%)
+        width: rem(16)
+        height: rem(16)
+
+        path
+          fill: $hex-black
+
+  > div:not(.YouTube), .YouTube > div
+    display: flex
+    justify-content: center
+
+    iframe
+      border: 0
+      aspect-ratio: 1920 / 1080
+      overflow: hidden
+      border-radius: rem(12)
+      width: 77%
+      height: auto
+
+  .YouTube
+    +row
+    gap: rem(52)
+
+    +mq(maxLarge)
+      flex-direction: column
+
+    > div
+      +mq(minExtraLarge)
+        +col
+
+        &:first-of-type
+          justify-content: flex-end
+
+        &:last-of-type
+          justify-content: flex-start
