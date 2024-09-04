@@ -21,20 +21,9 @@ export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
     const authInLocalStorage = localStorage.getItem('auth');
     const authInCookies = document.cookie.includes('auth=');
 
-    if (authInLocalStorage && authInCookies) {
-      const authCookieValue = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('auth='))
-        ?.split('=')[1];
-
-      if (authCookieValue) {
-        bcrypt.compare(authInLocalStorage, authCookieValue).then((isValid) => {
-          if (isValid) {
-            router.push('/daerogi');
-          }
-        });
-      }
-    } else {
+    if (authInLocalStorage && !authInCookies) {
+      document.cookie = `auth=${authInLocalStorage}; path=/;`;
+    } else if (!authInLocalStorage && !authInCookies) {
       router.push('/login');
     }
   }, [router]);
