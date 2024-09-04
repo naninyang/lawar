@@ -12,18 +12,6 @@ export default function DaerogiItems() {
   const [rogiking, setRogiking] = useState<LawarItem[] | null>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const authInLocalStorage = localStorage.getItem('auth');
-    const authInCookies = document.cookie.includes('auth=true');
-
-    if (!authInLocalStorage) {
-      router.push('/login');
-    } else if (authInLocalStorage && !authInCookies) {
-      document.cookie = `auth=true; path=/`;
-    }
-  }, [router]);
 
   const fetchData = async () => {
     try {

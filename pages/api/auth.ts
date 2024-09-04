@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 
-type Data = {
+type Message = {
   message: string;
+  hashedValue?: string;
 };
 
 const plainAlliance = process.env.ALLIANCE;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Message>) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Only POST method is allowed' });
   }
@@ -23,14 +24,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const saltRounds = 32;
+    const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(plainAlliance, saltRounds);
-
     const isMatch = await bcrypt.compare(password, hashedPassword);
 
     if (isMatch) {
-      res.setHeader('Set-Cookie', `auth=true; HttpOnly; Path=/; Max-Age=${60 * 60 * 24};`);
-      return res.status(200).json({ message: '로기킹! 😎' });
+      const hashedValue = await bcrypt.hash('true', saltRounds);
+      res.setHeader('Set-Cookie', `auth=${hashedValue}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24};`);
+      return res.status(200).json({ message: '로기킹! 😎', hashedValue });
     } else {
       return res.status(401).json({ message: '땡! 틀렸지롱! 🤪' });
     }

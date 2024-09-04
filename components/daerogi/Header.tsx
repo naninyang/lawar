@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 import Anchor from '../Anchor';
 import styles from '@/styles/Daerogi.module.sass';
 

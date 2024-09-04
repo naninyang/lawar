@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Daerogi.module.sass';
+import { useEffect } from 'react';
 
 interface DaerogiItem {
   id: number;
@@ -14,6 +15,20 @@ interface DaerogiDetailPage {
 
 export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
   const router = useRouter();
+
+  useEffect(() => {
+    const authInLocalStorage = localStorage.getItem('auth');
+    const authInCookies = document.cookie.includes('auth=true');
+
+    if (authInLocalStorage && authInCookies) {
+      router.push('/daerogi');
+    } else if (authInLocalStorage && !authInCookies) {
+      document.cookie = `auth=true; path=/`;
+      router.push('/daerogi');
+    } else if (!authInLocalStorage) {
+      router.push('/login');
+    }
+  }, [router]);
 
   const renderContent = (block: any, index: number) => {
     switch (block.type) {

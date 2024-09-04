@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
 
 export default function Login() {
@@ -9,13 +10,21 @@ export default function Login() {
 
   useEffect(() => {
     const authInLocalStorage = localStorage.getItem('auth');
-    const authInCookies = document.cookie.includes('auth=true');
+    const authInCookies = document.cookie.includes('auth=');
 
     if (authInLocalStorage && authInCookies) {
-      router.push('/daerogi');
-    } else if (authInLocalStorage && !authInCookies) {
-      document.cookie = `auth=true; path=/`;
-      router.push('/daerogi');
+      const authCookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('auth='))
+        ?.split('=')[1];
+
+      if (authCookieValue) {
+        bcrypt.compare(authInLocalStorage, authCookieValue).then((isValid) => {
+          if (isValid) {
+            router.push('/daerogi');
+          }
+        });
+      }
     }
   }, [router]);
 
@@ -32,8 +41,9 @@ export default function Login() {
     });
 
     if (response.ok) {
-      localStorage.setItem('auth', 'true');
-      document.cookie = `auth=true; path=/`;
+      const { hashedValue } = await response.json();
+      localStorage.setItem('auth', hashedValue);
+      document.cookie = `auth=${hashedValue}; path=/`;
       router.push('/daerogi');
     } else {
       const data = await response.json();
@@ -46,8 +56,9 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <fieldset>
           <legend>로그인 폼</legend>
+          <input type="hidden" name="username" value="daerogi" />
           <p>
-            <label htmlFor="pwd">비밀번호는 라스트 대로기 공동 비밀번호</label>
+            <label htmlFor="pwd">비밀번호는 아리에게 물어보세요</label>
           </p>
           <div className={styles.group}>
             <label htmlFor="pwd">비밀번호</label>
