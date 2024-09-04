@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
+import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
-import { useEffect } from 'react';
 
 interface DaerogiItem {
   id: number;
@@ -18,14 +19,22 @@ export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
 
   useEffect(() => {
     const authInLocalStorage = localStorage.getItem('auth');
-    const authInCookies = document.cookie.includes('auth=true');
+    const authInCookies = document.cookie.includes('auth=');
 
     if (authInLocalStorage && authInCookies) {
-      router.push('/daerogi');
-    } else if (authInLocalStorage && !authInCookies) {
-      document.cookie = `auth=true; path=/`;
-      router.push('/daerogi');
-    } else if (!authInLocalStorage) {
+      const authCookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('auth='))
+        ?.split('=')[1];
+
+      if (authCookieValue) {
+        bcrypt.compare(authInLocalStorage, authCookieValue).then((isValid) => {
+          if (isValid) {
+            router.push('/daerogi');
+          }
+        });
+      }
+    } else {
       router.push('/login');
     }
   }, [router]);

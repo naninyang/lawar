@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
+import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
 
 export interface LawarItem {
@@ -12,6 +13,29 @@ export default function DaerogiItems() {
   const [rogiking, setRogiking] = useState<LawarItem[] | null>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const authInLocalStorage = localStorage.getItem('auth');
+    const authInCookies = document.cookie.includes('auth=');
+
+    if (authInLocalStorage && authInCookies) {
+      const authCookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('auth='))
+        ?.split('=')[1];
+
+      if (authCookieValue) {
+        bcrypt.compare(authInLocalStorage, authCookieValue).then((isValid) => {
+          if (isValid) {
+            router.push('/daerogi');
+          }
+        });
+      }
+    } else {
+      router.push('/login');
+    }
+  }, [router]);
 
   const fetchData = async () => {
     try {
