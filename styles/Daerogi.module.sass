@@ -1,0 +1,218 @@
+@import './designSystem'
+
+header.header
+  display: flex
+  flex-direction: column
+  background-color: rgba($hex-white, .1)
+
+  h1
+    display: flex
+    justify-content: space-between
+    padding: rem(17) 0 rem(17) rem(25)
+
+    a
+      display: inline-flex
+
+      &:first-of-type
+        width: rem(152)
+        height: rem(24)
+
+        svg
+          width: rem(152)
+          height: rem(24)
+
+      &:last-of-type
+        padding: 0 rem(25)
+
+        strong
+          font-size: rem(16)
+          font-weight: 700
+          color: $hex-white
+          text-decoration: underline
+
+    span
+      +screen-reader-only
+
+  .font-controller
+    display: flex
+    justify-content: flex-end
+    gap: rem(7)
+    padding: rem(23)
+
+    button
+      background-color: rgba($hex-black, .72)
+      border-radius: rem(3)
+      padding: rem(3) rem(7)
+
+footer.footer
+  position: relative
+  z-index: 2700
+  display: flex
+  flex-direction: column
+  gap: rem(3)
+  background: $hex-bg
+  padding: 0 rem(23) rem(23)
+  font-size: rem(14)
+
+  p
+    font-weight: 700
+
+  ul
+    li
+      margin: rem(7) 0
+      padding-left: rem(7)
+      position: relative
+
+      &::before
+        position: absolute
+        top: 0
+        left: 0
+        content: '- '
+
+.login
+  fieldset
+    display: flex
+    flex-direction: column
+    gap: rem(23)
+    padding: rem(72) rem(23)
+
+    p
+      padding-bottom: rem(23)
+      font-size: rem(18)
+      font-weight: 700
+      text-align: center
+
+    .group
+      display: flex
+      align-items: center
+      gap: rem(23)
+
+      label
+        display: inline-flex
+        line-height: 1
+
+      input
+        +col
+        background-color: transparent
+        border: 1px solid rgba($hex-light, .7)
+        border-radius: rem(3)
+        padding: rem(3) rem(7)
+        color: $hex-white
+
+    .button
+      text-align: center
+
+      button
+        position: relative
+        background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+        border-radius: rem(3)
+        padding: rem(12) 0
+        width: rem(200)
+
+        span
+          font-size: rem(24)
+          font-weight: 800
+          color: $hex-white
+
+        svg
+          position: absolute
+          top: 50%
+          right: rem(12)
+          transform: translateY(-50%)
+          width: rem(20)
+          height: rem(20)
+
+.list, .detail
+  padding: rem(52) rem(23)
+  min-height: calc(100vh - rem(254))
+
+.list
+  p
+    display: flex
+    justify-content: center
+    align-items: center
+    min-height: calc(100vh - rem(254))
+
+  ul
+    border: rem(3) solid $hex-light
+    padding: rem(7) rem(17)
+
+    li
+      border-top: 1px solid rgba($hex-white, .2)
+      padding: rem(12) rem(17)
+
+      &:first-of-type
+        border-top: 0
+
+      a
+        display: flex
+        justify-content: space-between
+        align-items: center
+        font-size: rem(22)
+        color: $hex-white
+
+        svg
+          width: rem(20)
+          height: rem(20)
+
+.detail
+  h1
+    font-size: rem(27)
+    margin-bottom: rem(23)
+
+  h2
+    +visually-hidden-focusable
+    position: static
+    margin: rem(12) 0
+    font-size: rem(20)
+
+    &:last-of-type
+      margin-top: rem(32)
+
+    &::before
+      content: '['
+
+    &::after
+      content: ']'
+
+  ul, ol
+    margin: rem(3) 0
+    padding-left: rem(23)
+
+    li
+      margin: rem(3) 0
+
+      strong
+        font-weight: 900
+        color: orange
+
+  ul
+    list-style-type: disc
+
+  ol
+    list-style-type: decimal
+
+  .backbutton
+    display: flex
+    justify-content: center
+    padding: rem(72) 0
+
+    button
+      position: relative
+      background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+      border-radius: rem(3)
+      padding: rem(12) 0
+      width: rem(270)
+
+      svg
+        position: absolute
+        top: 50%
+        left: rem(12)
+        transform: translateY(-50%)
+        width: rem(24)
+        height: rem(24)
+
+      span
+        font-size: rem(24)
+        font-weight: 800
+        color: $hex-white

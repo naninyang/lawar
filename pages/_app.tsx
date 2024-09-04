@@ -11,6 +11,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MoveToTop from '@/components/MoveToTop';
 import '@/styles/globals.sass';
+import DaerogiHeader from '@/components/daerogi/Header';
+import DaerogiFooter from '@/components/daerogi/Footer';
 
 const font = Noto_Sans_KR({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -36,16 +38,6 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
   }, [router.events]);
   return (
     <RecoilRoot>
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_TRACKING_ID}', {
-            page_path: window.location.pathname,
-          });
-        `}
-      </Script>
       <style jsx global>
         {`
           body,
@@ -58,13 +50,32 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
           }
         `}
       </style>
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_TRACKING_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
       <TimeInitializer initialServerTime={initialServerTime} />
-      <div className="content">
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-        <MoveToTop />
-      </div>
+      {router.pathname === '/daerogi' || router.pathname === '/daerogi/[daerogiId]' || router.pathname === '/login' ? (
+        <div className="content">
+          <DaerogiHeader />
+          <Component {...pageProps} />
+          <DaerogiFooter />
+          <MoveToTop />
+        </div>
+      ) : (
+        <div className="content">
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+          <MoveToTop />
+        </div>
+      )}
     </RecoilRoot>
   );
 }

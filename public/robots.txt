@@ -1,4 +1,6 @@
 User-Agent: *
+Disallow: /login
+Disallow: /daerogi
 Allow: /
 
 Sitemap: https://lawar.dev1stud.io/sitemap.xml

@@ -6,15 +6,24 @@ header.header
   background-color: rgba($hex-white, .1)
 
   h1
-    padding: rem(17) rem(25)
+    display: flex
+    justify-content: space-between
 
-    +mq(maxSmall)
-      display: flex
-      flex-direction: column
+    a
+      display: inline-flex
 
-    svg
-      width: rem(203)
-      height: rem(24)
+      &:first-of-type
+        padding: rem(17) rem(25)
+        width: rem(253)
+        height: rem(58)
+
+        svg
+          width: rem(203)
+          height: rem(24)
+
+      &:last-of-type
+        width: rem(58)
+        height: rem(58)
 
     span
       +screen-reader-only
