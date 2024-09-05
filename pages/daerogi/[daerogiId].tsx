@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
 
 interface DaerogiItem {

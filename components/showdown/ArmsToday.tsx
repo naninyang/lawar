@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import styles from '@/styles/Showdown.module.sass';
 import { Themes } from '@/types';
+import styles from '@/styles/Showdown.module.sass';
 
 export default function ArmsToday() {
   const serverTime = useRecoilValue(serverTimeState);

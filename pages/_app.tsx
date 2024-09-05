@@ -10,9 +10,9 @@ import TimeInitializer from '@/components/TimeInitializer';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MoveToTop from '@/components/MoveToTop';
-import '@/styles/globals.sass';
 import DaerogiHeader from '@/components/daerogi/Header';
 import DaerogiFooter from '@/components/daerogi/Footer';
+import '@/styles/globals.sass';
 
 const font = Noto_Sans_KR({
   weight: ['400', '500', '600', '700', '800', '900'],

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
 
 export default function Login() {

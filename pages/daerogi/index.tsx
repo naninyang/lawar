@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
-import bcrypt from 'bcryptjs';
 import styles from '@/styles/Daerogi.module.sass';
 
 export interface LawarItem {
