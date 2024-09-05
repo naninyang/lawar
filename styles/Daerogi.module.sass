@@ -164,37 +164,38 @@ footer.footer
     font-size: rem(27)
     margin-bottom: rem(23)
 
-  h2
-    +visually-hidden-focusable
-    position: static
-    margin: rem(12) 0
-    font-size: rem(20)
+  .content
+    h2
+      +visually-hidden-focusable
+      position: static
+      margin: rem(12) 0
+      font-size: rem(20)
 
-    &:last-of-type
-      margin-top: rem(32)
+      &:last-of-type
+        margin-top: rem(32)
 
-    &::before
-      content: '['
+      &::before
+        content: '['
 
-    &::after
-      content: ']'
+      &::after
+        content: ']'
 
-  ul, ol
-    margin: rem(3) 0
-    padding-left: rem(23)
-
-    li
+    ul, ol
       margin: rem(3) 0
+      padding-left: rem(23)
 
-      strong
-        font-weight: 900
-        color: orange
+      li
+        margin: rem(3) 0
 
-  ul
-    list-style-type: disc
+        strong
+          font-weight: 900
+          color: orange
 
-  ol
-    list-style-type: decimal
+    ul
+      list-style-type: disc
+
+    ol
+      list-style-type: decimal
 
   .backbutton
     display: flex
