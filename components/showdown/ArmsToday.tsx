@@ -36,9 +36,21 @@ export default function ArmsToday() {
     const currentDate = new Date(adjustedServerTime);
     currentDate.setUTCHours(startHour, 0, 0, 0);
 
-    const timeDifference = adjustedServerTime.getTime() - currentDate.getTime();
-    const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
-    const themeIndex = Math.floor(elapsedHours / 4) % themes.length;
+    let timeDifference;
+    let elapsedHours;
+    let themeIndex;
+
+    if (adjustedServerTime.getUTCHours() < 2) {
+      const previousDayUTCDate = new Date(currentDate);
+      previousDayUTCDate.setUTCDate(previousDayUTCDate.getUTCDate() - 1);
+      timeDifference = adjustedServerTime.getTime() - previousDayUTCDate.getTime();
+      elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
+      themeIndex = Math.floor(elapsedHours / 4) % themes.length;
+    } else {
+      timeDifference = adjustedServerTime.getTime() - currentDate.getTime();
+      elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
+      themeIndex = Math.floor(elapsedHours / 4) % themes.length;
+    }
 
     setCurrentThemeIndex(themeIndex);
 

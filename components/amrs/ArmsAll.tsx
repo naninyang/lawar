@@ -55,9 +55,20 @@ export default function ArmsAll() {
       const currentUTCDate = new Date(adjustedServerTime);
       currentUTCDate.setUTCHours(startHour, 0, 0, 0);
 
-      const totalElapsedTime = currentDayIndex * 24 + adjustedServerTime.getUTCHours() - startHour;
-      const themeIndex = Math.floor(totalElapsedTime / 4);
+      let totalElapsedTime;
 
+      if (adjustedServerTime.getUTCHours() < 2) {
+        const previousDayUTCDate = new Date(adjustedServerTime);
+        previousDayUTCDate.setUTCDate(previousDayUTCDate.getUTCDate() - 1);
+        previousDayUTCDate.setUTCHours(startHour, 0, 0, 0);
+
+        const timeDifference = adjustedServerTime.getTime() - previousDayUTCDate.getTime();
+        totalElapsedTime = currentDayIndex * 24 + timeDifference / (1000 * 60 * 60);
+      } else {
+        totalElapsedTime = currentDayIndex * 24 + adjustedServerTime.getUTCHours() - startHour;
+      }
+
+      const themeIndex = Math.floor(totalElapsedTime / 4);
       setCurrentThemeIndex(themeIndex);
 
       const nextThemeTime = new Date(currentUTCDate);
@@ -67,6 +78,7 @@ export default function ArmsAll() {
       const hoursLeft = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
       const minutesLeft = Math.floor((timeDiff / (1000 * 60)) % 60);
       const secondsLeft = Math.floor((timeDiff / 1000) % 60);
+
       setTimeLeft(
         `${hoursLeft.toString()}시간 ${minutesLeft.toString().padStart(2, '0')}분 ${secondsLeft.toString().padStart(2, '0')}초`,
       );
