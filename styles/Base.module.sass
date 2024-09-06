@@ -8,8 +8,10 @@
     height: calc(100vh - rem(294))
     text-align: center
 
-  .table
+  .table, .items
     overflow: auto
+
+  .table
     margin: 0 auto
     max-width: rem(720)
 
@@ -32,9 +34,9 @@
             font-weight: 700
 
         th, td
+          padding: rem(12)
           text-align: center
           white-space: nowrap
-          padding: rem(12)
 
         th
           background-color: rgba($hex-white, .7)
@@ -48,7 +50,57 @@
           &:first-of-type
             font-weight: 700
 
-  ul
+  .items
+    ul
+      display: flex
+
+      li
+        &.current
+          dd
+            background-color: $hex-black
+            font-size: rem(18)
+            font-weight: 900
+
+        &:hover
+          dd
+            background-color: rgba($hex-black, .5)
+            font-weight: 700
+
+        dl
+          display: flex
+          flex-direction: column
+
+          dt
+            +screen-reader-only
+
+          dd
+            display: flex
+            align-items: center
+            justify-content: center
+            +col
+            height: rem(52)
+            padding: 0 rem(12)
+            white-space: nowrap
+
+        &:first-of-type
+          dl
+            div
+              display: flex
+
+            dt
+              +visually-hidden-focusable
+              display: flex
+              align-items: center
+              justify-content: center
+              position: static
+              background-color: rgba($hex-white, .7)
+              width: rem(100)
+              font-weight: 900
+              white-space: nowrap
+              white-space: nowrap
+              color: $hex-black
+
+  > ul
     padding: rem(23)
 
     li

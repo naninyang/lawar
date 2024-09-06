@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Base.module.sass';
 
@@ -10,17 +11,29 @@ interface BaseData {
   gold: string;
 }
 
+export function useMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  const mobile = useMediaQuery({
+    query: `(max-width: ${991 / 16}rem)`,
+  });
+  useEffect(() => {
+    setIsMobile(mobile);
+  }, [mobile]);
+  return isMobile;
+}
+
 export default function Base() {
-  const [data, setData] = useState<BaseData[]>([]);
+  const [base, setBase] = useState<BaseData[]>([]);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const isMobile = useMobile();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBase = async () => {
       const response = await fetch('/api/base');
       const result = await response.json();
-      setData(result);
+      setBase(result);
     };
-    fetchData();
+    fetchBase();
   }, []);
 
   const handleRowClick = (index: number) => {
@@ -56,35 +69,80 @@ export default function Base() {
           상태에 따라서 유동적입니다. 참고용으로만 사용하세요.
         </li>
       </ul>
-      {data.length > 0 ? (
-        <div className={styles.table}>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">기지 레벨</th>
-                <th scope="col">필수 건물업</th>
-                <th scope="col">원래 시간</th>
-                <th scope="col">강철/식량</th>
-                <th scope="col">금화</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row, index) => (
-                <tr
-                  key={index}
-                  className={selectedRow === index ? styles.current : undefined}
-                  onClick={() => handleRowClick(index)}
-                >
-                  <td>{row.level}</td>
-                  <td>{row.building}</td>
-                  <td>{row.time}</td>
-                  <td>{row.steel}</td>
-                  <td>{row.gold}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {base.length > 0 ? (
+        <>
+          {isMobile ? (
+            <div className={styles.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">기지 레벨</th>
+                    <th scope="col">필수 건물업</th>
+                    <th scope="col">원래 시간</th>
+                    <th scope="col">강철/식량</th>
+                    <th scope="col">금화</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {base
+                    .slice()
+                    .reverse()
+                    .map((row, index) => (
+                      <tr
+                        key={index}
+                        className={selectedRow === index ? styles.current : undefined}
+                        onClick={() => handleRowClick(index)}
+                      >
+                        <td>{row.level}</td>
+                        <td>{row.building}</td>
+                        <td>{row.time}</td>
+                        <td>{row.steel}</td>
+                        <td>{row.gold}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className={styles.items}>
+              <ul>
+                {base
+                  .slice()
+                  .reverse()
+                  .map((row, index) => (
+                    <li
+                      key={index}
+                      className={selectedRow === index ? styles.current : undefined}
+                      onClick={() => handleRowClick(index)}
+                    >
+                      <dl>
+                        <div>
+                          <dt>기지 레벨</dt>
+                          <dd>{row.level}</dd>
+                        </div>
+                        <div>
+                          <dt>필수 건물업</dt>
+                          <dd>{row.building}</dd>
+                        </div>
+                        <div>
+                          <dt>원래 시간</dt>
+                          <dd>{row.time}</dd>
+                        </div>
+                        <div>
+                          <dt>강철/식량</dt>
+                          <dd>{row.steel}</dd>
+                        </div>
+                        <div>
+                          <dt>금화</dt>
+                          <dd>{row.gold}</dd>
+                        </div>
+                      </dl>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+        </>
       ) : (
         <p>데이터를 불러오는 중입니다 :)</p>
       )}
