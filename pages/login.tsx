@@ -51,7 +51,9 @@ export default function Login() {
           </p>
           <div className={styles.group}>
             <label htmlFor="pwd">비밀번호</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div className={styles.pwd}>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
           </div>
           <div className={styles.button}>
             <button type="submit">
