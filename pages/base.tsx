@@ -104,42 +104,44 @@ export default function Base() {
               </table>
             </div>
           ) : (
-            <div className={styles.items}>
-              <ul>
-                {base
-                  .slice()
-                  .reverse()
-                  .map((row, index) => (
-                    <li
-                      key={index}
-                      className={selectedRow === index ? styles.current : undefined}
-                      onClick={() => handleRowClick(index)}
-                    >
-                      <dl>
-                        <div>
-                          <dt>기지 레벨</dt>
-                          <dd>{row.level}</dd>
-                        </div>
-                        <div>
-                          <dt>필수 건물업</dt>
-                          <dd>{row.building}</dd>
-                        </div>
-                        <div>
-                          <dt>원래 시간</dt>
-                          <dd>{row.time}</dd>
-                        </div>
-                        <div>
-                          <dt>강철/식량</dt>
-                          <dd>{row.steel}</dd>
-                        </div>
-                        <div>
-                          <dt>금화</dt>
-                          <dd>{row.gold}</dd>
-                        </div>
-                      </dl>
-                    </li>
-                  ))}
-              </ul>
+            <div className={styles.container}>
+              <div className={styles.items}>
+                <ul>
+                  {base
+                    .slice()
+                    .reverse()
+                    .map((row, index) => (
+                      <li
+                        key={index}
+                        className={selectedRow === index ? styles.current : undefined}
+                        onClick={() => handleRowClick(index)}
+                      >
+                        <dl>
+                          <div>
+                            <dt>기지 레벨</dt>
+                            <dd>{row.level}</dd>
+                          </div>
+                          <div>
+                            <dt>필수 건물업</dt>
+                            <dd>{row.building}</dd>
+                          </div>
+                          <div>
+                            <dt>원래 시간</dt>
+                            <dd>{row.time}</dd>
+                          </div>
+                          <div>
+                            <dt>강철/식량</dt>
+                            <dd>{row.steel}</dd>
+                          </div>
+                          <div>
+                            <dt>금화</dt>
+                            <dd>{row.gold}</dd>
+                          </div>
+                        </dl>
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </div>
           )}
         </>
