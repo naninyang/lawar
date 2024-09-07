@@ -17,5 +17,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       { item: '6레벨 드론 파츠 상자 개봉시', reward: 540000 },
       { item: '7레벨 드론 파츠 상자 개봉시', reward: 1620000 },
     ],
+    items: [
+      '테크 가속 1분 사용',
+      '테크 전투력 증가',
+      '명예 훈장 소모',
+      '레이더 임무 완료',
+      '다이아 포함 패키지 구매',
+      '드론 파츠 상자 개봉',
+    ],
   });
 }

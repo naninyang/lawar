@@ -47,6 +47,10 @@ $hex-blue: #1ECEFB
     @media screen and (max-width: rem(1399))
       @content
 
+  @if $mediaquery == minXXLarge
+    @media screen and (min-width: rem(1400))
+      @content
+
 @mixin row
   display: flex
   flex-wrap: wrap

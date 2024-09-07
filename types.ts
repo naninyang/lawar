@@ -11,6 +11,7 @@ export type Theme = {
 export type Alliance = {
   title: string;
   rewards: Reward[];
+  items?: any;
 };
 
 export interface Themes {

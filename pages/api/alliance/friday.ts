@@ -23,5 +23,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       { item: '다이아 포함 패키지 구매 (1다이아)', reward: 30 },
       { item: '드론 스킬칩 1점 획득마다', reward: 2000 },
     ],
+    items: [
+      '레이더 임무 완료',
+      '건설 가속 사용',
+      '건물 전투력 증가',
+      '테크 가속 사용',
+      '테크 전투력 증가',
+      '훈련 가속 사용',
+      '유닛 훈련',
+      '다이아 포함 패키지 구매',
+      '드론 스킬칩 획득',
+    ],
   });
 }

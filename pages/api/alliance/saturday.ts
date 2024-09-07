@@ -43,5 +43,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       { item: '다이아 포함 패키지 구매 (1다이아)', reward: 30 },
       { item: '드론 스킬칩 1점 획득마다', reward: 2000 },
     ],
+    items: [
+      'UR 교역 화물차 출발',
+      '주황 은밀한 임무 수행',
+      '건설 가속 사용',
+      '테크 가속 사용',
+      '훈련 가속 사용',
+      '치료 가속 사용',
+      '유닛 처치 (특정 매칭 연맹)',
+      '유닛 처치',
+      '유닛 전사',
+      '다이아 포함 패키지 구매',
+      '드론 스킬칩 획득',
+    ],
   });
 }

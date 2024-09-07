@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import styles from '@/styles/Arms.module.sass';
+import styles from '@/styles/Home.module.sass';
 
 interface Theme {
   name: string;
@@ -16,11 +16,10 @@ interface DailyThemes {
   matching: number[];
 }
 
-export default function ArmsCurrent() {
+export default function CurrentArms() {
   const serverTime = useRecoilValue(serverTimeState);
   const [weeklyThemes, setWeeklyThemes] = useState<DailyThemes[]>([]);
   const [currentThemeIndex, setCurrentThemeIndex] = useState<number>(0);
-  const [nextThemeIndex, setNextThemeIndex] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<string>('T00:00:00.000Z');
 
   useEffect(() => {
@@ -66,10 +65,8 @@ export default function ArmsCurrent() {
       }
 
       const themeIndex = Math.floor(totalElapsedTime / 4);
-      const nextIndex = (themeIndex + 1) % (7 * 6);
 
       setCurrentThemeIndex(themeIndex);
-      setNextThemeIndex(nextIndex);
 
       const nextThemeTime = new Date(currentUTCDate);
       nextThemeTime.setUTCHours(startHour + ((themeIndex % 6) + 1) * 4, 0, 0, 0);
@@ -89,47 +86,19 @@ export default function ArmsCurrent() {
   const currentThemeDayIndex = Math.floor(currentThemeIndex / 6);
   const currentTheme = weeklyThemes[currentThemeDayIndex].themes[currentThemeIndex % 6];
 
-  const nextThemeDayIndex = Math.floor(nextThemeIndex / 6);
-  const nextTheme = weeklyThemes[nextThemeDayIndex].themes[nextThemeIndex % 6];
-
   return (
-    <div className={styles['current-container']}>
-      {!currentTheme || !nextTheme ? (
+    <div className={styles.currentArms}>
+      {!currentTheme ? (
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
-        <>
-          <div className={styles['current-theme']}>
-            <div className={styles.headline}>
-              <h3>
-                현재 테마 <strong>{currentTheme.name}</strong>
-              </h3>
-              <p>
-                남은 시간 <strong>{timeLeft}</strong>
-              </p>
-            </div>
-            <dl>
-              {currentTheme.rewards.map((reward: any, idx: number) => (
-                <div key={idx}>
-                  <dt>{reward.item}</dt>
-                  <dd>{reward.reward}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div className={styles['next-theme']}>
-            <h3>
-              다음 테마 <strong>{nextTheme.name}</strong>
-            </h3>
-            <dl>
-              {nextTheme.rewards.map((reward: any, idx: number) => (
-                <div key={idx}>
-                  <dt>{reward.item}</dt>
-                  <dd>{reward.reward}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </>
+        <dl>
+          <dt>{currentTheme.name}</dt>
+          <dd>
+            {currentTheme.rewards.map((reward: any, idx: number) => (
+              <strong key={idx}>{reward.item}</strong>
+            ))}
+          </dd>
+        </dl>
       )}
     </div>
   );

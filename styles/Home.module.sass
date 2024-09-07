@@ -9,7 +9,7 @@
   p
     text-align: center
     font-size: rem(22)
-    font-weight: 500
+    font-weight: 600
 
   ul
     display: flex
@@ -17,8 +17,8 @@
     padding: 0 rem(23)
 
     li
-      width: 100%
       padding: rem(7) 0
+      width: 100%
 
       +mq(minMedium)
         width: 50%
@@ -29,32 +29,163 @@
         &:nth-of-type(even)
           padding-left: rem(7)
 
-      +mq(minExtraLarge)
+      +mq(minXXLarge)
         width: 25%
 
         &:nth-of-type(odd), &:nth-of-type(even)
           padding-right: rem(7)
           padding-left: rem(7)
 
-      a
+      .item
         display: flex
-        justify-content: space-between
-        align-items: center
-        padding: 0 rem(23)
+        flex-direction: column
         border: rem(2) solid rgba($hex-white, .2)
         border-radius: rem(3)
-        width: 100%
-        height: rem(57)
-        color: $hex-white
-        font-size: rem(20)
-        font-weight: 700
-        text-align: center
+        height: 100%
 
-        > span
+        a
           display: flex
+          justify-content: space-between
           align-items: center
-          gap: rem(7)
+          padding: 0 rem(12)
+          width: 100%
+          height: rem(43)
+          color: $hex-white
+          text-align: center
 
-        svg
-          width: rem(20)
-          height: rem(20)
+          > span, > strong
+            display: flex
+            align-items: center
+            gap: rem(7)
+
+          > span
+            span
+              font-size: rem(20)
+              font-weight: 500
+
+          > strong
+            span
+              font-size: rem(16)
+              font-weight: 900
+
+          svg
+            width: rem(20)
+            height: rem(20)
+
+        > div
+          border-top: rem(2) solid rgba($hex-white, .2)
+          padding: rem(12)
+
+.currentTheme, .currentArms
+  dl
+    display: flex
+    flex-direction: column
+
+    dt, dd
+      font-size: rem(16)
+
+    dt
+      margin-bottom: rem(12)
+      font-weight: 700
+
+    dd
+      strong
+        display: inline-flex
+        margin-right: rem(12)
+        margin-bottom: rem(12)
+        border-radius: rem(3)
+        padding: rem(3) rem(7)
+        background-color: rgba($hex-white, .2)
+        font-weight: 500
+        color: $hex-white
+        white-space: nowrap
+
+.currentShowdown
+  > dl
+    display: flex
+    flex-direction: column
+
+    > dt, > dd
+      font-size: rem(16)
+
+    > dt
+      margin-bottom: rem(12)
+      font-weight: 700
+
+    > dd
+      dl
+        display: flex
+        flex-direction: column
+        gap: rem(12)
+
+        dt
+          display: flex
+          justify-content: space-between
+
+        dd
+          strong
+            display: inline-flex
+            margin-right: rem(12)
+            margin-bottom: rem(12)
+            border-radius: rem(3)
+            padding: rem(3) rem(7)
+            background-color: rgba($hex-white, .2)
+            font-weight: 500
+            color: $hex-white
+            white-space: nowrap
+
+.searchBase
+  display: flex
+  flex-direction: column
+  gap: rem(12)
+  padding: rem(12)
+
+  form
+    fieldset
+      +row
+      overflow: hidden
+      border-radius: rem(3)
+
+      legend
+        width: 1px
+
+      select, button
+        padding-right: rem(12)
+        padding-left: rem(12)
+        height: rem(38)
+        font-size: rem(20)
+
+      .selectbox
+        +col
+        background-color: rgba($hex-white, .2)
+
+        select
+          background-color: transparent
+          width: 100%
+
+      .button
+        display: inline-flex
+        width: auto
+
+        button
+          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+          font-weight: 700
+
+  dl
+    +row
+    flex-direction: column
+    gap: rem(5)
+
+    div
+      display: flex
+
+    dt, dd
+      font-size: rem(20)
+
+    dt
+      width: rem(120)
+      font-weight: 400
+
+    dd
+      +col
+      font-weight: 700

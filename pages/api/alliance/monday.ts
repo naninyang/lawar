@@ -15,5 +15,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       { item: '금화 60 채집', reward: 40 },
       { item: '드론 스킬칩 1점 획득마다', reward: 2000 },
     ],
+    items: [
+      '체력 소모',
+      '레이더 임무 완료',
+      '영웅 경험치 소모',
+      '드론 전투 데이터 소모',
+      '드론 부품 소모',
+      '다이아 포함 패키지 구매',
+      '식량 채집',
+      '강철 채집',
+      '금화 채집',
+      '드론 스킬칩 획득',
+    ],
   });
 }
