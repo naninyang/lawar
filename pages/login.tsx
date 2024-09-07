@@ -4,6 +4,7 @@ import styles from '@/styles/Daerogi.module.sass';
 
 export default function Login() {
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('daerogi');
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +27,7 @@ export default function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username, password }),
     });
 
     if (response.ok) {
@@ -45,14 +46,25 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <fieldset>
           <legend>로그인 폼</legend>
-          <input type="hidden" name="username" value="daerogi" />
-          <p>
-            <label htmlFor="pwd">비밀번호는 아리에게 물어보세요</label>
-          </p>
+          <div className={styles.group}>
+            <label htmlFor="username">아이디</label>
+            <div className={styles.usr}>
+              <input type="text" id="username" value={username} readOnly autoComplete="username" />
+              <label htmlFor="pwd">
+                <span>.</span>
+              </label>
+            </div>
+          </div>
           <div className={styles.group}>
             <label htmlFor="pwd">비밀번호</label>
             <div className={styles.pwd}>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input
+                type="password"
+                value={password}
+                id="pwd"
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
             </div>
           </div>
           <div className={styles.button}>

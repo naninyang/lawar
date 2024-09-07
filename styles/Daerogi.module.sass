@@ -91,12 +91,30 @@ footer.footer
       align-items: center
       gap: rem(23)
 
+      &:first-of-type
+        opacity: .1
+
       label
         display: inline-flex
+        justify-content: flex-end
+        width: rem(62)
         line-height: 1
 
-      .pwd
+      .usr
+        position: relative
+
+      .usr, .pwd
         +col
+
+        label
+          position: absolute
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+
+          span
+            +screen-reader-only
 
       input
         background-color: transparent

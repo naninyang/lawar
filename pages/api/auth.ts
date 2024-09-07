@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(405).json({ message: 'Only POST method is allowed' });
   }
 
-  const { password } = req.body;
+  const { password, username } = req.body;
 
   if (!password) {
     return res.status(400).json({ message: '비번도 입력하지 않고 입장하시려구요? 앙대여~' });
