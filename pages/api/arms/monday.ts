@@ -71,6 +71,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         ],
       },
     ],
-    matching: [2],
+    matching: [2, 3],
   });
 }
