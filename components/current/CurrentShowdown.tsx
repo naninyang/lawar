@@ -31,17 +31,24 @@ export default function CurrentShowdown() {
       });
   }, [serverTime]);
 
-  const formatToLocalTime = (utcTime: string) => {
+  const formatToLocalTime = (utcTime: string, dueTime?: boolean) => {
     const [hours, minutes, seconds] = utcTime.slice(1, 9).split(':').map(Number);
 
     const localDate = new Date();
     localDate.setUTCHours(hours, minutes, seconds);
 
-    const localHours = localDate.getHours().toString().padStart(2, '0');
-    const localMinutes = localDate.getMinutes().toString().padStart(2, '0');
-    const localSeconds = localDate.getSeconds().toString().padStart(2, '0');
+    if (dueTime) {
+      localDate.setHours(localDate.getHours() + 4);
+    }
 
-    return `${localHours}:${localMinutes}:${localSeconds}`;
+    const localHours = localDate.getHours().toString().padStart(2, '0');
+    let nextDayText = localHours >= '03' && localHours <= '07' ? '내일' : '';
+
+    if (dueTime) {
+      nextDayText = localHours >= '03' && localHours <= '11' ? '내일' : '';
+    }
+
+    return `${nextDayText} ${localHours}시`;
   };
 
   return (
@@ -58,7 +65,9 @@ export default function CurrentShowdown() {
                 <dl className={styles.items} key={index}>
                   <dt>
                     <strong>{theme.name}</strong>
-                    <span>{formatToLocalTime(theme.time)}</span>
+                    <span>
+                      {formatToLocalTime(theme.time)} ~ {formatToLocalTime(theme.time, true)}
+                    </span>
                   </dt>
                   <dd>
                     {theme.rewards.map((reward: any, idx: number) => (
