@@ -137,6 +137,7 @@
 .searchBase
   display: flex
   flex-direction: column
+  flex-grow: 1
   gap: rem(12)
   padding: rem(12)
 
@@ -170,6 +171,14 @@
         button
           background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
           font-weight: 700
+
+  p
+    display: flex
+    justify-content: center
+    flex-direction: column
+    flex-grow: 1
+    font-size: rem(16)
+    font-weight: 700
 
   dl
     +row

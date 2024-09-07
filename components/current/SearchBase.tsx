@@ -56,7 +56,7 @@ export default function SearchBase() {
               </div>
             </fieldset>
           </form>
-          {selectedData && (
+          {selectedData ? (
             <dl>
               <div>
                 <dt>필수 건물업</dt>
@@ -75,6 +75,10 @@ export default function SearchBase() {
                 <dd>{selectedData.gold}</dd>
               </div>
             </dl>
+          ) : (
+            <p>
+              <span>레벨을 선택하시면</span> 필수업 등 정보를 보실 수 있어요
+            </p>
           )}
         </>
       ) : (
