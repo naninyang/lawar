@@ -152,33 +152,132 @@ footer.footer
   min-height: calc(100vh - rem(254))
 
 .list
-  p
+  > p
     display: flex
     justify-content: center
     align-items: center
     min-height: calc(100vh - rem(254))
 
   ul
-    border: rem(3) solid $hex-light
-    padding: rem(7) rem(17)
+    display: flex
+    flex-wrap: wrap
+    padding: 0 rem(23)
 
     li
-      border-top: 1px solid rgba($hex-white, .2)
-      padding: rem(12) rem(17)
+      padding: rem(7) 0
+      width: 100%
 
-      &:first-of-type
-        border-top: 0
+      +mq(minLarge)
+        width: 50%
 
-      a
+        &:nth-of-type(odd)
+          padding-right: rem(7)
+
+        &:nth-of-type(even)
+          padding-left: rem(7)
+
+        &:last-of-type
+          width: 100%
+
+      +mq(minXXLarge)
+        width: 33.33%
+
+        &:nth-of-type(odd), &:nth-of-type(even)
+          padding-right: rem(7)
+          padding-left: rem(7)
+
+      .item
+        background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
         display: flex
-        justify-content: space-between
-        align-items: center
-        font-size: rem(22)
-        color: $hex-white
+        flex-direction: column
+        gap: rem(2)
+        border-radius: rem(3)
+        padding: rem(2)
+        height: 100%
 
-        svg
-          width: rem(20)
-          height: rem(20)
+        a, dl
+          background-color: $hex-bg
+
+        a
+          display: flex
+          justify-content: space-between
+          align-items: center
+          padding: 0 rem(12)
+          width: 100%
+          height: rem(43)
+          color: $hex-white
+          text-align: center
+
+          > strong, > span
+            display: flex
+            align-items: center
+            gap: rem(7)
+
+          > strong
+            font-size: rem(20)
+            font-weight: 500
+
+          > span
+            strong
+              font-size: rem(16)
+              font-weight: 900
+
+          svg
+            width: rem(20)
+            height: rem(20)
+
+        dl
+          display: flex
+          flex-direction: column
+          flex-grow: 1
+          padding: rem(12)
+
+          div
+            display: flex
+            flex-direction: column
+            gap: rem(3)
+            border-top: 1px solid rgba($hex-white, .5)
+            padding: rem(12) 0
+
+            &:first-of-type
+              border-top: 0
+              padding-top: 0
+
+            &:last-of-type
+              padding-bottom: 0
+
+            dt, dd
+              display: flex
+              gap: rem(12)
+
+              strong
+                display: flex
+                align-items: center
+                height: rem(26)
+                font-size: rem(18)
+                font-weight: 500
+                line-height: 1
+                white-space: nowrap
+
+            dt
+              span
+                display: flex
+                flex-wrap: wrap
+                gap: rem(5)
+
+                em
+                  display: inline-flex
+                  margin-right: rem(5)
+                  border-radius: rem(3)
+                  padding: rem(1) rem(7)
+                  background-color: rgba($hex-white, .2)
+                  font-weight: 500
+                  font-style: normal
+                  color: $hex-white
+                  white-space: nowrap
+
+            dd
+              align-items: center
 
 .detail
   h1

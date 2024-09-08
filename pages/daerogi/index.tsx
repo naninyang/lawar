@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
 import styles from '@/styles/Daerogi.module.sass';
@@ -6,6 +6,7 @@ import styles from '@/styles/Daerogi.module.sass';
 export interface LawarItem {
   id: number;
   subject: string;
+  summary: any;
 }
 
 export default function DaerogiItems() {
@@ -33,6 +34,7 @@ export default function DaerogiItems() {
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
         id: item.id,
         subject: item.attributes.subject,
+        summary: item.attributes.summary,
       }));
 
       setRogiking(formattedData);
@@ -55,15 +57,43 @@ export default function DaerogiItems() {
         <ul>
           {rogiking.map((daerogi: LawarItem, index: number) => (
             <li key={index}>
-              <Anchor href={`/daerogi/${daerogi.id}`}>
-                <strong>{daerogi.subject}</strong>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M14 4.92969L12.5 6.42969L17.0703 11H3V13H17.0703L12.5 17.5703L14 19.0703L21.0703 12L14 4.92969Z"
-                    fill="white"
-                  />
-                </svg>{' '}
-              </Anchor>
+              <div className={styles.item}>
+                <Anchor href={`/daerogi/${daerogi.id}`}>
+                  <strong>{daerogi.subject}</strong>
+                  <span>
+                    <strong>더 보기</strong>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14 4.92969L12.5 6.42969L17.0703 11H3V13H17.0703L12.5 17.5703L14 19.0703L21.0703 12L14 4.92969Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                </Anchor>
+                <dl>
+                  {daerogi.summary &&
+                    daerogi.summary.map((summaryItem: any, i: number) => (
+                      <div key={i}>
+                        {Object.entries(summaryItem).map(([key, value]: [string, any], idx: number) => (
+                          <React.Fragment key={idx}>
+                            <dt>
+                              <strong>매칭 연맹 대전</strong>
+                              <span>
+                                {key.split(',').map((splitKey: string, j: number) => (
+                                  <em key={j}>{splitKey.trim()}</em>
+                                ))}
+                              </span>
+                            </dt>
+                            <dd>
+                              <strong>매칭 군비 경쟁</strong>
+                              {String(value)}
+                            </dd>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    ))}
+                </dl>
+              </div>
             </li>
           ))}
         </ul>
