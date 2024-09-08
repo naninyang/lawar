@@ -52,6 +52,14 @@ export default function Header() {
   };
   const resetFontSize = () => handleFontSizeChange(16);
 
+  useEffect(() => {
+    if (router.pathname !== '/') {
+      setEventsJekyll(false);
+    } else {
+      setEventsJekyll(true);
+    }
+  }, [router.pathname]);
+
   return (
     <>
       <header className={styles.header}>
