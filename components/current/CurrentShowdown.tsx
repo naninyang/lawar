@@ -59,23 +59,25 @@ export default function CurrentShowdown() {
         <dl>
           <dt>{title}</dt>
           <dd>
-            {themes
-              .filter((_, index) => matching.includes(index))
-              .map((theme, index) => (
-                <dl className={styles.items} key={index}>
-                  <dt>
-                    <strong>{theme.name}</strong>
-                    <span>
-                      {formatToLocalTime(theme.time)} ~ {formatToLocalTime(theme.time, true)}
-                    </span>
-                  </dt>
-                  <dd>
-                    {theme.rewards.map((reward: any, idx: number) => (
-                      <strong key={idx}>{reward.item}</strong>
-                    ))}
-                  </dd>
-                </dl>
-              ))}
+            {themes.filter((_, index) => matching.includes(index)).length === 0
+              ? '오늘은 연맹 대전이 없는 날입니다'
+              : themes
+                  .filter((_, index) => matching.includes(index))
+                  .map((theme, index) => (
+                    <dl className={styles.items} key={index}>
+                      <dt>
+                        <strong>{theme.name}</strong>
+                        <span>
+                          {formatToLocalTime(theme.time)} ~ {formatToLocalTime(theme.time, true)}
+                        </span>
+                      </dt>
+                      <dd>
+                        {theme.rewards.map((reward: any, idx: number) => (
+                          <strong key={idx}>{reward.item}</strong>
+                        ))}
+                      </dd>
+                    </dl>
+                  ))}
           </dd>
         </dl>
       )}

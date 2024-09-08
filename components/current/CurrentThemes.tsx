@@ -61,9 +61,9 @@ export default function CurrentTheme() {
         <dl>
           <dt>{currentTheme.title}</dt>
           <dd>
-            {currentTheme.items.map((item: string, index: number) => (
-              <strong key={index}>{item}</strong>
-            ))}
+            {currentTheme.items
+              ? currentTheme.items.map((item: string, index: number) => <strong key={index}>{item}</strong>)
+              : '오늘은 연맹 대전이 없는 날입니다'}
           </dd>
         </dl>
       )}
