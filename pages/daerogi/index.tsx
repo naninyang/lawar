@@ -6,7 +6,7 @@ import styles from '@/styles/Daerogi.module.sass';
 export interface LawarItem {
   id: number;
   subject: string;
-  summary: any;
+  summary?: any;
 }
 
 export default function DaerogiItems() {

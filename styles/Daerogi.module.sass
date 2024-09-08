@@ -44,6 +44,56 @@ header.header
       border-radius: rem(3)
       padding: rem(3) rem(7)
 
+nav.gnb
+  position: sticky
+  top: env(safe-area-inset-top)
+  z-index: 777
+  padding-top: rem(23)
+  background-color: rgba($hex-bg, .7)
+  backdrop-filter: blur(rem(20))
+
+  .menu
+    display: flex
+    overflow-x: auto
+    gap: rem(2)
+    width: 100%
+    height: rem(33)
+    margin: 0
+    margin-bottom: rem(23)
+    scroll-behavior: smooth
+
+    &:-webkit-scrollbar
+      display: none
+
+    li
+      flex: 0 0 auto
+
+      &:first-of-type
+        padding-left: rem(23)
+
+      &:last-of-type
+        padding-right: rem(23)
+
+      a
+        display: flex
+        align-items: center
+        border-bottom: rem(2) solid transparent
+        padding: 0 rem(12)
+        height: rem(32)
+        color: $hex-white
+        font-size: rem(18)
+        font-weight: 400
+        opacity: .5
+
+        span
+          padding-bottom: rem(7)
+
+      &.current
+        a
+          border-bottom-color: $hex-white
+          font-weight: 700
+          opacity: 1
+
 footer.footer
   position: relative
   z-index: 2700
@@ -280,6 +330,10 @@ footer.footer
               align-items: center
 
 .detail
+  margin: 0 auto
+  max-width: rem(1020)
+  width: 100%
+
   h1
     font-size: rem(27)
     margin-bottom: rem(23)
@@ -322,12 +376,13 @@ footer.footer
     justify-content: center
     padding: rem(72) 0
 
-    button
+    a
       position: relative
       background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
       border-radius: rem(3)
       padding: rem(12) 0
       width: rem(270)
+      text-align: center
 
       svg
         position: absolute
