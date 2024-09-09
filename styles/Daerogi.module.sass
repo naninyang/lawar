@@ -405,6 +405,10 @@ footer.footer
     +screen-reader-only
 
   > div
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: rem(23)
     padding: rem(72) 0
 
   .backbutton
@@ -434,11 +438,6 @@ footer.footer
         color: $hex-white
 
 .units
-  display: flex
-  flex-direction: column
-  align-items: center
-  gap: rem(23)
-
   form
     fieldset
       display: flex
@@ -538,3 +537,69 @@ footer.footer
 
             &:first-of-type::before
               display: none
+
+.alliance
+  form
+    max-width: rem(570)
+    width: 100%
+
+    fieldset
+      display: flex
+      flex-direction: column
+      gap: rem(7)
+      border: rem(2) solid rgba($hex-white, .5)
+      border-radius: rem(3)
+      padding: rem(25)
+      width: 100%
+
+      label
+        font-size: rem(20)
+        font-weight: 700
+
+      input, select
+        background-color: transparent
+        outline: 0
+        border: 0
+        height: rem(38)
+        font-size: rem(16)
+        color: $hex-white
+
+      input::placeholder
+        color: rgba($hex-white, .5)
+
+      .group
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+        padding-bottom: rem(23)
+
+        ~ .button
+          padding-top: 0
+
+      .value, .selectbox
+        background-color: rgba($hex-white, .2)
+
+      .selectbox
+        padding-right: rem(12)
+
+        select
+          width: 100%
+
+      .button
+        padding-top: rem(23)
+        width: 100%
+
+        button
+          width: 100%
+          height: rem(57)
+          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+          font-size: rem(24)
+          font-weight: 700
+          color: $hex-white
+
+    input, select, button
+      color: $hex-black
+
+  p
+    font-size: rem(20)
+    font-weight: 500

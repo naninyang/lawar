@@ -15,13 +15,17 @@ export const componentMap: ComponentMap = {
     title: '단위 계산기',
     content: dynamic(() => import('@/components/daerogi/Unit')),
   },
+  alliance: {
+    title: '연맹대전 보상 계산기',
+    content: dynamic(() => import('@/components/daerogi/Alliance')),
+  },
 };
 
 interface Props {
   toolboxId: string;
 }
 
-export default function UtilPage({ toolboxId }: Props) {
+export default function Toolbox({ toolboxId }: Props) {
   const componentInfo = componentMap[toolboxId];
   if (!componentInfo) return;
   const { title, content: Component } = componentInfo;
