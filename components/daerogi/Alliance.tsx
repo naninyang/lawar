@@ -123,7 +123,7 @@ export default function Alliance() {
           </fieldset>
         </form>
       )}
-      {rewards && rewards.length > 0 && (
+      {rewards && rewards.length > 0 && rewards[0].reward > 0 ? (
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>보상 점수 계산폼</legend>
@@ -145,10 +145,12 @@ export default function Alliance() {
             </div>
           </fieldset>
         </form>
+      ) : (
+        <p>일정이 없는 일요일입니다.</p>
       )}
       {totalReward > 0 && (
         <p>
-          {chestCount}상 ({formatNumber(totalReward)}점) 가능합니다.
+          {chestCount}상 {chestCount > 8 && '이상'} ({formatNumber(totalReward)}점) 가능합니다.
         </p>
       )}
     </div>
