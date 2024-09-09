@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { fetchDaerogiItem, fetchDaerogiItems } from '@/lib/daerogi';
+import { fetchMatchingItem, fetchMatchingItems } from '@/lib/matching';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL, 'https://vercel.com/dev1studio/lawar'];
@@ -20,18 +20,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const id = Number(req.query.id);
 
   if (!id) {
-    const daerogiData = await fetchDaerogiItems();
-    if (!daerogiData) {
-      res.status(500).json({ error: 'Failed to fetch data from Daerogi API' });
+    const matchingData = await fetchMatchingItems();
+    if (!matchingData) {
+      res.status(500).json({ error: 'Failed to fetch data from Matching API' });
       return;
     }
-    res.status(200).json(daerogiData);
+    res.status(200).json(matchingData);
   } else {
-    const daerogiData = await fetchDaerogiItem(id);
-    if (!daerogiData) {
-      res.status(500).json({ error: 'Failed to fetch data from Daerogi API' });
+    const matchingData = await fetchMatchingItem(id);
+    if (!matchingData) {
+      res.status(500).json({ error: 'Failed to fetch data from Matching API' });
       return;
     }
-    res.status(200).json(daerogiData);
+    res.status(200).json(matchingData);
   }
 }

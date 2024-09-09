@@ -4,17 +4,17 @@ import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
 import styles from '@/styles/Daerogi.module.sass';
 
-interface DaerogiItem {
+interface MatchingItem {
   id: number;
   subject: string;
   content: any[];
 }
 
-interface DaerogiDetailPage {
-  daerogiItem: DaerogiItem;
+interface MatchingDetailPage {
+  matchingItem: MatchingItem;
 }
 
-export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
+export default function MatchingDetail({ matchingItem }: MatchingDetailPage) {
   const router = useRouter();
 
   useEffect(() => {
@@ -58,11 +58,11 @@ export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <article>
-          <h1>{daerogiItem.subject}</h1>
+          <h1>{matchingItem.subject}</h1>
           <div className={styles.content}>
-            {daerogiItem.content.map((block, index) => renderContent(block, index))}
+            {matchingItem.content.map((block, index) => renderContent(block, index))}
             <div className={styles.backbutton}>
-              <Anchor href="/daerogi">
+              <Anchor href="/matching">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M10 19.0703L11.5 17.5703L6.92969 13L21 13L21 11L6.92969 11L11.5 6.42969L10 4.92969L2.92969 12L10 19.0703Z"
@@ -80,12 +80,12 @@ export default function DaerogiDetail({ daerogiItem }: DaerogiDetailPage) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const daerogiId = params?.daerogiId;
+  const matchingId = params?.matchingId;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/daerogi?id=${daerogiId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/matching?id=${matchingId}`);
   const result = await response.json();
 
-  const daerogiItem = {
+  const matchingItem = {
     id: result.data.id,
     subject: result.data.attributes.subject,
     content: result.data.attributes.content,
@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      daerogiItem,
+      matchingItem,
     },
     revalidate: 10,
   };

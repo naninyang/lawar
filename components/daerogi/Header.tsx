@@ -8,7 +8,7 @@ export default function DaerogiHeader() {
   const router = useRouter();
   const menuRef = useRef<HTMLOListElement>(null);
   const [fontSize, setFontSize] = useState<number>(16);
-  const [rogiking, setRogiking] = useState<LawarItem[] | null>([]);
+  const [matching, setMatching] = useState<LawarItem[] | null>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,7 +55,7 @@ export default function DaerogiHeader() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/daerogi`);
+      const response = await fetch(`/api/matching`);
       const result = await response.json();
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
@@ -63,7 +63,7 @@ export default function DaerogiHeader() {
         subject: item.attributes.subject,
       }));
 
-      setRogiking(formattedData);
+      setMatching(formattedData);
     } catch (error) {
       setError('Failed to load data');
     } finally {
@@ -124,17 +124,17 @@ export default function DaerogiHeader() {
           </button>
         </div>
       </header>
-      {!loading && !error && rogiking && router.pathname === '/daerogi/[daerogiId]' && (
+      {!loading && !error && matching && router.pathname === '/daerogi/matching/[matchingId]' && (
         <nav className={styles.gnb}>
           <ol ref={menuRef} className={styles.menu}>
-            {rogiking.map((daerogi: LawarItem, index: number) => (
+            {matching.map((item: LawarItem, index: number) => (
               <li
                 key={index}
-                className={router.asPath === `/daerogi/${daerogi.id}` ? styles.current : undefined}
-                onClick={() => handleMenuClick(`/daerogi/${daerogi.id}`, index)}
+                className={router.asPath === `/daerogi/matching/${item.id}` ? styles.current : undefined}
+                onClick={() => handleMenuClick(`/daerogi/matching/${item.id}`, index)}
               >
-                <Anchor href={`/daerogi/${daerogi.id}`}>
-                  <span>{daerogi.subject}</span>
+                <Anchor href={`/daerogi/matching${item.id}`}>
+                  <span>{item.subject}</span>
                 </Anchor>
               </li>
             ))}

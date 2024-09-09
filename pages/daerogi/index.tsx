@@ -10,7 +10,7 @@ export interface LawarItem {
 }
 
 export default function DaerogiItems() {
-  const [rogiking, setRogiking] = useState<LawarItem[] | null>([]);
+  const [matching, setMatching] = useState<LawarItem[] | null>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function DaerogiItems() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/api/daerogi`);
+      const response = await fetch(`/api/matching`);
       const result = await response.json();
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
@@ -37,7 +37,7 @@ export default function DaerogiItems() {
         summary: item.attributes.summary,
       }));
 
-      setRogiking(formattedData);
+      setMatching(formattedData);
     } catch (error) {
       setError('Failed to load data');
     } finally {
@@ -53,13 +53,13 @@ export default function DaerogiItems() {
     <main className={styles.list}>
       {loading && <p>데이터를 불러오는 중입니다 :)</p>}
       {error && <p>일시적인 오류입니다. 지속적으로 문제 발생시 아리를 호출하세요.</p>}
-      {!loading && !error && rogiking && (
+      {!loading && !error && matching && (
         <ul>
-          {rogiking.map((daerogi: LawarItem, index: number) => (
+          {matching.map((item: LawarItem, index: number) => (
             <li key={index}>
               <div className={styles.item}>
-                <Anchor href={`/daerogi/${daerogi.id}`}>
-                  <strong>{daerogi.subject}</strong>
+                <Anchor href={`/daerogi/matching/${item.id}`}>
+                  <strong>{item.subject}</strong>
                   <span>
                     <strong>더 보기</strong>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,8 +71,8 @@ export default function DaerogiItems() {
                   </span>
                 </Anchor>
                 <dl>
-                  {daerogi.summary &&
-                    daerogi.summary.map((summaryItem: any, i: number) => (
+                  {item.summary &&
+                    item.summary.map((summaryItem: any, i: number) => (
                       <div key={i}>
                         {Object.entries(summaryItem).map(([key, value]: [string, any], idx: number) => (
                           <React.Fragment key={idx}>

@@ -61,7 +61,9 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
         `}
       </Script>
       <TimeInitializer initialServerTime={initialServerTime} />
-      {router.pathname === '/daerogi' || router.pathname === '/daerogi/[daerogiId]' || router.pathname === '/login' ? (
+      {router.pathname === '/daerogi' ||
+      router.pathname === '/daerogi/matching/[matchingId]' ||
+      router.pathname === '/daerogi/login' ? (
         <div className="content">
           <DaerogiHeader />
           <Component {...pageProps} />
