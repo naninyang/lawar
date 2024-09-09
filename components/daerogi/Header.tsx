@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '../Anchor';
 import { LawarItem } from '@/pages/daerogi';
+import { componentMap } from '@/pages/daerogi/toolboxes/[toolboxId]';
 import styles from '@/styles/Daerogi.module.sass';
 
 export default function DaerogiHeader() {
@@ -133,11 +134,31 @@ export default function DaerogiHeader() {
                 className={router.asPath === `/daerogi/matching/${item.id}` ? styles.current : undefined}
                 onClick={() => handleMenuClick(`/daerogi/matching/${item.id}`, index)}
               >
-                <Anchor href={`/daerogi/matching${item.id}`}>
+                <Anchor href={`/daerogi/matching/${item.id}`}>
                   <span>{item.subject}</span>
                 </Anchor>
               </li>
             ))}
+          </ol>
+        </nav>
+      )}
+      {router.pathname === '/daerogi/toolboxes/[toolboxId]' && (
+        <nav className={styles.gnb}>
+          <ol ref={menuRef} className={styles.menu}>
+            {Object.keys(componentMap).map((toolboxId, index) => {
+              const { title } = componentMap[toolboxId];
+              return (
+                <li
+                  key={toolboxId}
+                  className={router.asPath === `/daerogi/toolboxes/${toolboxId}` ? styles.current : undefined}
+                  onClick={() => handleMenuClick(`/daerogi/toolboxes/${toolboxId}`, index)}
+                >
+                  <Anchor href={`/daerogi/toolboxes/${toolboxId}`}>
+                    <span>{title}</span>
+                  </Anchor>
+                </li>
+              );
+            })}
           </ol>
         </nav>
       )}

@@ -62,7 +62,7 @@ export default function MatchingDetail({ matchingItem }: MatchingDetailPage) {
           <div className={styles.content}>
             {matchingItem.content.map((block, index) => renderContent(block, index))}
             <div className={styles.backbutton}>
-              <Anchor href="/matching">
+              <Anchor href="/daerogi">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M10 19.0703L11.5 17.5703L6.92969 13L21 13L21 11L6.92969 11L11.5 6.42969L10 4.92969L2.92969 12L10 19.0703Z"
