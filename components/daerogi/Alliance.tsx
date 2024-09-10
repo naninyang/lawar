@@ -1,4 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import ProgressBar from './ProgressBar';
 import styles from '@/styles/Daerogi.module.sass';
 
 interface Reward {
@@ -16,6 +18,30 @@ interface TitleOption {
   api: string;
 }
 
+const thresholds = [
+  { count: 0, score: 0 },
+  { count: 1, score: 40000 },
+  { count: 2, score: 150000 },
+  { count: 3, score: 540000 },
+  { count: 4, score: 660000 },
+  { count: 5, score: 1000000 },
+  { count: 6, score: 2300000 },
+  { count: 7, score: 2600000 },
+  { count: 8, score: 3600000 },
+  { count: 9, score: 7200000 },
+];
+
+export function useMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  const mobile = useMediaQuery({
+    query: `(max-width: ${991 / 16}rem)`,
+  });
+  useEffect(() => {
+    setIsMobile(mobile);
+  }, [mobile]);
+  return isMobile;
+}
+
 export default function Alliance() {
   const [selectedAlliance, setSelectedAlliance] = useState<string>('');
   const [titles, setTitles] = useState<TitleOption[]>([]);
@@ -24,6 +50,7 @@ export default function Alliance() {
   const [totalReward, setTotalReward] = useState<number>(0);
   const [chestCount, setChestCount] = useState<number>(0);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const isMobile = useMobile();
 
   const apiList: string[] = [
     '/api/alliance/monday',
@@ -78,6 +105,19 @@ export default function Alliance() {
     calculateChestCount(total);
   };
 
+  const getNextChestThreshold = (total: number): number => {
+    if (total < 40000) return 40000;
+    if (total < 150000) return 150000;
+    if (total < 540000) return 540000;
+    if (total < 660000) return 660000;
+    if (total < 1000000) return 1000000;
+    if (total < 2300000) return 2300000;
+    if (total < 2600000) return 2600000;
+    if (total < 3600000) return 3600000;
+    if (total < 7200000) return 7200000;
+    return 7200000;
+  };
+
   const calculateChestCount = (total: number) => {
     if (total >= 7200000) setChestCount(9);
     else if (total >= 3600000) setChestCount(8);
@@ -89,6 +129,24 @@ export default function Alliance() {
     else if (total >= 150000) setChestCount(2);
     else if (total >= 40000) setChestCount(1);
     else setChestCount(0);
+  };
+
+  const getRemainingPoints = (total: number): number => {
+    const nextThreshold = getNextChestThreshold(total);
+    return nextThreshold - total;
+  };
+
+  const getNormalizedTotalReward = (total: number): number => {
+    for (let i = 0; i < thresholds.length - 1; i++) {
+      const currentThreshold = thresholds[i];
+      const nextThreshold = thresholds[i + 1];
+
+      if (total >= currentThreshold.score && total < nextThreshold.score) {
+        const normalized = (total - currentThreshold.score) / (nextThreshold.score - currentThreshold.score);
+        return (i + normalized) * (7200000 / (thresholds.length - 1));
+      }
+    }
+    return total;
   };
 
   const formatNumber = (number: number) => {
@@ -124,7 +182,7 @@ export default function Alliance() {
         </form>
       )}
       {rewards && rewards.length > 0 && rewards[0].reward > 0 ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={!isMobile ? styles['reward-item'] : undefined}>
           <fieldset>
             <legend>보상 점수 계산폼</legend>
             {rewards.map((reward, index) => (
@@ -149,9 +207,21 @@ export default function Alliance() {
         <p>일정이 없는 일요일입니다.</p>
       )}
       {totalReward > 0 && (
-        <p>
-          {chestCount}상 {chestCount > 8 && '이상'} ({formatNumber(totalReward)}점) 가능합니다.
-        </p>
+        <div className={styles.result}>
+          <ProgressBar totalReward={getNormalizedTotalReward(totalReward)} correctionReward={totalReward} />
+          <div className={styles.paragraphes}>
+            <p>
+              {chestCount}상 {chestCount > 8 && '이상'} ({formatNumber(totalReward)}점) 입니다.
+            </p>
+            {chestCount < 9 ? (
+              <p>
+                {chestCount + 1}상까지는 {formatNumber(getRemainingPoints(totalReward))}점 남았습니다.
+              </p>
+            ) : (
+              <p>최대 상자에 도달했습니다.</p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

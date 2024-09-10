@@ -543,6 +543,30 @@ footer.footer
     max-width: rem(570)
     width: 100%
 
+    &.reward-item
+      max-width: none
+
+      fieldset
+        flex-direction: row
+        flex-wrap: wrap
+        gap: 0
+
+        .group
+          flex-direction: row
+          width: 50%
+
+          &:nth-of-type(even)
+            label
+              padding-left: rem(23)
+
+          label, > div
+            +col
+
+          label
+            display: flex
+            align-items: center
+            font-size: rem(16)
+
     fieldset
       display: flex
       flex-direction: column
@@ -560,6 +584,8 @@ footer.footer
         background-color: transparent
         outline: 0
         border: 0
+        padding-left: rem(12)
+        padding-right: rem(12)
         width: 100%
         height: rem(38)
         font-size: rem(16)
@@ -601,6 +627,166 @@ footer.footer
     input, select, button
       color: $hex-black
 
-  p
-    font-size: rem(20)
-    font-weight: 500
+  .result
+    display: flex
+    flex-direction: column
+    gap: rem(23)
+    background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+    border-radius: rem(3)
+    padding: rem(52) 0
+    width: 100%
+
+    +mq(maxMedium)
+      align-items: center
+
+    +mq(minLarge)
+      padding: rem(102) rem(72) rem(23)
+
+    .paragraphes
+      padding-top: rem(53)
+      text-align: center
+
+      +mq(minLarge)
+        padding-top: rem(37)
+
+    p
+      font-size: rem(18)
+      font-weight: 500
+
+      +mq(minLarge)
+        font-size: rem(20)
+
+.progress-container
+  position: relative
+
+  +mq(maxMedium)
+    width: rem(10)
+    height: rem(1000)
+
+  +mq(minLarge)
+    width: 100%
+    height: rem(10)
+
+  .progress-bar
+    display: flex
+    align-items: center
+    position: relative
+    background-color: rgba($hex-black, .5)
+    border-radius: rem(20)
+    padding: 0 rem(2)
+    height: 100%
+
+    +mq(maxMedium)
+      flex-direction: column
+      padding: rem(2) 0
+
+    +mq(minLarge)
+      padding: 0 rem(2)
+      width: 100%
+
+    .progress-fill
+      background-color: #4caf50
+      border-radius: rem(5)
+      transition: width 0.3s ease
+
+      +mq(maxMedium)
+        width: rem(5)
+
+      +mq(minLarge)
+        height: rem(5)
+
+    .progress-box, .progress-score
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      position: absolute
+      padding: rem(2) rem(12)
+      width: rem(80)
+      white-space: nowrap
+
+      +mq(minLarge)
+        transform: translateX(-50%)
+
+    .progress-box
+      justify-content: flex-end
+      align-items: center
+      background-color: rgba($hex-white, .35)
+      border-radius: rem(3)
+
+      &.open
+        background-color: rgba($hex-white, .75)
+
+      +mq(maxMedium)
+        transform: translateY(-50%)
+        right: rem(23)
+        padding: rem(7) rem(17)
+        width: auto
+
+      +mq(minLarge)
+        bottom: rem(23)
+        transform: translateX(-50%)
+
+      svg, span
+        opacity: .35
+
+      span
+        color: $hex-black
+        font-size: rem(16)
+
+      svg
+        width: rem(30)
+        height: rem(30)
+
+        path
+          fill: $hex-black
+
+      &.open
+        svg, span
+          opacity: 1
+
+        svg
+          path
+            fill: $hex-red
+
+    .progress-score
+      span
+        opacity: .35
+
+      &.open
+        span
+          opacity: 1
+
+      +mq(maxMedium)
+        flex-direction: row
+        align-items: center
+        gap: rem(5)
+        transform: translateY(-50%)
+        left: rem(-10)
+        padding: 0
+        width: auto
+
+        .dummy
+          display: block
+          width: rem(30)
+          height: rem(30)
+
+      +mq(minLarge)
+        bottom: rem(-48)
+        transform: translateX(-50%)
+        gap: rem(5)
+
+      svg
+        width: rem(30)
+        height: rem(30)
+
+      span
+        opacity: .35
+        border-radius: rem(3)
+        padding: rem(7) rem(17)
+        background-color: $hex-white
+        color: $hex-black
+        font-size: rem(16)
+
+        +mq(minLarge)
+          font-size: rem(12)
