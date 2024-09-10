@@ -79,14 +79,16 @@ export default function Unit() {
         <dl>
           <div className={styles.default}>
             <dt>입력한 값</dt>
-            <dd>{unitValue}</dd>
+            <dd>
+              {unitValue} {unit !== '기본' && unit}
+            </dd>
           </div>
           <div>
             <dt>계산된 값</dt>
             <dd>
-              {results['K'] !== '0' && <strong>{results['K']} K</strong>}
-              {results['M'] !== '0' && <strong>{results['M']} M</strong>}
-              {results['G'] !== '0' && <strong>{results['G']} G</strong>}
+              {results['K'] !== '0' && unit !== 'K' && <strong>{results['K']} K</strong>}
+              {results['M'] !== '0' && unit !== 'M' && <strong>{results['M']} M</strong>}
+              {results['G'] !== '0' && unit !== 'G' && <strong>{results['G']} G</strong>}
             </dd>
           </div>
         </dl>
