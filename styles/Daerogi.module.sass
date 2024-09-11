@@ -538,12 +538,30 @@ footer.footer
             &:first-of-type::before
               display: none
 
-.alliance
+.alliances
   form
     max-width: rem(570)
     width: 100%
 
-    &.reward-item
+    &.reward-column, &.reward-row
+      fieldset
+        .group
+          flex-direction: row
+          gap: rem(17)
+
+          label
+            justify-content: flex-end
+
+          > div
+            width: rem(100)
+
+          label
+            display: flex
+            align-items: center
+            font-size: rem(16)
+            text-align: right
+
+    &.reward-row
       max-width: none
 
       fieldset
@@ -552,20 +570,30 @@ footer.footer
         gap: 0
 
         .group
-          flex-direction: row
           width: 50%
 
           &:nth-of-type(even)
             label
               padding-left: rem(23)
 
-          label, > div
+          label
             +col
+            font-size: rem(16)
+
+    &.reward-column
+      fieldset
+        .group
+          +row
+          justify-content: center
+          padding-bottom: 0
 
           label
-            display: flex
-            align-items: center
-            font-size: rem(16)
+            width: calc(100% - rem(117))
+            font-size: rem(14)
+            letter-spacing: -.07em
+
+          ~ .button
+            padding-top: rem(23)
 
     fieldset
       display: flex
@@ -587,7 +615,7 @@ footer.footer
         padding-left: rem(12)
         padding-right: rem(12)
         width: 100%
-        height: rem(38)
+        height: rem(48)
         font-size: rem(16)
         color: $hex-white
 
@@ -633,14 +661,12 @@ footer.footer
     gap: rem(23)
     background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
     border-radius: rem(3)
-    padding: rem(52) 0
+    padding: rem(102) rem(72) rem(23)
     width: 100%
 
     +mq(maxMedium)
-      align-items: center
-
-    +mq(minLarge)
-      padding: rem(102) rem(72) rem(23)
+      max-width: rem(570)
+      padding: rem(102) rem(52) rem(23)
 
     .paragraphes
       padding-top: rem(53)
@@ -656,16 +682,47 @@ footer.footer
       +mq(minLarge)
         font-size: rem(20)
 
-.progress-container
-  position: relative
+.progress-sections
+  display: flex
+  flex-direction: column
+  gap: rem(152)
 
-  +mq(maxMedium)
-    width: rem(10)
-    height: rem(1000)
-
-  +mq(minLarge)
+  .progress-section
+    display: flex
+    position: relative
     width: 100%
     height: rem(10)
+
+.progress-container
+  position: relative
+  height: rem(10)
+  width: 100%
+
+  .progress-content
+    display: flex
+
+    > div
+      + col
+
+  .progress-content
+    display: flex
+
+    > div
+      + col
+
+      &.progress-bar-before
+        border-radius: rem(20) 0 0 rem(20)
+        padding-right: 0
+
+        .progress-fill
+          border-radius: rem(5) 0 0 rem(5)
+
+      &.progress-bar-after
+        border-radius: 0 rem(20) rem(20) 0
+        padding-left: 0
+
+        .progress-fill
+          border-radius: 0 rem(5) rem(5) 0
 
   .progress-bar
     display: flex
@@ -673,59 +730,43 @@ footer.footer
     position: relative
     background-color: rgba($hex-black, .5)
     border-radius: rem(20)
-    padding: 0 rem(2)
-    height: 100%
-
-    +mq(maxMedium)
-      flex-direction: column
-      padding: rem(2) 0
-
-    +mq(minLarge)
-      padding: 0 rem(2)
-      width: 100%
+    padding: rem(2)
+    width: 100%
 
     .progress-fill
+      transition: width 0.3s ease
       background-color: #4caf50
       border-radius: rem(5)
-      transition: width 0.3s ease
-
-      +mq(maxMedium)
-        width: rem(5)
-
-      +mq(minLarge)
-        height: rem(5)
+      height: rem(5)
 
     .progress-box, .progress-score
       display: flex
       flex-direction: column
       justify-content: center
       align-items: center
+      transform: translateX(-50%)
       position: absolute
       padding: rem(2) rem(12)
       width: rem(80)
       white-space: nowrap
 
-      +mq(minLarge)
-        transform: translateX(-50%)
-
     .progress-box
       justify-content: flex-end
       align-items: center
+      bottom: rem(23)
+      transform: translateX(-50%)
       background-color: rgba($hex-white, .35)
       border-radius: rem(3)
 
       &.open
         background-color: rgba($hex-white, .75)
 
-      +mq(maxMedium)
-        transform: translateY(-50%)
-        right: rem(23)
-        padding: rem(7) rem(17)
-        width: auto
+        svg, span
+          opacity: 1
 
-      +mq(minLarge)
-        bottom: rem(23)
-        transform: translateX(-50%)
+        svg
+          path
+            fill: $hex-red
 
       svg, span
         opacity: .35
@@ -741,40 +782,17 @@ footer.footer
         path
           fill: $hex-black
 
-      &.open
-        svg, span
-          opacity: 1
-
-        svg
-          path
-            fill: $hex-red
-
     .progress-score
-      span
-        opacity: .35
+      bottom: rem(-48)
+      transform: translateX(-50%)
+      gap: rem(5)
 
       &.open
         span
           opacity: 1
 
-      +mq(maxMedium)
-        flex-direction: row
-        align-items: center
-        gap: rem(5)
-        transform: translateY(-50%)
-        left: rem(-10)
-        padding: 0
-        width: auto
-
-        .dummy
-          display: block
-          width: rem(30)
-          height: rem(30)
-
-      +mq(minLarge)
-        bottom: rem(-48)
-        transform: translateX(-50%)
-        gap: rem(5)
+      span
+        opacity: .35
 
       svg
         width: rem(30)
@@ -786,7 +804,4 @@ footer.footer
         padding: rem(7) rem(17)
         background-color: $hex-white
         color: $hex-black
-        font-size: rem(16)
-
-        +mq(minLarge)
-          font-size: rem(12)
+        font-size: rem(12)

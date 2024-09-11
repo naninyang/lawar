@@ -156,7 +156,7 @@ export default function Alliance() {
   if (!isMounted) return null;
 
   return (
-    <div className={styles.alliance}>
+    <div className={styles.alliances}>
       {titles && titles.length > 0 && (
         <form onSubmit={handleTitleSubmit}>
           <fieldset>
@@ -181,8 +181,8 @@ export default function Alliance() {
           </fieldset>
         </form>
       )}
-      {rewards && rewards.length > 0 && rewards[0].reward > 0 ? (
-        <form onSubmit={handleSubmit} className={!isMobile ? styles['reward-item'] : undefined}>
+      {rewards && rewards.length > 0 && rewards[0].reward > 0 && (
+        <form onSubmit={handleSubmit} className={isMobile ? styles['reward-column'] : styles['reward-row']}>
           <fieldset>
             <legend>보상 점수 계산폼</legend>
             {rewards.map((reward, index) => (
@@ -203,15 +203,14 @@ export default function Alliance() {
             </div>
           </fieldset>
         </form>
-      ) : (
-        <p>일정이 없는 일요일입니다.</p>
       )}
-      {totalReward > 0 && (
+      {rewards && rewards.length > 0 && rewards[0].reward === 0 && <p>일정이 없는 일요일입니다.</p>}
+      {rewards && rewards.length > 0 && rewards[0].reward > 0 && totalReward > 0 && (
         <div className={styles.result}>
           <ProgressBar totalReward={getNormalizedTotalReward(totalReward)} correctionReward={totalReward} />
           <div className={styles.paragraphes}>
             <p>
-              {chestCount}상 {chestCount > 8 && '이상'} ({formatNumber(totalReward)}점) 입니다.
+              {chestCount}상 {totalReward > 7200000 && '이상'} ({formatNumber(totalReward)}점) 입니다.
             </p>
             {chestCount < 9 ? (
               <p>

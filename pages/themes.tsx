@@ -12,8 +12,6 @@ export default function Themes() {
   const [displayDay, setDisplayDay] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!serverTime) return;
-
     async function fetchAllData() {
       try {
         if (!serverTime) return;
