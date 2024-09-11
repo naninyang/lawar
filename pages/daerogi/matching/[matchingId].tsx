@@ -24,7 +24,7 @@ export default function MatchingDetail({ matchingItem }: MatchingDetailPage) {
     if (authInLocalStorage && !authInCookies) {
       document.cookie = `auth=${authInLocalStorage}; path=/;`;
     } else if (!authInLocalStorage && !authInCookies) {
-      router.push('/login');
+      router.push('/daerogi/login');
     }
   }, [router]);
 

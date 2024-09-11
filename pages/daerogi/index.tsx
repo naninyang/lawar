@@ -23,7 +23,7 @@ export default function DaerogiItems() {
     if (authInLocalStorage && !authInCookies) {
       document.cookie = `auth=${authInLocalStorage}; path=/;`;
     } else if (!authInLocalStorage && !authInCookies) {
-      router.push('/login');
+      router.push('/daerogi/login');
     }
   }, [router]);
 
