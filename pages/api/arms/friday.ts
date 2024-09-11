@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
+    day: '금요일',
     title: '7일차',
     themes: [
       {

@@ -9,11 +9,13 @@ interface Reward {
 }
 
 interface ApiResponse {
+  day: string;
   title: string;
   rewards: Reward[];
 }
 
 interface TitleOption {
+  day: string;
   title: string;
   api: string;
 }
@@ -70,7 +72,7 @@ export default function Alliance() {
       for (const api of apiList) {
         const response = await fetch(api);
         const data: ApiResponse = await response.json();
-        fetchedTitles.push({ title: data.title, api });
+        fetchedTitles.push({ day: data.day, title: data.title, api });
       }
       setTitles(fetchedTitles);
     }
@@ -170,7 +172,7 @@ export default function Alliance() {
                 <option value="">선택하기</option>
                 {titles.map((titleObj, index) => (
                   <option key={index} value={titleObj.api}>
-                    {titleObj.title}
+                    {titleObj.day} - {titleObj.title}
                   </option>
                 ))}
               </select>

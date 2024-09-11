@@ -59,7 +59,9 @@ export default function CurrentTheme() {
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <dl>
-          <dt>{currentTheme.title}</dt>
+          <dt>
+            {currentTheme.day} - {currentTheme.title}
+          </dt>
           <dd>
             {currentTheme.items
               ? currentTheme.items.map((item: string, index: number) => <strong key={index}>{item}</strong>)

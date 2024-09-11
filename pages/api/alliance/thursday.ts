@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
+    day: '목요일',
     title: '4일차 영웅 육성 (승차점수 2점)',
     rewards: [
       { item: '정예 모집 1회', reward: 3450 },

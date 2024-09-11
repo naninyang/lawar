@@ -8,6 +8,7 @@ export interface LawarItem {
   id: number;
   subject: string;
   summary?: any;
+  matchingtime?: any;
 }
 
 export default function DaerogiItems() {
@@ -36,6 +37,7 @@ export default function DaerogiItems() {
         id: item.id,
         subject: item.attributes.subject,
         summary: item.attributes.summary,
+        matchingtime: item.attributes.matchingtime,
       }));
 
       setMatching(formattedData);
@@ -114,29 +116,36 @@ export default function DaerogiItems() {
                     </svg>
                   </span>
                 </Anchor>
-                <dl>
-                  {item.summary &&
-                    item.summary.map((summaryItem: any, i: number) => (
-                      <div key={i}>
-                        {Object.entries(summaryItem).map(([key, value]: [string, any], idx: number) => (
-                          <React.Fragment key={idx}>
-                            <dt>
-                              <strong>매칭 연맹 대전</strong>
-                              <span>
-                                {key.split(',').map((splitKey: string, j: number) => (
-                                  <em key={j}>{splitKey.trim()}</em>
-                                ))}
-                              </span>
-                            </dt>
-                            <dd>
-                              <strong>매칭 군비 경쟁</strong>
-                              {String(value)}
-                            </dd>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    ))}
-                </dl>
+                {item.id < 7 && (
+                  <dl>
+                    {item.summary &&
+                      item.matchingtime &&
+                      item.summary.map((summaryItem: any, i: number) => (
+                        <div key={i}>
+                          {Object.entries(summaryItem).map(([key, value]: [string, any], idx: number) => (
+                            <React.Fragment key={idx}>
+                              <dt>
+                                <strong>매칭 연맹 대전</strong>
+                                <span>
+                                  {key.split(',').map((splitKey: string, j: number) => (
+                                    <em key={j}>{splitKey.trim()}</em>
+                                  ))}
+                                </span>
+                              </dt>
+                              <dd>
+                                <strong>매칭 군비 경쟁</strong>
+                                <span>{String(value)}</span>
+                              </dd>
+                              <dd>
+                                <strong>매칭 시간</strong>
+                                <span>{item.matchingtime[i] ? item.matchingtime[i] : '매칭 시간이 없습니다'}</span>
+                              </dd>
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      ))}
+                  </dl>
+                )}
               </div>
             </li>
           ))}

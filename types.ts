@@ -9,12 +9,14 @@ export type Theme = {
 };
 
 export type Alliance = {
+  day: string;
   title: string;
   rewards: Reward[];
   items?: any;
 };
 
 export interface Themes {
+  day: string;
   name: string;
   time: string;
   rewards: { item: string; reward: number }[];

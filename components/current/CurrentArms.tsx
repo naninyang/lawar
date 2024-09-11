@@ -92,7 +92,7 @@ export default function CurrentArms() {
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <dl>
-          <dt>{currentTheme.name}</dt>
+          <dt>현재 군비경쟁 테마 - {currentTheme.name}</dt>
           <dd>
             {currentTheme.rewards.map((reward: any, idx: number) => (
               <strong key={idx}>{reward.item}</strong>

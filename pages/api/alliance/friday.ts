@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
+    day: '금요일',
     title: '5일차 전면 준비 (승차점수 2점)',
     rewards: [
       { item: '레이더 임무 1회 완료', reward: 23000 },

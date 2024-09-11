@@ -7,6 +7,7 @@ import styles from '@/styles/Home.module.sass';
 export default function CurrentShowdown() {
   const serverTime = useRecoilValue(serverTimeState);
   const [themes, setThemes] = useState<Themes[]>([]);
+  const [day, setDay] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [matching, setMatching] = useState<number[]>([]);
 
@@ -26,6 +27,7 @@ export default function CurrentShowdown() {
       .then((response) => response.json())
       .then((data) => {
         setThemes(data.themes);
+        setDay(data.day);
         setTitle(data.title);
         setMatching(data.matching || []);
       });
@@ -42,10 +44,10 @@ export default function CurrentShowdown() {
     }
 
     const localHours = localDate.getHours().toString().padStart(2, '0');
-    let nextDayText = localHours >= '03' && localHours <= '07' ? '내일' : '';
+    let nextDayText = localHours >= '03' && localHours <= '07' ? '다음 날' : '';
 
     if (dueTime) {
-      nextDayText = localHours >= '03' && localHours <= '11' ? '내일' : '';
+      nextDayText = localHours >= '03' && localHours <= '11' ? '다음 날' : '';
     }
 
     return `${nextDayText} ${localHours}시`;
@@ -57,7 +59,9 @@ export default function CurrentShowdown() {
         <p>데이터를 불러오는 중입니다 :)</p>
       ) : (
         <dl>
-          <dt>{title}</dt>
+          <dt>
+            {day} - {title}
+          </dt>
           <dd>
             {themes.filter((_, index) => matching.includes(index)).length === 0
               ? '오늘은 연맹 대전이 없는 날입니다'
