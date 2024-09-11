@@ -5,6 +5,7 @@ import styles from '@/styles/Daerogi.module.sass';
 
 export type ComponentMap = {
   [key: string]: {
+    name: string;
     title: string;
     content: React.ComponentType<any>;
   };
@@ -12,10 +13,12 @@ export type ComponentMap = {
 
 export const componentMap: ComponentMap = {
   unit: {
+    name: 'unit',
     title: '단위 계산기',
     content: dynamic(() => import('@/components/daerogi/Unit')),
   },
   alliance: {
+    name: 'alliance',
     title: '연맹대전 보상 계산기',
     content: dynamic(() => import('@/components/daerogi/Alliance')),
   },
