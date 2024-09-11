@@ -476,6 +476,9 @@ footer.footer
         overflow: hidden
         border-radius: rem(3)
 
+        +mq(maxExtraSmall)
+          flex-direction: column
+
         label
           +screen-reader-only
 
@@ -487,6 +490,9 @@ footer.footer
           font-size: rem(20)
           color: $hex-white
 
+          +mq(maxExtraSmall)
+            width: 100%
+
         input, select
           background-color: transparent
           outline: 0
@@ -494,16 +500,12 @@ footer.footer
         input::placeholder
           color: rgba($hex-white, .5)
 
-        .value, .selectbox
-          background-color: rgba($hex-white, .2)
-
         .value
+          background-color: rgba($hex-white, .2)
           width: rem(270)
 
-          +mq(maxExtraSmall)
-            width: calc(100% - rem(120))
-
         .selectbox
+          background-color: rgba($hex-black, .2)
           width: rem(120)
           padding-right: rem(12)
 
@@ -514,19 +516,13 @@ footer.footer
           display: inline-flex
           width: auto
 
-          +mq(maxExtraSmall)
-            width: 100%
-
-            button
-              width: 100%
-              height: rem(57)
-
           button
             background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
             font-weight: 700
 
-      input, select, button
-        color: $hex-black
+        .value, .selectbox, .button
+          +mq(maxExtraSmall)
+            width: 100%
 
   dl
     display: flex
