@@ -189,13 +189,15 @@ export default function Alliance() {
             <legend>보상 점수 계산폼</legend>
             {rewards.map((reward, index) => (
               <div key={index} className={styles.group}>
-                <label htmlFor="allianceItem">{reward.item}</label>
+                <label htmlFor={`allianceItem${index}`}>{reward.item}</label>
                 <div className={styles.value}>
                   <input
                     type="number"
-                    id="allianceItem"
-                    onChange={(e) => handleInputChange(e, index)}
+                    id={`allianceItem${index}`}
                     placeholder="수량 입력"
+                    pattern="\d*"
+                    min={0}
+                    onChange={(e) => handleInputChange(e, index)}
                   />
                 </div>
               </div>

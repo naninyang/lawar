@@ -24,6 +24,11 @@ export const componentMap: ComponentMap = {
     title: '연맹대전 보상 계산기',
     content: dynamic(() => import('@/components/daerogi/Alliance')),
   },
+  arms: {
+    name: 'arms',
+    title: '군비 보상 계산기',
+    content: dynamic(() => import('@/components/daerogi/Arms')),
+  },
 };
 
 interface Props {

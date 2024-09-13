@@ -66,7 +66,7 @@ export default function ArmsToday() {
     );
   }, [serverTime, themes.length]);
 
-  const formatToLocalTime = (utcTime: string) => {
+  const localTime = (utcTime: string) => {
     const [hours, minutes, seconds] = utcTime.slice(1, 9).split(':').map(Number);
 
     const localDate = new Date();
@@ -99,7 +99,7 @@ export default function ArmsToday() {
                   <strong>
                     {theme.name} {index === currentThemeIndex && '[현재 테마]'}
                   </strong>
-                  <span>{formatToLocalTime(theme.time)}</span>
+                  <span>{localTime(theme.time)}</span>
                 </h4>
                 <dl>
                   {theme.rewards.map((reward: any, idx: number) => (

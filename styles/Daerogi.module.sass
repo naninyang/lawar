@@ -731,12 +731,6 @@ footer.footer
     > div
       + col
 
-  .progress-content
-    display: flex
-
-    > div
-      + col
-
       &.progress-bar-before
         border-radius: rem(20) 0 0 rem(20)
         padding-right: 0
@@ -832,3 +826,261 @@ footer.footer
         background-color: $hex-white
         color: $hex-black
         font-size: rem(12)
+
+.arms
+  form
+    max-width: rem(570)
+    width: 100%
+
+    fieldset
+      display: flex
+      flex-direction: column
+      gap: rem(7)
+      border: rem(2) solid rgba($hex-white, .5)
+      border-radius: rem(3)
+      padding: rem(25)
+      width: 100%
+
+      label
+        font-size: rem(20)
+        font-weight: 700
+
+      input, select
+        background-color: transparent
+        outline: 0
+        border: 0
+        padding-left: rem(12)
+        padding-right: rem(12)
+        width: 100%
+        height: rem(48)
+        font-size: rem(16)
+        color: $hex-white
+
+      input::placeholder
+        color: rgba($hex-white, .5)
+
+      .group
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+        padding-bottom: rem(23)
+
+        ~ .button
+          padding-top: 0
+
+      .value, .selectbox
+        background-color: rgba($hex-white, .2)
+
+      .selectbox
+        padding-right: rem(12)
+
+        select
+          width: 100%
+
+      .button
+        padding-top: rem(23)
+        width: 100%
+
+        button
+          width: 100%
+          height: rem(57)
+          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+          font-size: rem(24)
+          font-weight: 700
+          color: $hex-white
+
+    input, select, button
+      color: $hex-black
+
+    &.armsCalc
+      max-width: none
+
+      dl
+        display: flex
+        flex-direction: column
+        gap: rem(12)
+        border-top: 1px solid rgba($hex-white, .5)
+        padding-top: rem(23)
+
+        &:first-of-type
+          border-top: 0
+          padding-top: 0
+
+        dt
+          font-size: rem(20)
+          font-weight: 800
+
+        > div
+          +row
+
+          +mq(maxMedium)
+            flex-direction: column
+
+          dd
+            flex-direction: row
+
+            +mq(minLarge)
+              width: 50%
+
+            &:nth-of-type(even)
+              label
+                padding-left: rem(23)
+
+            label
+              display: flex
+              align-items: center
+              justify-content: flex-end
+              +col
+              font-size: rem(16)
+              text-align: right
+
+            .value
+              width: rem(100)
+
+  .result
+    display: flex
+    flex-direction: column
+    gap: rem(23)
+    border-radius: rem(3)
+    width: 100%
+
+    .progress-container
+      span
+        position: absolute
+        transform: translateX(-50%)
+
+    .result-badges
+      display: flex
+      align-items: center
+      flex-direction: column
+      gap: rem(7)
+      background: linear-gradient(90deg, #FBF9D1 0%, #FCBD5B 100%)
+      border-radius: rem(3)
+      padding: rem(53) rem(53) rem(23) rem(23)
+
+      .badges-result
+        display: flex
+        align-items: center
+        gap: rem(23)
+        width: 100%
+
+      dl
+        &.badge
+          dt
+            +screen-reader-only
+
+          dd
+            position: relative
+
+            svg
+              width: rem(58)
+              height: rem(58)
+
+            strong
+              position: absolute
+              top: rem(9)
+              left: 50%
+              transform: translateX(-50%)
+              font-size: rem(16)
+              font-weight: 900
+              color: $hex-black
+
+            span
+              +screen-reader-only
+
+        &.score
+          display: flex
+          gap: rem(7)
+
+          dt, dd
+            color: $hex-black
+
+          dt::after
+            content: ': '
+
+          dd
+            font-weight: 800
+
+      .progress-container
+        background-color: rgba($hex-black, .2)
+
+        .progress-fill
+          background-color: #F9B832
+
+        span
+          display: flex
+          flex-direction: column
+          align-items: center
+          gap: rem(5)
+          top: rem(-51)
+
+          svg
+            width: rem(38)
+            height: rem(38)
+
+          strong
+            position: relative
+            font-size: rem(16)
+            font-weight: 900
+
+            span
+              position: absolute
+              top: 50%
+              left: 50%
+              z-index: 1
+              transform: translate(-50%, -50%)
+              color: $hex-black
+
+            i
+              display: block
+              background-color: #F9B832
+              transform: rotate(45deg)
+              width: rem(25)
+              height: rem(25)
+              border: rem(3) solid #E6951B
+              border-radius: rem(3)
+
+            em
+              +screen-reader-only
+
+    .result-theme
+      display: flex
+      flex-direction: column
+      gap: rem(53)
+      background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+      border-radius: rem(3)
+      padding: rem(23) rem(32) rem(53)
+      color: $hex-black
+
+      +mq(minLarge)
+        padding: rem(23) rem(53) rem(53)
+
+      .result-theme-item
+        dl
+          display: flex
+          gap: rem(23)
+
+          dd
+            font-weight: 700
+
+        .progress-container
+          padding: rem(53) rem(12) rem(23)
+
+        .progress-bar
+          > span
+            display: flex
+            flex-direction: column
+            align-items: center
+            top: rem(-45)
+
+            i:first-of-type
+              svg
+                width: rem(32)
+                height: rem(32)
+
+            span
+              +screen-reader-only
+
+            strong
+              font-size: rem(16)
+              font-weight: 900
