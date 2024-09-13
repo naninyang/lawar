@@ -304,7 +304,7 @@ export default function Arms() {
             </div>
             <dl className={styles.score}>
               <dt>총 획득점수</dt>
-              <dd> {calculatedResults.reduce((acc, result) => acc + result.score, 0)} 점</dd>
+              <dd> {calculatedResults.reduce((acc, result) => acc + result.score, 0).toLocaleString()} 점</dd>
             </dl>
           </div>
           <div className={styles['result-theme']}>
@@ -313,7 +313,7 @@ export default function Arms() {
                 <dl>
                   <dt>{result.name}</dt>
                   <dd>
-                    {result.smallChests} 상자 / {result.score} 점
+                    {result.smallChests} 상자 / {result.score.toLocaleString()} 점
                   </dd>
                 </dl>
                 <div className={styles['progress-container']}>
