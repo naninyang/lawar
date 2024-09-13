@@ -129,7 +129,7 @@ export default function Arms() {
         <fieldset>
           <legend>요일 선택폼</legend>
           <div className={styles.group}>
-            <label htmlFor="armsSelect">연맹 대전 선택</label>
+            <label htmlFor="armsSelect">군비 요일 선택</label>
             <div className={styles.selectbox}>
               <select id="armsSelect" onChange={(e) => setSelectedDay(e.target.value)}>
                 <option value="">요일을 선택하세요</option>
