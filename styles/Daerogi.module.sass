@@ -600,6 +600,9 @@ footer.footer
         .group
           width: 50%
 
+          +mq(minXXLarge)
+            width: 25%
+
           &:nth-of-type(even)
             label
               padding-left: rem(23)
@@ -923,6 +926,9 @@ footer.footer
             +mq(minLarge)
               width: 50%
 
+            +mq(minXXLarge)
+              width: 25%
+
             &:nth-of-type(even)
               label
                 padding-left: rem(23)
@@ -1046,17 +1052,26 @@ footer.footer
 
     .result-theme
       display: flex
-      flex-direction: column
       gap: rem(53)
       background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
       border-radius: rem(3)
       padding: rem(23) rem(32) rem(53)
       color: $hex-black
 
+      +mq(maxMedium)
+        flex-direction: column
+
       +mq(minLarge)
+        flex-wrap: wrap
         padding: rem(23) rem(53) rem(53)
 
       .result-theme-item
+        +mq(minLarge)
+          width: calc(50% - rem(27))
+
+        +mq(minXXLarge)
+          width: calc(33% - rem(32))
+
         dl
           display: flex
           gap: rem(23)

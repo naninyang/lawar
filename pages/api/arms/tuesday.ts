@@ -54,6 +54,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           { item: '7레벨 유닛 1개 훈련', reward: 22 },
           { item: '8레벨 유닛 1개 훈련', reward: 25 },
           { item: '9레벨 유닛 1개 훈련', reward: 28 },
+          { item: '다이아 포함 패키지 구매 (1다이아)', reward: 30 },
         ],
       },
       {
