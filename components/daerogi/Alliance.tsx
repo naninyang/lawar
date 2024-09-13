@@ -193,10 +193,11 @@ export default function Alliance() {
                 <div className={styles.value}>
                   <input
                     type="number"
+                    min="0"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     id={`allianceItem${index}`}
                     placeholder="수량 입력"
-                    pattern="\d*"
-                    min={0}
                     onChange={(e) => handleInputChange(e, index)}
                   />
                 </div>

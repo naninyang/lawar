@@ -165,6 +165,9 @@ export default function Arms() {
                       <div className={styles.value}>
                         <input
                           type="number"
+                          min="0"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           id={`armsItem${themeIndex}${rewardIndex}`}
                           value={inputScores[themeIndex][rewardIndex] || ''}
                           onChange={(e) => handleScoreChange(themeIndex, rewardIndex, Number(e.target.value))}
