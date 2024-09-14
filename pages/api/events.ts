@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetchEventsData } from '@/lib/events';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL, 'https://lsat-api.vercel.app'];
+  const allowedOrigins = [process.env.NEXT_PUBLIC_API_URL, 'https://lawar.vercel.app'];
   const origin = req.headers.origin;
 
   if (allowedOrigins.includes(origin || '')) {
