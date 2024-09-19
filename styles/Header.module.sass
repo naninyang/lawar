@@ -7,10 +7,20 @@ header.header
 
   h1
     display: flex
-    justify-content: space-between
+    position: relative
+
+    +mq(maxExtraSmall)
+      flex-direction: column
+
+    +mq(minSmall)
+      align-items: center
 
     a
       display: inline-flex
+
+      &:first-of-type, &:last-of-type
+        span
+          +screen-reader-only
 
       &:first-of-type
         padding: rem(17) rem(25)
@@ -21,12 +31,34 @@ header.header
           width: rem(203)
           height: rem(24)
 
+      &:nth-of-type(2)
+        display: flex
+        font-size: rem(20)
+        color: $hex-white
+
+        +mq(maxExtraSmall)
+          padding: 0 rem(25) rem(17)
+
+        +mq(minSmall)
+          &::before
+            content: '·'
+            padding-right: rem(7)
+
+        span
+          text-decoration: underline
+          font-size: rem(20)
+          color: $hex-white
+
       &:last-of-type
+        position: absolute
+        top: 0
+        right: 0
         width: rem(58)
         height: rem(58)
 
-    span
-      +screen-reader-only
+        +mq(maxExtraSmall)
+          width: rem(104)
+          height: rem(104)
 
   .font-controller
     display: flex

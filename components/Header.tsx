@@ -101,6 +101,9 @@ export default function Header() {
             </svg>
             <span>라스트워 가이드북</span>
           </Anchor>
+          <a href="https://lawarq.vercel.app">
+            <span>게임 만들기</span>
+          </a>
           <Anchor href="/daerogi">
             <span>.</span>
           </Anchor>
