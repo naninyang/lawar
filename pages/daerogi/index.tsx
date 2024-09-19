@@ -66,6 +66,14 @@ export default function DaerogiItems() {
               className={router.asPath === `/daerogi/toolboxes/${toolboxId}` ? styles.current : undefined}
             >
               <Anchor href={`/daerogi/toolboxes/${toolboxId}`}>
+                {name === 'alarm' && (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.29688 1.50195L1.69922 5.36719L2.98633 6.89648L7.58398 3.0332L6.29688 1.50195ZM17.7031 1.50195L16.416 3.0332L21.0137 6.89648L22.3008 5.36719L17.7031 1.50195ZM12 4C7.029 4 3 8.029 3 13C3 17.971 7.029 22 12 22C16.971 22 21 17.971 21 13C21 8.029 16.971 4 12 4ZM11 8H13V13.3828L16.4473 15.1055L15.5527 16.8945L11 14.6172V8Z"
+                      fill="#E50032"
+                    />
+                  </svg>
+                )}
                 {name === 'unit' && (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

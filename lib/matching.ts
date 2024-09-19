@@ -32,3 +32,13 @@ export const fetchMatchingItem = async (daerogiId: number) => {
   const url = `${MATCHING_API_URL}/api/lawars/${daerogiId}`;
   return await fetchMatchingAPI(url);
 };
+
+export const fetcAlarms = async () => {
+  const url = `${MATCHING_API_URL}/api/lawar-slack-mentions?sort[0]=id:asc`;
+  return await fetchMatchingAPI(url);
+};
+
+export const fetchSlackIds = async () => {
+  const url = `${MATCHING_API_URL}/api/lawar-slack-ids?sort[0]=id:asc`;
+  return await fetchMatchingAPI(url);
+};

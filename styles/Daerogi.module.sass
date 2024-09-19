@@ -218,8 +218,16 @@ footer.footer
     width: 100%
     max-width: rem(570)
 
+    +mq(maxExtraSmall)
+      flex-wrap: wrap
+
     li
-      +col
+      +mq(maxExtraSmall)
+        width: 50%
+        padding-bottom: rem(32)
+
+      +mq(minSmall)
+        +col
 
       a
         display: flex
@@ -441,7 +449,7 @@ footer.footer
     flex-direction: column
     align-items: center
     gap: rem(23)
-    padding: rem(72) 0
+    padding: rem(23) 0
 
   .backbutton
     display: flex
@@ -1100,3 +1108,92 @@ footer.footer
             strong
               font-size: rem(16)
               font-weight: 900
+
+.notification
+  padding: 0!important
+
+  .alarm
+    display: flex
+    flex-direction: column
+    gap: rem(52)
+    margin: 0 auto
+    padding: 0 rem(23)
+    width: 100%
+    max-width: rem(570)
+
+    h3
+      font-size: rem(24)
+      text-align: center
+
+    ul
+      margin-left: rem(23)
+      list-style-type: disc
+
+      li
+        margin: rem(5) 0
+
+    .table
+      margin: 0 auto
+      width: 100%
+
+      table
+        caption-side: bottom
+        border-collapse: collapse
+        width: 100%
+        vertical-align: top
+
+        tr
+          th, td
+            padding: rem(12)
+            text-align: center
+            white-space: nowrap
+
+          th
+            background-color: rgba($hex-white, .7)
+            font-weight: 900
+            color: $hex-black
+
+          td
+            vertical-align: top
+            border-bottom: 1px solid rgba($hex-white, .5)
+
+            &:first-of-type
+              font-weight: 700
+
+    .form
+      width: 100%
+
+      fieldset
+        display: flex
+        flex-direction: column
+        overflow: hidden
+        border-radius: rem(3)
+        max-width: rem(570)
+        width: 100%
+
+      .selectors
+        +row
+
+        +mq(maxExtraSmall)
+          flex-direction: column
+
+        .selector
+          +col
+
+          select
+            background-color: $hex-black
+            display: block
+            border: 0
+            padding: 0 rem(12)
+            width: 100%
+            height: rem(37)
+            font-size: rem(20)
+            color: $hex-white
+
+      .submit
+        button
+          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+          width: 100%
+          height: rem(63)
+          font-size: rem(20)
+          font-weight: 700

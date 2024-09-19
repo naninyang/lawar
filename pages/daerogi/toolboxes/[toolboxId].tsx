@@ -14,6 +14,11 @@ export type ComponentMap = {
 };
 
 export const componentMap: ComponentMap = {
+  alarm: {
+    name: 'alarm',
+    title: '알람',
+    content: dynamic(() => import('@/components/daerogi/Alarm')),
+  },
   unit: {
     name: 'unit',
     title: '단위 계산기',
@@ -21,7 +26,7 @@ export const componentMap: ComponentMap = {
   },
   alliance: {
     name: 'alliance',
-    title: '연맹대전 보상 계산기',
+    title: '연맹대전 계산기',
     content: dynamic(() => import('@/components/daerogi/Alliance')),
   },
   arms: {

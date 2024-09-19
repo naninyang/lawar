@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@slack/web-api": "^7.5.0",
     "bcryptjs": "^2.4.3",
     "next": "14.2.5",
     "react": "^18",
