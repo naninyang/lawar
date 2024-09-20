@@ -140,7 +140,7 @@ export default function Alarm() {
               disabled={isSubmitting}
             >
               <option value="">남은 시간 선택</option>
-              {Array.from({ length: 3 }, (_, i) => i).map((hour) => (
+              {Array.from({ length: 4 }, (_, i) => i).map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}시간
                 </option>
