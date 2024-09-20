@@ -33,6 +33,7 @@ export default function Alarm() {
   const [selectedHour, setSelectedHour] = useState('');
   const [selectedMinute, setSelectedMinute] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [remainingTime, setRemainingTime] = useState('');
 
   const fetchData = async () => {
     try {
@@ -127,6 +128,80 @@ export default function Alarm() {
     return response.ok;
   };
 
+  const handleTimeSelect = () => {
+    if (selectedMessage === '은밀회수') {
+      return (
+        <>
+          <div className={styles.selector}>
+            <select
+              id="hourSelect"
+              value={selectedHour}
+              onChange={(e) => setSelectedHour(e.target.value)}
+              disabled={isSubmitting}
+            >
+              <option value="">남은 시간 선택</option>
+              {Array.from({ length: 3 }, (_, i) => i).map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}시간
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.selector}>
+            <select
+              id="minuteSelect"
+              value={selectedMinute}
+              onChange={(e) => setSelectedMinute(e.target.value)}
+              disabled={isSubmitting}
+            >
+              <option value="">분 선택</option>
+              {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                <option key={minute} value={minute}>
+                  {minute}분
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className={styles.selector}>
+            <select
+              id="hourSelect"
+              value={selectedHour}
+              onChange={(e) => setSelectedHour(e.target.value)}
+              disabled={isSubmitting}
+            >
+              <option value="">시간 선택</option>
+              {getAvailableHours().map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour.toString().padStart(2, '0')}시
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.selector}>
+            <select
+              id="minuteSelect"
+              value={selectedMinute}
+              onChange={(e) => setSelectedMinute(e.target.value)}
+              disabled={selectedHour === '' || isSubmitting}
+            >
+              <option value="">{selectedHour === '' ? '시간 먼저 선택하세요' : '분 선택'}</option>
+              {getAvailableMinutes().map((minute) => (
+                <option key={minute} value={minute}>
+                  {minute.toString().padStart(2, '0')}분
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
+      );
+    }
+  };
+
   const sendScheduledMention = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -138,13 +213,22 @@ export default function Alarm() {
     setIsSubmitting(true);
 
     const now = new Date();
-    const selectedTime = new Date();
-    selectedTime.setHours(Number(selectedHour), Number(selectedMinute), 0, 0);
+    let targetDate: Date;
+    if (selectedMessage === '은밀회수') {
+      const additionalHours = Number(selectedHour);
+      const additionalMinutes = Number(selectedMinute);
 
-    let targetDate = new Date(selectedTime);
+      targetDate = new Date(now.getTime());
+      targetDate.setHours(now.getHours() + additionalHours);
+      targetDate.setMinutes(now.getMinutes() + additionalMinutes);
+    } else {
+      targetDate = new Date(now);
+      targetDate.setHours(Number(selectedHour));
+      targetDate.setMinutes(Number(selectedMinute));
 
-    if (selectedTime < now) {
-      targetDate.setDate(targetDate.getDate() + 1);
+      if (targetDate < now) {
+        targetDate.setDate(targetDate.getDate() + 1);
+      }
     }
 
     const timestamp = Math.floor(targetDate.getTime() / 1000);
@@ -259,38 +343,7 @@ export default function Alarm() {
                 </select>
               </div>
             </div>
-            <div className={styles.selectors}>
-              <div className={styles.selector}>
-                <select
-                  id="hourSelect"
-                  value={selectedHour}
-                  onChange={(e) => setSelectedHour(e.target.value)}
-                  disabled={isSubmitting}
-                >
-                  <option value="">시간 선택</option>
-                  {getAvailableHours().map((hour) => (
-                    <option key={hour} value={hour}>
-                      {hour.toString().padStart(2, '0')}시
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.selector}>
-                <select
-                  id="minuteSelect"
-                  value={selectedMinute}
-                  onChange={(e) => setSelectedMinute(e.target.value)}
-                  disabled={selectedHour === '' || isSubmitting}
-                >
-                  <option value="">{selectedHour === '' ? '시간 먼저 선택하세요' : '분 선택'}</option>
-                  {getAvailableMinutes().map((minute) => (
-                    <option key={minute} value={minute}>
-                      {minute.toString().padStart(2, '0')}분
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <div className={styles.selectors}>{handleTimeSelect()}</div>
             <div className={styles.submit}>
               <button type="submit" disabled={isSubmitting}>
                 <span>{isSubmitting ? '설정 중...' : '설정 완료'}</span>
