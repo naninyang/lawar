@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { GetServerSideProps } from 'next';
 import styles from '@/styles/Daerogi.module.sass';
 
 interface MentionAttributes {
