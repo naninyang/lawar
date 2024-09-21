@@ -38,6 +38,11 @@ export const fetcAlarms = async () => {
   return await fetchMatchingAPI(url);
 };
 
+export const fetcNotifications = async () => {
+  const url = `${MATCHING_API_URL}/api/lawar-slack-notifications?sort[0]=id:asc`;
+  return await fetchMatchingAPI(url);
+};
+
 export const fetchSlackIds = async () => {
   const url = `${MATCHING_API_URL}/api/lawar-slack-ids?sort[0]=id:asc`;
   return await fetchMatchingAPI(url);

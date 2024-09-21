@@ -54,6 +54,11 @@ export default function DaerogiItems() {
 
   return (
     <main className={styles.list}>
+      <div className={styles.noti}>
+        <Anchor href="/daerogi/notifications">
+          <span>.</span>
+        </Anchor>
+      </div>
       {loading && <p>데이터를 불러오는 중입니다 :)</p>}
       {error && <p>일시적인 오류입니다. 지속적으로 문제 발생시 아리를 호출하세요.</p>}
       <ul className={styles.toolbox}>

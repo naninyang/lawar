@@ -205,6 +205,20 @@ footer.footer
   display: flex
   flex-direction: column
   gap: rem(32)
+  position: relative
+
+  .noti
+    position: absolute
+    top: 0
+    left: 0
+
+    a
+      display: block
+      width: rem(20)
+      height: rem(20)
+
+      span
+        +screen-reader-only
 
   > p
     display: flex
@@ -1135,6 +1149,7 @@ footer.footer
     .table
       margin: 0 auto
       width: 100%
+      overflow: auto
 
       table
         caption-side: bottom
@@ -1180,9 +1195,7 @@ footer.footer
         .selector
           +col
 
-          select
-            appearance: initial
-            background: $hex-black no-repeat url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTExLjk5OTkgMTQuMDcxTDguMTc4OTEgMTAuMjVDNy43NjQ5MSA5LjgzNiA3LjA5MjkxIDkuODM2IDYuNjc4OTEgMTAuMjVDNi4yNjQ5MSAxMC42NjQgNi4yNjQ5MSAxMS4zMzYgNi42Nzg5MSAxMS43NUwxMS4yOTI5IDE2LjM2NEMxMS42ODM5IDE2Ljc1NSAxMi4zMTY5IDE2Ljc1NSAxMi43MDY5IDE2LjM2NEwxNy4zMjA5IDExLjc1QzE3LjczNDkgMTEuMzM2IDE3LjczNDkgMTAuNjY0IDE3LjMyMDkgMTAuMjVDMTYuOTA2OSA5LjgzNiAxNi4yMzQ5IDkuODM2IDE1LjgyMDkgMTAuMjVMMTEuOTk5OSAxNC4wNzFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=) 99% 50%/rem(24) rem(24)
+          input, select
             display: block
             border: 0
             padding: 0 rem(12)
@@ -1190,6 +1203,13 @@ footer.footer
             height: rem(37)
             font-size: rem(20)
             color: $hex-white
+
+          input
+            background-color: $hex-black
+
+          select
+            appearance: initial
+            background: $hex-black no-repeat url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTExLjk5OTkgMTQuMDcxTDguMTc4OTEgMTAuMjVDNy43NjQ5MSA5LjgzNiA3LjA5MjkxIDkuODM2IDYuNjc4OTEgMTAuMjVDNi4yNjQ5MSAxMC42NjQgNi4yNjQ5MSAxMS4zMzYgNi42Nzg5MSAxMS43NUwxMS4yOTI5IDE2LjM2NEMxMS42ODM5IDE2Ljc1NSAxMi4zMTY5IDE2Ljc1NSAxMi43MDY5IDE2LjM2NEwxNy4zMjA5IDExLjc1QzE3LjczNDkgMTEuMzM2IDE3LjczNDkgMTAuNjY0IDE3LjMyMDkgMTAuMjVDMTYuOTA2OSA5LjgzNiAxNi4yMzQ5IDkuODM2IDE1LjgyMDkgMTAuMjVMMTEuOTk5OSAxNC4wNzFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=) 99% 50%/rem(24) rem(24)
 
       .submit
         button
