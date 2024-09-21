@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const { userId, message, postAt } = req.body;
 
-      const response = await fetch(`${process.env.MATCHING_API_URL}/api/lawar-slack-mentions`, {
+      const response = await fetch(`${process.env.MATCHING_API_URL}/api/lawar-slack-mentions?sort[0]=id:desc`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

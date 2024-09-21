@@ -34,12 +34,12 @@ export const fetchMatchingItem = async (daerogiId: number) => {
 };
 
 export const fetcAlarms = async () => {
-  const url = `${MATCHING_API_URL}/api/lawar-slack-mentions?sort[0]=id:asc`;
+  const url = `${MATCHING_API_URL}/api/lawar-slack-mentions?sort[0]=id:desc`;
   return await fetchMatchingAPI(url);
 };
 
 export const fetcNotifications = async () => {
-  const url = `${MATCHING_API_URL}/api/lawar-slack-notifications?sort[0]=id:asc`;
+  const url = `${MATCHING_API_URL}/api/lawar-slack-notifications?sort[0]=id:desc`;
   return await fetchMatchingAPI(url);
 };
 
