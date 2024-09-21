@@ -144,7 +144,7 @@ export default function Notification() {
       alert('성공적으로 예약되었습니다.');
       await fetchData();
     } else {
-      alert('알림 예약에 실패했습니다.');
+      alert('알람 예약에 실패했습니다.');
     }
 
     setIsSubmitting(false);
