@@ -32,7 +32,10 @@ export default function Alarm() {
     try {
       const mentionResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackMention`);
       const mentionData = await mentionResponse.json();
-      setSlackMentions(mentionData.data);
+      const filteredMentions = (mentionData.data as MentionAttributes[])
+        .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
+        .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime());
+      setSlackMentions(filteredMentions);
 
       const userIdsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackUser`);
       const userIdsData = await userIdsResponse.json();
@@ -277,38 +280,35 @@ export default function Alarm() {
                 </tr>
               </thead>
               <tbody>
-                {slackMentions
-                  .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
-                  .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime())
-                  .map((mention, index) => {
-                    const date = new Date(mention.attributes.postAt);
-                    const now = new Date();
+                {slackMentions.map((mention, index) => {
+                  const date = new Date(mention.attributes.postAt);
+                  const now = new Date();
 
-                    let remainingDate;
-                    if (mention.attributes.message === '은밀회수') {
-                      const remainingTime = date.getTime() - now.getTime();
-                      const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                      const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                      remainingDate = `${hours}시간 ${minutes}분 남음`;
-                    }
-                    const formattedDate = new Intl.DateTimeFormat('ko-KR', {
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      hour12: true,
-                      timeZone: 'Asia/Seoul',
-                    }).format(date);
-                    return (
-                      <tr key={index}>
-                        <td>{mention.attributes.userName}</td>
-                        <td>
-                          {formattedDate}
-                          {mention.attributes.message === '은밀회수' && <strong>{remainingDate}</strong>}
-                        </td>
-                        <td>{mention.attributes.message}</td>
-                      </tr>
-                    );
-                  })}
+                  let remainingDate;
+                  if (mention.attributes.message === '은밀회수') {
+                    const remainingTime = date.getTime() - now.getTime();
+                    const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                    remainingDate = `${hours}시간 ${minutes}분 남음`;
+                  }
+                  const formattedDate = new Intl.DateTimeFormat('ko-KR', {
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                    timeZone: 'Asia/Seoul',
+                  }).format(date);
+                  return (
+                    <tr key={index}>
+                      <td>{mention.attributes.userName}</td>
+                      <td>
+                        {formattedDate}
+                        {mention.attributes.message === '은밀회수' && <strong>{remainingDate}</strong>}
+                      </td>
+                      <td>{mention.attributes.message}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

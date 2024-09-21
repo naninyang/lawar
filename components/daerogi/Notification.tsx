@@ -151,43 +151,42 @@ export default function Notification() {
   };
 
   return (
-    <div className={styles.notification}>
+    <div className={`${styles.notification} ${styles.notifications}`}>
       <div className={styles.alarm}>
-        {slackMentions.length > 0 && (
-          <div className={styles.table}>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">알람 시간</th>
-                  <th scope="col">3분전 메시지</th>
-                  <th scope="col">해당시간 메시지</th>
-                </tr>
-              </thead>
-              <tbody>
-                {slackMentions
-                  .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
-                  .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime())
-                  .map((mention, index) => {
-                    const date = new Date(mention.attributes.postAt);
-                    const formattedDate = new Intl.DateTimeFormat('ko-KR', {
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      hour12: true,
-                      timeZone: 'Asia/Seoul',
-                    }).format(date);
-                    return (
-                      <tr key={index}>
-                        <td>{formattedDate}</td>
-                        <td>{mention.attributes.messageBefore}</td>
-                        <td>{mention.attributes.message}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <h3>단체 알람</h3>
+        <div className={styles.table}>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">알람 시간</th>
+                <th scope="col">3분전 메시지</th>
+                <th scope="col">해당시간 메시지</th>
+              </tr>
+            </thead>
+            <tbody>
+              {slackMentions
+                .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
+                .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime())
+                .map((mention, index) => {
+                  const date = new Date(mention.attributes.postAt);
+                  const formattedDate = new Intl.DateTimeFormat('ko-KR', {
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                    timeZone: 'Asia/Seoul',
+                  }).format(date);
+                  return (
+                    <tr key={index}>
+                      <td>{formattedDate}</td>
+                      <td>{mention.attributes.messageBefore}</td>
+                      <td>{mention.attributes.message}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
         <form className={styles.form} onSubmit={sendScheduledMention}>
           <fieldset>
             <legend>알람 설정폼</legend>
