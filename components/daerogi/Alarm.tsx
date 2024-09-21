@@ -255,12 +255,16 @@ export default function Alarm() {
         <h3>⌚️ 알람을 설정해요</h3>
         <ul>
           <li>알람 기능은 Slack 앱에서 이용 가능합니다.</li>
-          <li>Slack은 모바일, PC 둘 다 지원합니다. 애플 앱스토어 및 구글 플레이에서 slack을 검색하세요.</li>
           <li>이용을 원하는 동생, 언니, 오빠들은 아리에게 이메일 주소를 알려주세요. slack 초대장을 보내드려요.</li>
-          <li>이메일만 알려주고 방치하면 알람을 받을 수 없으니 이점 유의!</li>
-          <li>현재 시간에서 5분 뒤부터 알람 설정이 가능합니다.</li>
-          <li>e.g) 현재 시각이 11시 2분이라면 11시 7분 부터 설정 가능.</li>
-          <li>알람을 맞추면 알람이 2번 갑니다. 설정된 시간과 설정된 시간 3분전.</li>
+          <li>Slack은 모바일, PC 둘 다 지원합니다. 업무 컴에 설치해서 알람을 놓치는 일이 없게 하세요.</li>
+          <li>
+            <strong>이메일만 알려주고 방치하면 알람을 받을 수 없습니다.</strong>
+          </li>
+          <li>
+            <strong>
+              은밀회수는 남은시간으로 입력되기 때문에 1분 정도 앞당겨서 설정하세요. (설정완료 누른 시점이 기준)
+            </strong>
+          </li>
         </ul>
         {slackMentions.length > 0 && (
           <div className={styles.table}>
@@ -278,6 +282,15 @@ export default function Alarm() {
                   .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime())
                   .map((mention, index) => {
                     const date = new Date(mention.attributes.postAt);
+                    const now = new Date();
+
+                    let remainingDate;
+                    if (mention.attributes.message === '은밀회수') {
+                      const remainingTime = date.getTime() - now.getTime();
+                      const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                      const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                      remainingDate = `${hours}시간 ${minutes}분 남음`;
+                    }
                     const formattedDate = new Intl.DateTimeFormat('ko-KR', {
                       day: 'numeric',
                       hour: 'numeric',
@@ -288,7 +301,10 @@ export default function Alarm() {
                     return (
                       <tr key={index}>
                         <td>{mention.attributes.userName}</td>
-                        <td>{formattedDate}</td>
+                        <td>
+                          {formattedDate}
+                          {mention.attributes.message === '은밀회수' && <strong>{remainingDate}</strong>}
+                        </td>
                         <td>{mention.attributes.message}</td>
                       </tr>
                     );
