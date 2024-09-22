@@ -47,3 +47,8 @@ export const fetchSlackIds = async () => {
   const url = `${MATCHING_API_URL}/api/lawar-slack-ids?sort[0]=id:asc`;
   return await fetchMatchingAPI(url);
 };
+
+export const fetchSlackOnlyIds = async () => {
+  const url = `${MATCHING_API_URL}/api/lawar-slack-only-ids?sort[0]=id:asc`;
+  return await fetchMatchingAPI(url);
+};

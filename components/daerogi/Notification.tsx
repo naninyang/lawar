@@ -33,7 +33,7 @@ export default function Notification() {
       const mentionData = await mentionResponse.json();
       setSlackMentions(mentionData.data);
 
-      const userIdsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackUser`);
+      const userIdsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackIds`);
       const userIdsData = await userIdsResponse.json();
       setSlackUserIds(userIdsData.data);
     } catch (error) {
