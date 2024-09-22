@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         body: JSON.stringify({
           data: {
-            userName: userName,
+            UserName: userName,
             userId: userId,
           },
         }),

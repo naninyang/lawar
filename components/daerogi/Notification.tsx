@@ -76,19 +76,34 @@ export default function Notification() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/slackUser', {
+      const userIdResponse = await fetch('/api/slackIds', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userId: memberId,
-          userName: userName,
+          userName,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to add member');
+      const userIdsResponse = await fetch('/api/slackUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: memberId,
+          userName,
+        }),
+      });
+
+      if (!userIdsResponse.ok) {
+        throw new Error('메인 ID 추가 실패');
+      }
+
+      if (!userIdResponse.ok) {
+        throw new Error('유저 추가 실패');
       }
 
       alert('사용자가 추가되었습니다.');
