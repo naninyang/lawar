@@ -30,14 +30,14 @@ export default function Alarm() {
 
   const fetchData = async () => {
     try {
-      const mentionResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackMention`);
+      const mentionResponse = await fetch(`/api/slackMention`);
       const mentionData = await mentionResponse.json();
       const filteredMentions = (mentionData.data as MentionAttributes[])
         .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
         .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime());
       setSlackMentions(filteredMentions);
 
-      const userIdsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackUser`);
+      const userIdsResponse = await fetch(`/api/slackUser`);
       const userIdsData = await userIdsResponse.json();
       setSlackUserIds(userIdsData.data);
     } catch (error) {
