@@ -18,7 +18,17 @@ interface UserAttributes {
   };
 }
 
+type Member = {
+  id: string;
+  name: string;
+  realName: string;
+};
+
 export default function Notification() {
+  const [members, setMembers] = useState<Member[]>([]);
+  const [slackUser, setSlackUser] = useState<UserAttributes[]>([]);
+  const [userName, setUserName] = useState('');
+
   const [slackMentions, setSlackMentions] = useState<MentionAttributes[]>([]);
   const [slackUserIds, setSlackUserIds] = useState<UserAttributes[]>([]);
   const [reservedMessage, setReservedMessage] = useState('');
@@ -27,13 +37,30 @@ export default function Notification() {
   const [selectedMinute, setSelectedMinute] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchData = async () => {
+  async function fetchMembers() {
     try {
-      const mentionResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackMentionForAll`);
+      const membersResponse = await fetch('/api/slackMembers');
+      const membersData = await membersResponse.json();
+      setMembers(membersData.members);
+      const usersResponse = await fetch('/api/slackUser');
+      const usersData = await usersResponse.json();
+      setSlackUser(usersData.data);
+    } catch (error) {
+      console.error('Failed to fetch members:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
+
+  const fetchNotiData = async () => {
+    try {
+      const mentionResponse = await fetch(`/api/slackMentionForAll`);
       const mentionData = await mentionResponse.json();
       setSlackMentions(mentionData.data);
 
-      const userIdsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slackIds`);
+      const userIdsResponse = await fetch(`/api/slackIds`);
       const userIdsData = await userIdsResponse.json();
       setSlackUserIds(userIdsData.data);
     } catch (error) {
@@ -42,8 +69,34 @@ export default function Notification() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchNotiData();
   }, []);
+
+  const handlePrimarySubmit = async (e: React.FormEvent, memberId: string) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/slackUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: memberId,
+          userName: userName,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add member');
+      }
+
+      alert('사용자가 추가되었습니다.');
+      await fetchMembers();
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const now = new Date();
   const currentHour = now.getHours();
@@ -72,8 +125,8 @@ export default function Notification() {
     return Array.from({ length: 13 }, (_, i) => (currentHour + i) % 24);
   };
 
+  const mentions = slackUserIds.map((user) => `<@${user.attributes.userId}>`).join(' ');
   const scheduleSlackMessage = async (messageText: string, timestamp: number) => {
-    const mentions = slackUserIds.map((user) => `<@${user.attributes.userId}>`).join(' ');
     const response = await fetch('/api/slackMessage', {
       method: 'POST',
       headers: {
@@ -97,6 +150,7 @@ export default function Notification() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        userId: mentions,
         messageBefore: reservedBeforeMessage,
         message: reservedMessage,
         postAt: new Date(timestamp * 1000).toISOString(),
@@ -142,7 +196,7 @@ export default function Notification() {
 
     if (successBefore && successOnTime && slackMentionsSuccess) {
       alert('성공적으로 예약되었습니다.');
-      await fetchData();
+      await fetchNotiData();
     } else {
       alert('알람 예약에 실패했습니다.');
     }
@@ -152,6 +206,57 @@ export default function Notification() {
 
   return (
     <div className={`${styles.notification} ${styles.notifications}`}>
+      <div className={styles.members}>
+        <h3>멤버 관리</h3>
+        {members && slackUser ? (
+          <dl>
+            {members.map((member) => {
+              if (['Slackbot', 'Statuspage', 'last_daerogi', 'lawar_games'].includes(member.realName)) {
+                return null;
+              }
+              return (
+                <div key={member.id} className={styles.member}>
+                  <div className={styles.basic}>
+                    <dt>설정이름</dt>
+                    <dd>{member.realName}</dd>
+                    <dt>이메일ID</dt>
+                    <dd>{member.name}</dd>
+                    <dt>멤버ID</dt>
+                    <dd>{member.id}</dd>
+                  </div>
+                  <div className={styles.settings}>
+                    <dt>API 추가여부</dt>
+                    <dd>
+                      {slackUser.filter((user) => user.attributes.userId === member.id).length > 0 ? (
+                        slackUser
+                          .filter((user) => user.attributes.userId === member.id)
+                          .map((user) => <span key={user.id}>{user.attributes.userName}</span>)
+                      ) : (
+                        <>
+                          <strong>추가안됨</strong>
+                          <form onSubmit={(e) => handlePrimarySubmit(e, member.id)}>
+                            <fieldset>
+                              <input
+                                type="text"
+                                placeholder="이름 입력"
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
+                              />
+                              <button type="submit">추가하기</button>
+                            </fieldset>
+                          </form>
+                        </>
+                      )}
+                    </dd>
+                  </div>
+                </div>
+              );
+            })}
+          </dl>
+        ) : (
+          <p>로딩 중. 쫌만 기다려 아리야!</p>
+        )}
+      </div>
       <div className={styles.alarm}>
         <h3>단체 알람</h3>
         <div className={styles.table}>

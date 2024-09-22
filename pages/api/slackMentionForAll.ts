@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json(notificationsData);
   } else if (req.method === 'POST') {
     try {
-      const { userId, message, postAt } = req.body;
+      const { userId, reservedBeforeMessage, reservedMessage, postAt } = req.body;
 
       const response = await fetch(`${process.env.MATCHING_API_URL}/api/lawar-slack-notifications`, {
         method: 'POST',
@@ -37,8 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         body: JSON.stringify({
           data: {
             userName: userId,
-            messageBefore: message,
-            message: message,
+            messageBefore: reservedBeforeMessage,
+            message: reservedMessage,
             postAt: postAt,
           },
         }),

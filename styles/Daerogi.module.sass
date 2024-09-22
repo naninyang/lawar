@@ -1227,3 +1227,76 @@ footer.footer
 
 .notifications
   padding: rem(53) 0!important
+
+  .members
+    display: flex
+    flex-direction: column
+    gap: rem(52)
+    margin: 0 auto
+    padding: 0 rem(23) rem(52)
+    width: 100%
+    max-width: rem(570)
+
+    h3
+      font-size: rem(24)
+      text-align: center
+
+    dl
+      display: flex
+      flex-direction: column
+      gap: rem(23)
+
+      .member
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+        border-top: 1px solid $hex-white
+        padding-top: rem(23)
+
+        .basic, .settings
+          display: flex
+          justify-content: space-between
+
+          dt
+            +screen-reader-only
+
+          dd
+            display: flex
+            align-items: center
+            gap: rem(12)
+            +col
+
+            span
+              display: inline-flex
+              align-items: center
+              border: 1px solid $hex-white
+              border-radius: rem(27)
+              padding: 0 rem(12)
+              height: rem(27)
+
+            strong
+              color: $hex-accent
+
+            form, form fieldset
+              display: inline-flex
+
+            form
+              +col
+
+            fieldset
+              gap: rem(7)
+              width: 100%
+
+              input
+                +col
+                background-color: $hex-black
+                border: 0
+                border-radius: rem(3)
+                padding: rem(5) rem(12)
+                color: $hex-white
+
+              button
+                background-color: $hex-black
+                border: 0
+                border-radius: rem(3)
+                padding: rem(5) rem(12)
