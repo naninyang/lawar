@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const id = Number(req.query.id);
+  const id = Array.isArray(req.query.documentId) ? req.query.documentId[0] : req.query.documentId;
 
   if (!id) {
     const matchingData = await fetchMatchingItems();

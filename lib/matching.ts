@@ -28,7 +28,7 @@ export const fetchMatchingItems = async () => {
   return await fetchDaerogiAPI(url);
 };
 
-export const fetchMatchingItem = async (daerogiId: number) => {
+export const fetchMatchingItem = async (daerogiId: string) => {
   const url = `${DAEROGI_API_URL}/api/lawar-matchings/${daerogiId}`;
   return await fetchDaerogiAPI(url);
 };

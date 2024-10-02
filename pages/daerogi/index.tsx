@@ -34,7 +34,6 @@ export default function DaerogiItems() {
     try {
       const response = await fetch(`/api/matching`);
       const result = await response.json();
-      console.log('result.data: ', result.data);
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
         id: item.id,
@@ -156,10 +155,6 @@ export default function DaerogiItems() {
                 </Anchor>
                 {item.subject !== '일요일 (연맹 대전 없음)' && (
                   <dl>
-                    {console.log('item.summary: ', item.summary)}
-                    {console.log('item.matchingTime: ', item.matchingTime)}
-                    {console.log('item.summary: ', item.summary)}
-                    {console.log('item: ', item)}
                     {item.summary &&
                       item.matchingTime &&
                       item.summary.map((summaryItem: any, i: number) => (
