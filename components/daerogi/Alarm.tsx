@@ -3,19 +3,17 @@ import styles from '@/styles/Daerogi.module.sass';
 
 interface MentionAttributes {
   id: number;
-  attributes: {
-    userName: string;
-    message: string;
-    postAt: string;
-  };
+  documentId: string;
+  userName: string;
+  message: string;
+  postAt: string;
 }
 
 interface UserAttributes {
   id: number;
-  attributes: {
-    userName: string;
-    userId: string;
-  };
+  documentId: string;
+  userName: string;
+  userId: string;
 }
 
 export default function Alarm() {
@@ -33,8 +31,8 @@ export default function Alarm() {
       const mentionResponse = await fetch(`/api/slackMention`);
       const mentionData = await mentionResponse.json();
       const filteredMentions = (mentionData.data as MentionAttributes[])
-        .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
-        .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime());
+        .filter((mention) => new Date(mention.postAt) >= new Date())
+        .sort((a, b) => new Date(a.postAt).getTime() - new Date(b.postAt).getTime());
       setSlackMentions(filteredMentions);
 
       const userIdsResponse = await fetch(`/api/slackUser`);
@@ -50,8 +48,8 @@ export default function Alarm() {
   }, []);
 
   const users = slackUserIds.map((user) => ({
-    name: user.attributes.userName,
-    id: user.attributes.userId,
+    name: user.userName,
+    id: user.userId,
   }));
 
   const messages = [
@@ -281,11 +279,11 @@ export default function Alarm() {
               </thead>
               <tbody>
                 {slackMentions.map((mention, index) => {
-                  const date = new Date(mention.attributes.postAt);
+                  const date = new Date(mention.postAt);
                   const now = new Date();
 
                   let remainingDate;
-                  if (mention.attributes.message === '은밀회수') {
+                  if (mention.message === '은밀회수') {
                     const remainingTime = date.getTime() - now.getTime();
                     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
                     const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -300,12 +298,12 @@ export default function Alarm() {
                   }).format(date);
                   return (
                     <tr key={index}>
-                      <td>{mention.attributes.userName}</td>
+                      <td>{mention.userName}</td>
                       <td>
                         {formattedDate}
-                        {mention.attributes.message === '은밀회수' && <strong>{remainingDate}</strong>}
+                        {mention.message === '은밀회수' && <strong>{remainingDate}</strong>}
                       </td>
-                      <td>{mention.attributes.message}</td>
+                      <td>{mention.message}</td>
                     </tr>
                   );
                 })}

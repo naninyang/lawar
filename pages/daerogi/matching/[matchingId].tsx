@@ -84,11 +84,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/matching?id=${matchingId}`);
   const result = await response.json();
+  console.log('result: ', result);
 
   const matchingItem = {
     id: result.data.id,
-    subject: result.data.attributes.subject,
-    content: result.data.attributes.content,
+    documentId: result.data.documentId,
+    subject: result.data.subject,
+    content: result.data.content,
   };
 
   return {

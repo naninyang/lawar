@@ -6,9 +6,11 @@ import { componentMap } from './toolboxes/[toolboxId]';
 
 export interface LawarItem {
   id: number;
+  documentId: string;
   subject: string;
   summary?: any;
-  matchingtime?: any;
+  matchingTime?: any;
+  createdAt: string;
 }
 
 export default function DaerogiItems() {
@@ -32,12 +34,15 @@ export default function DaerogiItems() {
     try {
       const response = await fetch(`/api/matching`);
       const result = await response.json();
+      console.log('result.data: ', result.data);
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
         id: item.id,
-        subject: item.attributes.subject,
-        summary: item.attributes.summary,
-        matchingtime: item.attributes.matchingtime,
+        documentId: item.documentId,
+        subject: item.subject,
+        summary: item.summary,
+        matchingTime: item.matchingTime,
+        createdAt: item.createdAt,
       }));
 
       setMatching(formattedData);
@@ -137,7 +142,7 @@ export default function DaerogiItems() {
           {matching.map((item: LawarItem, index: number) => (
             <li key={index}>
               <div className={styles.item}>
-                <Anchor href={`/daerogi/matching/${item.id}`}>
+                <Anchor href={`/daerogi/matching/${item.documentId}`}>
                   <strong>{item.subject}</strong>
                   <span>
                     <strong>더 보기</strong>
@@ -149,10 +154,14 @@ export default function DaerogiItems() {
                     </svg>
                   </span>
                 </Anchor>
-                {item.id < 7 && (
+                {item.subject !== '일요일 (연맹 대전 없음)' && (
                   <dl>
+                    {console.log('item.summary: ', item.summary)}
+                    {console.log('item.matchingTime: ', item.matchingTime)}
+                    {console.log('item.summary: ', item.summary)}
+                    {console.log('item: ', item)}
                     {item.summary &&
-                      item.matchingtime &&
+                      item.matchingTime &&
                       item.summary.map((summaryItem: any, i: number) => (
                         <div key={i}>
                           {Object.entries(summaryItem).map(([key, value]: [string, any], idx: number) => (
@@ -171,7 +180,7 @@ export default function DaerogiItems() {
                               </dd>
                               <dd>
                                 <strong>매칭 시간</strong>
-                                <span>{item.matchingtime[i] ? item.matchingtime[i] : '매칭 시간이 없습니다'}</span>
+                                <span>{item.matchingTime[i] ? item.matchingTime[i] : '매칭 시간이 없습니다'}</span>
                               </dd>
                             </React.Fragment>
                           ))}

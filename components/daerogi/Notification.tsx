@@ -3,19 +3,17 @@ import styles from '@/styles/Daerogi.module.sass';
 
 interface MentionAttributes {
   id: number;
-  attributes: {
-    messageBefore: string;
-    message: string;
-    postAt: string;
-  };
+  documentId: string;
+  messageBefore: string;
+  message: string;
+  postAt: string;
 }
 
 interface UserAttributes {
   id: number;
-  attributes: {
-    userName: string;
-    userId: string;
-  };
+  documentId: string;
+  userName: string;
+  userId: string;
 }
 
 type Member = {
@@ -63,6 +61,7 @@ export default function Notification() {
       const userIdsResponse = await fetch(`/api/slackIds`);
       const userIdsData = await userIdsResponse.json();
       setSlackUserIds(userIdsData.data);
+      console.log('userIdsData.data:', userIdsData.data);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -140,7 +139,7 @@ export default function Notification() {
     return Array.from({ length: 13 }, (_, i) => (currentHour + i) % 24);
   };
 
-  const mentions = slackUserIds.map((user) => `<@${user.attributes.userId}>`).join(' ');
+  const mentions = slackUserIds.map((user) => `<@${user.userId}>`).join(' ');
   const scheduleSlackMessage = async (messageText: string, timestamp: number) => {
     const response = await fetch('/api/slackMessage', {
       method: 'POST',
@@ -158,7 +157,7 @@ export default function Notification() {
     return result.success;
   };
 
-  const sendToSlackMentions = async (timestamp: number) => {
+  const sendToSlackMentions = async (reservedBeforeMessage: string, reservedMessage: string, timestamp: number) => {
     const response = await fetch('/api/slackMentionForAll', {
       method: 'POST',
       headers: {
@@ -207,7 +206,7 @@ export default function Notification() {
 
     const successBefore = await scheduleSlackMessage(reservedBeforeMessage, reservationBeforeTimestamp);
     const successOnTime = await scheduleSlackMessage(reservedMessage, timestamp);
-    const slackMentionsSuccess = await sendToSlackMentions(timestamp);
+    const slackMentionsSuccess = await sendToSlackMentions(reservedBeforeMessage, reservedMessage, timestamp);
 
     if (successBefore && successOnTime && slackMentionsSuccess) {
       alert('성공적으로 예약되었습니다.');
@@ -242,10 +241,10 @@ export default function Notification() {
                   <div className={styles.settings}>
                     <dt>API 추가여부</dt>
                     <dd>
-                      {slackUser.filter((user) => user.attributes.userId === member.id).length > 0 ? (
+                      {slackUser.filter((user) => user.userId === member.id).length > 0 ? (
                         slackUser
-                          .filter((user) => user.attributes.userId === member.id)
-                          .map((user) => <span key={user.id}>{user.attributes.userName}</span>)
+                          .filter((user) => user.userId === member.id)
+                          .map((user) => <span key={user.id}>{user.userName}</span>)
                       ) : (
                         <>
                           <strong>추가안됨</strong>
@@ -285,10 +284,10 @@ export default function Notification() {
             </thead>
             <tbody>
               {slackMentions
-                .filter((mention) => new Date(mention.attributes.postAt) >= new Date())
-                .sort((a, b) => new Date(a.attributes.postAt).getTime() - new Date(b.attributes.postAt).getTime())
+                .filter((mention) => new Date(mention.postAt) >= new Date())
+                .sort((a, b) => new Date(a.postAt).getTime() - new Date(b.postAt).getTime())
                 .map((mention, index) => {
-                  const date = new Date(mention.attributes.postAt);
+                  const date = new Date(mention.postAt);
                   const formattedDate = new Intl.DateTimeFormat('ko-KR', {
                     day: 'numeric',
                     hour: 'numeric',
@@ -299,8 +298,8 @@ export default function Notification() {
                   return (
                     <tr key={index}>
                       <td>{formattedDate}</td>
-                      <td>{mention.attributes.messageBefore}</td>
-                      <td>{mention.attributes.message}</td>
+                      <td>{mention.messageBefore}</td>
+                      <td>{mention.message}</td>
                     </tr>
                   );
                 })}

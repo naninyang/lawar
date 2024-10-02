@@ -61,7 +61,7 @@ export default function DaerogiHeader() {
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
         id: item.id,
-        subject: item.attributes.subject,
+        subject: item.subject,
       }));
 
       setMatching(formattedData);

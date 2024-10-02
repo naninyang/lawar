@@ -28,15 +28,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const { userId, userName } = req.body;
 
-      const response = await fetch(`${process.env.MATCHING_API_URL}/api/lawar-slack-only-ids?sort[0]=id:desc`, {
+      const response = await fetch(`${process.env.DAEROGI_API_URL}/api/lawar-slack-only-ids?sort[0]=id:desc`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.MATCHING_API_KEY}`,
+          Authorization: `Bearer ${process.env.DAEROGI_API_KEY}`,
         },
         body: JSON.stringify({
           data: {
-            UserName: userName,
+            userName: userName,
             userId: userId,
           },
         }),
