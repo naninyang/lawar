@@ -82,9 +82,8 @@ export default function MatchingDetail({ matchingItem }: MatchingDetailPage) {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const matchingId = params?.matchingId;
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/matching?id=${matchingId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/matching?documentId=${matchingId}`);
   const result = await response.json();
-  console.log('result: ', result);
 
   const matchingItem = {
     id: result.data.id,

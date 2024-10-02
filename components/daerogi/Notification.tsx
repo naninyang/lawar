@@ -61,7 +61,6 @@ export default function Notification() {
       const userIdsResponse = await fetch(`/api/slackIds`);
       const userIdsData = await userIdsResponse.json();
       setSlackUserIds(userIdsData.data);
-      console.log('userIdsData.data:', userIdsData.data);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -164,7 +163,6 @@ export default function Notification() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: mentions,
         messageBefore: reservedBeforeMessage,
         message: reservedMessage,
         postAt: new Date(timestamp * 1000).toISOString(),
