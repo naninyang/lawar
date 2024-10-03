@@ -4,6 +4,8 @@ import styles from '@/styles/Daerogi.module.sass';
 interface MentionAttributes {
   id: number;
   documentId: string;
+  userId: string;
+  userName: string;
   messageBefore: string;
   message: string;
   postAt: string;
@@ -156,6 +158,7 @@ export default function Notification() {
     return result.success;
   };
 
+  const users = slackUserIds.map((user) => `@${user.userName}`).join(' ');
   const sendToSlackMentions = async (reservedBeforeMessage: string, reservedMessage: string, timestamp: number) => {
     const response = await fetch('/api/slackMentionForAll', {
       method: 'POST',
@@ -163,6 +166,8 @@ export default function Notification() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        userId: mentions,
+        userName: users,
         messageBefore: reservedBeforeMessage,
         message: reservedMessage,
         postAt: new Date(timestamp * 1000).toISOString(),
@@ -271,38 +276,46 @@ export default function Notification() {
       </div>
       <div className={styles.alarm}>
         <h3>단체 알람</h3>
-        <div className={styles.table}>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">알람 시간</th>
-                <th scope="col">3분전 메시지</th>
-                <th scope="col">해당시간 메시지</th>
-              </tr>
-            </thead>
-            <tbody>
-              {slackMentions
-                .filter((mention) => new Date(mention.postAt) >= new Date())
-                .sort((a, b) => new Date(a.postAt).getTime() - new Date(b.postAt).getTime())
-                .map((mention, index) => {
-                  const date = new Date(mention.postAt);
-                  const formattedDate = new Intl.DateTimeFormat('ko-KR', {
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true,
-                    timeZone: 'Asia/Seoul',
-                  }).format(date);
-                  return (
-                    <tr key={index}>
-                      <td>{formattedDate}</td>
-                      <td>{mention.messageBefore}</td>
-                      <td>{mention.message}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <div className={styles.dl}>
+          <dl>
+            {slackMentions
+              .filter((mention) => new Date(mention.postAt) >= new Date())
+              .sort((a, b) => new Date(a.postAt).getTime() - new Date(b.postAt).getTime())
+              .map((mention, index) => {
+                const date = new Date(mention.postAt);
+                const formattedDate = new Intl.DateTimeFormat('ko-KR', {
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true,
+                  timeZone: 'Asia/Seoul',
+                }).format(date);
+                return (
+                  <div key={index}>
+                    <div>
+                      <dt>알람 시간</dt>
+                      <dd>{formattedDate}</dd>
+                    </div>
+                    <div>
+                      <dt>대상자 ID</dt>
+                      <dd>{mention.userId}</dd>
+                    </div>
+                    <div>
+                      <dt>대상자 캐릭터</dt>
+                      <dd>{mention.userName}</dd>
+                    </div>
+                    <div>
+                      <dt>3분전 메시지</dt>
+                      <dd>{mention.messageBefore}</dd>
+                    </div>
+                    <div>
+                      <dt>시작 메시지</dt>
+                      <dd>{mention.message}</dd>
+                    </div>
+                  </div>
+                );
+              })}
+          </dl>
         </div>
         <form className={styles.form} onSubmit={sendScheduledMention}>
           <fieldset>

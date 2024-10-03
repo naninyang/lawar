@@ -1300,3 +1300,28 @@ footer.footer
                 border: 0
                 border-radius: rem(3)
                 padding: rem(5) rem(12)
+
+  .alarm
+    .dl
+      dl
+        display: flex
+        flex-direction: column
+        gap: rem(23)
+
+        > div
+          display: flex
+          flex-direction: column
+          border: rem(2) solid $hex-white
+          border-right: 0
+          border-left: 0
+
+          > div
+            +row
+            border-top: rem(1) solid $hex-white
+            padding: rem(12) 0
+
+            dt
+              width: rem(110)
+
+            dd
+              +col
