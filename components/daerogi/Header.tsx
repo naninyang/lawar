@@ -60,7 +60,7 @@ export default function DaerogiHeader() {
       const result = await response.json();
 
       const formattedData: LawarItem[] = result.data.map((item: any) => ({
-        id: item.id,
+        documentId: item.documentId,
         subject: item.subject,
       }));
 
@@ -131,10 +131,10 @@ export default function DaerogiHeader() {
             {matching.map((item: LawarItem, index: number) => (
               <li
                 key={index}
-                className={router.asPath === `/daerogi/matching/${item.id}` ? styles.current : undefined}
-                onClick={() => handleMenuClick(`/daerogi/matching/${item.id}`, index)}
+                className={router.asPath === `/daerogi/matching/${item.documentId}` ? styles.current : undefined}
+                onClick={() => handleMenuClick(`/daerogi/matching/${item.documentId}`, index)}
               >
-                <Anchor href={`/daerogi/matching/${item.id}`}>
+                <Anchor href={`/daerogi/matching/${item.documentId}`}>
                   <span>{item.subject}</span>
                 </Anchor>
               </li>
