@@ -1,0 +1,48 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const droneData = [
+    { level: '5', parts: '5' },
+    { level: '10', parts: '10' },
+    { level: '15', parts: '20' },
+    { level: '20', parts: '30' },
+    { level: '25', parts: '40' },
+    { level: '30', parts: '50' },
+    { level: '35', parts: '60' },
+    { level: '40', parts: '80' },
+    { level: '45', parts: '100' },
+    { level: '50', parts: '120' },
+    { level: '55', parts: '140' },
+    { level: '60', parts: '160' },
+    { level: '65', parts: '180' },
+    { level: '70', parts: '200' },
+    { level: '75', parts: '250' },
+    { level: '80', parts: '300' },
+    { level: '85', parts: '350' },
+    { level: '90', parts: '400' },
+    { level: '95', parts: '450' },
+    { level: '100', parts: '500' },
+    { level: '105', parts: '600' },
+    { level: '110', parts: '700' },
+    { level: '115', parts: '800' },
+    { level: '120', parts: '1000' },
+    { level: '125', parts: '1500' },
+    { level: '130', parts: '2000' },
+    { level: '135', parts: '3000' },
+    { level: '140', parts: '4000' },
+    { level: '145', parts: '5000' },
+    { level: '150 - 159', parts: '500' },
+    { level: '160 - 169', parts: '600' },
+    { level: '170 - 179', parts: '700' },
+    { level: '180 - 189', parts: '800' },
+    { level: '190 - 199', parts: '900' },
+    { level: '200 - 209', parts: '1000' },
+    { level: '210 - 219', parts: '1100' },
+    { level: '220 - 229', parts: '1200' },
+    { level: '230 - 239', parts: '1300' },
+    { level: '240 - 249', parts: '1400' },
+    { level: '250', parts: '1400' },
+  ];
+
+  res.status(200).json(droneData);
+}

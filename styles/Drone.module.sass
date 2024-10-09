@@ -1,0 +1,141 @@
+@import './designSystem'
+
+.drone
+  overflow: hidden
+
+  p
+    display: flex
+    justify-content: center
+    align-items: center
+    height: calc(100vh - rem(294))
+    text-align: center
+
+  .table, .items
+    overflow: auto
+
+  .table
+    margin: 0 auto
+    max-width: rem(720)
+
+    table
+      caption-side: bottom
+      border-collapse: collapse
+      width: 100%
+      vertical-align: top
+
+      tr
+        &.current
+          td
+            background-color: $hex-black
+            font-size: rem(18)
+            font-weight: 900
+
+        &:hover
+          td
+            background-color: rgba($hex-black, .5)
+            font-weight: 700
+
+        th, td
+          padding: rem(12)
+          text-align: center
+          white-space: nowrap
+
+        th
+          background-color: rgba($hex-white, .7)
+          font-weight: 900
+          color: $hex-black
+
+        td
+          vertical-align: top
+          border-bottom: 1px solid rgba($hex-white, .5)
+
+          &:first-of-type
+            font-weight: 700
+
+  .container
+    +row
+
+    .table
+      +col
+      border-left: rem(2) solid $hex-light
+
+      &:first-of-type
+        border-left: 0
+
+  .items
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+    ul
+      display: table
+      border: 1px solid rgba($hex-white, .5)
+
+      li
+        display: table-cell
+        border-left: 1px solid rgba($hex-white, .5)
+
+        &.current
+          dd
+            background-color: $hex-black
+            font-size: rem(18)
+            font-weight: 900
+
+        &:hover
+          dd
+            background-color: rgba($hex-black, .5)
+            font-weight: 700
+
+        dl
+          display: flex
+          flex-direction: column
+
+          dt
+            +screen-reader-only
+
+          dd
+            display: flex
+            align-items: center
+            justify-content: center
+            +col
+            height: rem(52)
+            padding: 0 rem(12)
+            white-space: nowrap
+
+        &:first-of-type
+          dl
+            div
+              display: flex
+
+            dt
+              +visually-hidden-focusable
+              display: flex
+              align-items: center
+              justify-content: center
+              position: static
+              background-color: rgba($hex-white, .7)
+              width: rem(100)
+              font-weight: 900
+              white-space: nowrap
+              white-space: nowrap
+              color: $hex-black
+
+  > ul
+    padding: rem(23)
+
+    li
+      margin: rem(7) 0
+      padding-left: rem(12)
+      position: relative
+
+      &::before
+        position: absolute
+        top: rem(8)
+        left: 0
+        content: ''
+        width: rem(4)
+        height: rem(4)
+        background-color: $hex-white
+        border-radius: rem(4)

@@ -3,6 +3,7 @@ import CurrentArms from '@/components/current/CurrentArms';
 import CurrentShowdown from '@/components/current/CurrentShowdown';
 import CurrentTheme from '@/components/current/CurrentThemes';
 import SearchBase from '@/components/current/SearchBase';
+import SearchDrone from '@/components/current/SearchDrone';
 import Seo from '@/components/Seo';
 import styles from '@/styles/Home.module.sass';
 
@@ -44,31 +45,6 @@ export default function Home() {
         </li>
         <li>
           <div className={styles.item}>
-            <Anchor href="/arms">
-              <span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22 2L16.6992 2.80078L18.2422 4.34375L15.1777 7.4082L13.5684 5.90039L9.49219 10.0781L8.00781 8.59375L3.30273 13.2031L4.70312 14.6309L7.99219 11.4062L9.50781 12.9219L13.6309 8.69922L15.2227 10.1914L19.6562 5.75781L21.1992 7.30078L22 2ZM19 10V21H21V10H19ZM15 12V21H17V12H15ZM11 14V21H13V14H11ZM7 16V21H9V16H7ZM3 18V21H5V18H3Z"
-                    fill="white"
-                  />
-                </svg>
-                <span>군비 경쟁</span>
-              </span>
-              <strong>
-                <span>더보기</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M14 4.92969L12.5 6.42969L17.0703 11H3V13H17.0703L12.5 17.5703L14 19.0703L21.0703 12L14 4.92969Z"
-                    fill="white"
-                  />
-                </svg>
-              </strong>
-            </Anchor>
-            <CurrentArms />
-          </div>
-        </li>
-        <li>
-          <div className={styles.item}>
             <Anchor href="/showdown">
               <span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,6 +70,31 @@ export default function Home() {
         </li>
         <li>
           <div className={styles.item}>
+            <Anchor href="/arms">
+              <span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M22 2L16.6992 2.80078L18.2422 4.34375L15.1777 7.4082L13.5684 5.90039L9.49219 10.0781L8.00781 8.59375L3.30273 13.2031L4.70312 14.6309L7.99219 11.4062L9.50781 12.9219L13.6309 8.69922L15.2227 10.1914L19.6562 5.75781L21.1992 7.30078L22 2ZM19 10V21H21V10H19ZM15 12V21H17V12H15ZM11 14V21H13V14H11ZM7 16V21H9V16H7ZM3 18V21H5V18H3Z"
+                    fill="white"
+                  />
+                </svg>
+                <span>군비 경쟁</span>
+              </span>
+              <strong>
+                <span>더보기</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M14 4.92969L12.5 6.42969L17.0703 11H3V13H17.0703L12.5 17.5703L14 19.0703L21.0703 12L14 4.92969Z"
+                    fill="white"
+                  />
+                </svg>
+              </strong>
+            </Anchor>
+            <CurrentArms />
+          </div>
+        </li>
+        <li>
+          <div className={styles.item}>
             <Anchor href="/base">
               <span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,6 +116,31 @@ export default function Home() {
               </strong>
             </Anchor>
             <SearchBase />
+          </div>
+        </li>
+        <li>
+          <div className={styles.item}>
+            <Anchor href="/drone">
+              <span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 4L3 10V14L12 8L21 14V10L12 4ZM12 10.375L3 16.375V20.375L12 14.375L21 20.375V16.375L12 10.375Z"
+                    fill="white"
+                  />
+                </svg>
+                <span>드론 레벨업</span>
+              </span>
+              <strong>
+                <span>더보기</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M14 4.92969L12.5 6.42969L17.0703 11H3V13H17.0703L12.5 17.5703L14 19.0703L21.0703 12L14 4.92969Z"
+                    fill="white"
+                  />
+                </svg>
+              </strong>
+            </Anchor>
+            <SearchDrone />
           </div>
         </li>
       </ul>

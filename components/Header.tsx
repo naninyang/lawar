@@ -165,6 +165,14 @@ export default function Header() {
                 <span>기지 레벨업</span>
               </Anchor>
             </li>
+            <li
+              className={router.pathname === '/drone' ? styles.current : undefined}
+              onClick={() => handleMenuClick('/drone', 4)}
+            >
+              <Anchor href="/drone">
+                <span>드론 레벨업</span>
+              </Anchor>
+            </li>
           </ol>
         </nav>
       )}

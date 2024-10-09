@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/Home.module.sass';
 
-interface BaseData {
+interface DroneData {
   level: string;
-  building: string;
-  time: string;
-  steel: string;
-  gold: string;
+  parts: string;
 }
 
-export default function SearchBase() {
-  const [base, setBase] = useState<BaseData[]>([]);
+export default function SearchDrone() {
+  const [drone, setDrone] = useState<DroneData[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<string>('');
-  const [selectedData, setSelectedData] = useState<BaseData | null>(null);
+  const [selectedData, setSelectedData] = useState<DroneData | null>(null);
 
   useEffect(() => {
-    const fetchBase = async () => {
-      const response = await fetch('/api/base');
+    const fetchDrone = async () => {
+      const response = await fetch('/api/drone');
       const result = await response.json();
-      setBase(result);
+      setDrone(result);
     };
-    fetchBase();
+    fetchDrone();
   }, []);
 
   const handleLevelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -29,13 +26,13 @@ export default function SearchBase() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const data = base.find((row) => row.level === selectedLevel);
+    const data = drone.find((row) => row.level === selectedLevel);
     setSelectedData(data || null);
   };
 
   return (
-    <div className={styles.searchBase}>
-      {base.length > 0 ? (
+    <div className={styles.searchDrone}>
+      {drone.length > 0 ? (
         <>
           <form onSubmit={handleSubmit}>
             <fieldset>
@@ -43,7 +40,7 @@ export default function SearchBase() {
               <div className={styles.selectbox}>
                 <select id="levelSelect" value={selectedLevel} onChange={handleLevelChange} required>
                   <option value="">레벨을 선택하세요</option>
-                  {base.map((row) => (
+                  {drone.map((row) => (
                     <option key={row.level} value={row.level}>
                       {row.level}
                     </option>
@@ -58,25 +55,13 @@ export default function SearchBase() {
           {selectedData ? (
             <dl>
               <div>
-                <dt>필수 건물업</dt>
-                <dd>{selectedData.building}, 테크센터</dd>
-              </div>
-              <div>
-                <dt>원래 시간</dt>
-                <dd>{selectedData.time}</dd>
-              </div>
-              <div>
-                <dt>강철/식량</dt>
-                <dd>{selectedData.steel}</dd>
-              </div>
-              <div>
-                <dt>금화</dt>
-                <dd>{selectedData.gold}</dd>
+                <dt>필요 드론 부품</dt>
+                <dd>{selectedData.parts} 개</dd>
               </div>
             </dl>
           ) : (
             <p>
-              <span>레벨을 선택하시면</span> 필수업 등 정보를 보실 수 있어요
+              <span>레벨을 선택하세요</span>
             </p>
           )}
         </>
