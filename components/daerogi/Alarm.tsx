@@ -54,7 +54,7 @@ export default function Alarm() {
 
   const messages = [
     { label: '은밀회수', value: '은밀회수' },
-    { label: '전략장관', value: '전략장관' },
+    { label: '유령작전', value: '유령작전' },
     { label: '국방부장관', value: '국방부장관' },
     { label: '건설장관', value: '건설장관' },
     { label: '과학부장', value: '과학부장' },
@@ -158,6 +158,41 @@ export default function Alarm() {
           </div>
         </>
       );
+    } else if (selectedMessage === '유령작전') {
+      return (
+        <>
+          <div className={styles.selector}>
+            <select
+              id="hourSelect"
+              value={selectedHour}
+              onChange={(e) => setSelectedHour(e.target.value)}
+              disabled={isSubmitting}
+            >
+              <option value="">남은 시간 선택</option>
+              {Array.from({ length: 1 }, (_, i) => i).map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}시간
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.selector}>
+            <select
+              id="minuteSelect"
+              value={selectedMinute}
+              onChange={(e) => setSelectedMinute(e.target.value)}
+              disabled={isSubmitting}
+            >
+              <option value="">분 선택</option>
+              {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                <option key={minute} value={minute}>
+                  {minute}분
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
+      );
     } else {
       return (
         <>
@@ -208,7 +243,7 @@ export default function Alarm() {
 
     const now = new Date();
     let targetDate: Date;
-    if (selectedMessage === '은밀회수') {
+    if (selectedMessage === '은밀회수' || selectedMessage === '유령작전') {
       const additionalHours = Number(selectedHour);
       const additionalMinutes = Number(selectedMinute);
 
@@ -283,7 +318,7 @@ export default function Alarm() {
                   const now = new Date();
 
                   let remainingDate;
-                  if (mention.message === '은밀회수') {
+                  if (mention.message === '은밀회수' || mention.message === '유령작전') {
                     const remainingTime = date.getTime() - now.getTime();
                     const hours = Math.floor(remainingTime / (1000 * 60 * 60));
                     const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -301,7 +336,9 @@ export default function Alarm() {
                       <td>{mention.userName}</td>
                       <td>
                         {formattedDate}
-                        {mention.message === '은밀회수' && <strong>{remainingDate}</strong>}
+                        {(mention.message === '은밀회수' || mention.message === '유령작전') && (
+                          <strong>{remainingDate}</strong>
+                        )}
                       </td>
                       <td>{mention.message}</td>
                     </tr>
