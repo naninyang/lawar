@@ -59,7 +59,7 @@ export default function DaerogiItems() {
   return (
     <main className={styles.list}>
       <div className={styles.noti}>
-        <Anchor href="/daerogi/notifications">
+        <Anchor href="/daerogi/managements/notice">
           <span>.</span>
         </Anchor>
       </div>

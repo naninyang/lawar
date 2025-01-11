@@ -6,9 +6,14 @@ $hex-black: #000
 $hex-white: #fff
 $hex-accent: #94E138
 $hex-light: #E9DDD7
-$hex-bg: #2D334A
+$hex-bg: #2D2E47
 $hex-red: #D8272E
 $hex-blue: #1ECEFB
+
+=fw($fontweight)
+  font-family: var(--square)
+  font-weight: $fontweight
+  font-variation-settings: "wght" $fontweight
 
 =mq($mediaquery)
   @if $mediaquery == maxExtraSmall

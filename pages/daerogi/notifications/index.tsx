@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Notification from '@/components/daerogi/Notification';
+import Notification from '@/components/daerogi/Members';
 
 export default function Notifications() {
   const router = useRouter();

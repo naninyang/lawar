@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Anchor from '../Anchor';
 import { LawarItem } from '@/pages/daerogi';
 import { componentMap } from '@/pages/daerogi/toolboxes/[toolboxId]';
+import { managementMap } from '@/pages/daerogi/managements/[managementId]';
 import styles from '@/styles/Daerogi.module.sass';
 
 export default function DaerogiHeader() {
@@ -154,6 +155,26 @@ export default function DaerogiHeader() {
                   onClick={() => handleMenuClick(`/daerogi/toolboxes/${toolboxId}`, index)}
                 >
                   <Anchor href={`/daerogi/toolboxes/${toolboxId}`}>
+                    <span>{title}</span>
+                  </Anchor>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
+      {router.pathname === '/daerogi/managements/[managementId]' && (
+        <nav className={styles.gnb}>
+          <ol ref={menuRef} className={styles.menu}>
+            {Object.keys(managementMap).map((managementId, index) => {
+              const { title } = managementMap[managementId];
+              return (
+                <li
+                  key={managementId}
+                  className={router.asPath === `/daerogi/managements/${managementId}` ? styles.current : undefined}
+                  onClick={() => handleMenuClick(`/daerogi/managements/${managementId}`, index)}
+                >
+                  <Anchor href={`/daerogi/managements/${managementId}`}>
                     <span>{title}</span>
                   </Anchor>
                 </li>

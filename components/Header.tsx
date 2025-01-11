@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from './Anchor';
-import Events from './Events';
-import EventsIngame from './EventsIngame';
 import styles from '@/styles/Header.module.sass';
 
 export default function Header() {
@@ -101,23 +99,7 @@ export default function Header() {
             </svg>
             <span>라스트워 가이드북</span>
           </Anchor>
-          {/* <a href="https://lawarq.vercel.app">
-            <span>게임 만들기</span>
-          </a> */}
-          <Anchor href="/daerogi">
-            <span>.</span>
-          </Anchor>
         </h1>
-        <div className={`${styles.group} ${eventsJekyll ? styles.show : ''}`}>
-          {!eventsJekyll && <h3>이벤트를 닫았어요.</h3>}
-          <Events />
-          <EventsIngame />
-          <div className={styles.button}>
-            <button type="button" onClick={() => setEventsJekyll((prev) => !prev)}>
-              {eventsJekyll ? '이벤트 숨기기' : '이벤트 보기'}
-            </button>
-          </div>
-        </div>
         <div className={styles['font-controller']}>
           <button type="button" onClick={increaseFontSize}>
             크게

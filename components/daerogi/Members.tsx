@@ -24,7 +24,7 @@ type Member = {
   realName: string;
 };
 
-export default function Notification() {
+export default function Members() {
   const [members, setMembers] = useState<Member[]>([]);
   const [slackUser, setSlackUser] = useState<UserAttributes[]>([]);
   const [userName, setUserName] = useState('');
@@ -178,6 +178,50 @@ export default function Notification() {
   };
 
   const sendScheduledMention = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (reservedMessage === '' || selectedHour === '' || selectedMinute === '') {
+      alert('메시지와 시간을 입력해야 합니다.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const now = new Date();
+    let targetDate = new Date(now);
+    targetDate.setHours(Number(selectedHour));
+    targetDate.setMinutes(Number(selectedMinute));
+
+    if (targetDate < now) {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
+
+    const timestamp = Math.floor(targetDate.getTime() / 1000);
+
+    if (timestamp <= Math.floor(Date.now() / 1000)) {
+      alert('예약 시간이 현재 시간보다 과거일 수 없습니다.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    const reservationBefore = new Date(targetDate.getTime() - 3 * 60 * 1000);
+    const reservationBeforeTimestamp = Math.floor(reservationBefore.getTime() / 1000);
+
+    const successBefore = await scheduleSlackMessage(reservedBeforeMessage, reservationBeforeTimestamp);
+    const successOnTime = await scheduleSlackMessage(reservedMessage, timestamp);
+    const slackMentionsSuccess = await sendToSlackMentions(reservedBeforeMessage, reservedMessage, timestamp);
+
+    if (successBefore && successOnTime && slackMentionsSuccess) {
+      alert('성공적으로 예약되었습니다.');
+      await fetchNotiData();
+    } else {
+      alert('알람 예약에 실패했습니다.');
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const sendScheduledDesert = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (reservedMessage === '' || selectedHour === '' || selectedMinute === '') {

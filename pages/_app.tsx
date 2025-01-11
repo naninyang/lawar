@@ -4,6 +4,7 @@ import NextApp from 'next/app';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { Noto_Sans_KR } from 'next/font/google';
+import localFont from 'next/font/local';
 import { RecoilRoot } from 'recoil';
 import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
 import TimeInitializer from '@/components/TimeInitializer';
@@ -17,6 +18,12 @@ import '@/styles/globals.sass';
 const font = Noto_Sans_KR({
   weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['cyrillic'],
+});
+
+const Square = localFont({
+  src: './fonts/NanumSquareNeoVF.woff2',
+  style: 'normal',
+  variable: '--square',
 });
 
 type LastwarAppProps = AppProps & {
@@ -62,7 +69,7 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
       </Script>
       <TimeInitializer initialServerTime={initialServerTime} />
       {router.pathname === '/daerogi' ||
-      router.pathname === '/daerogi/notifications' ||
+      router.pathname === '/daerogi/managements/[managementId]' ||
       router.pathname === '/daerogi/matching/[matchingId]' ||
       router.pathname === '/daerogi/toolboxes/[toolboxId]' ||
       router.pathname === '/daerogi/login' ? (
@@ -73,7 +80,7 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
           <MoveToTop />
         </div>
       ) : (
-        <div className="content">
+        <div className={`content ${Square.variable}`}>
           <Header />
           <Component {...pageProps} />
           <Footer />
@@ -86,7 +93,6 @@ export default function LastwarApp({ Component, pageProps, initialServerTime }: 
 
 LastwarApp.getInitialProps = async (appContext: AppContext) => {
   const serverTime = new Date().toISOString();
-
   const appProps = await NextApp.getInitialProps(appContext);
 
   return {

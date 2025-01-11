@@ -62,8 +62,8 @@
 
           > span
             span
+              +fw(700)
               font-size: rem(20)
-              font-weight: 500
 
           > strong
             span
@@ -97,9 +97,9 @@
 
       strong
         display: inline-flex
-        border-radius: rem(3)
-        padding: rem(3) rem(7)
-        background-color: rgba($hex-white, .2)
+        border: 1px solid $hex-white
+        border-radius: rem(29)
+        padding: rem(3) rem(12)
         font-weight: 500
         color: $hex-white
         white-space: nowrap
@@ -117,6 +117,10 @@
       font-weight: 700
 
     > dd
+      display: flex
+      flex-direction: column
+      gap: rem(17)
+
       dl
         display: flex
         flex-direction: column
@@ -133,9 +137,9 @@
 
           strong
             display: inline-flex
-            border-radius: rem(3)
-            padding: rem(3) rem(7)
-            background-color: rgba($hex-white, .2)
+            border: 1px solid $hex-white
+            border-radius: rem(29)
+            padding: rem(3) rem(12)
             font-weight: 500
             color: $hex-white
             white-space: nowrap
