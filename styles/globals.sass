@@ -97,7 +97,10 @@ a, button, select, input
   user-select: none
 
 main
-  padding-bottom: rem(72)
+  +col
+
+.container
+  display: flex
 
 .content
   position: relative
@@ -107,9 +110,8 @@ main
   h2
     +screen-reader-only
 
-.move-to-top
+.toggle-menu, .move-to-top
   position: fixed
-  bottom: calc(env(safe-area-inset-bottom) + rem(23))
   right: calc(env(safe-area-inset-right) + rem(23))
   z-index: 1000
   background-color: $hex-white
@@ -118,9 +120,16 @@ main
   height: rem(52)
   font-size: rem(23)
   transition: opacity 270ms ease-in-out
+  vertical-align: middle
 
   &.hide
     opacity: 0
 
   &.show
     opacity: 1
+
+.toggle-menu
+  bottom: calc(env(safe-area-inset-bottom) + rem(98))
+
+.move-to-top
+  bottom: calc(env(safe-area-inset-bottom) + rem(23))

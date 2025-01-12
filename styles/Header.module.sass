@@ -5,26 +5,45 @@ header.header
   flex-direction: column
   background: linear-gradient(90deg, $hex-red 0%, $hex-blue 100%)
 
-  h1
+  .container
     display: flex
-    position: relative
 
-    +mq(maxExtraSmall)
-      flex-direction: column
+    button
+      background: none
+      padding: rem(17) rem(25) rem(17) rem(12)
+      width: rem(58)
+      height: rem(58)
 
-    +mq(minSmall)
-      align-items: center
+      +mq(maxSmall)
+        position: absolute
+        top: 0
+        right: 0
 
-    a
-      display: inline-flex
+      +mq(minMedium)
+        padding: rem(17) rem(12) rem(17) rem(25)
 
-      span
-        +screen-reader-only
+      svg
+        width: rem(24)
+        height: rem(24)
 
-      &:first-of-type
-        padding: rem(17) rem(25)
+    h1
+      display: flex
+      position: relative
+
+      +mq(maxExtraSmall)
+        flex-direction: column
+
+      +mq(minSmall)
+        align-items: center
+
+      a
+        display: inline-flex
+        padding: rem(17) rem(25) rem(17) rem(12)
         width: rem(253)
         height: rem(58)
+
+        span
+          +screen-reader-only
 
         svg
           width: rem(203)
@@ -89,10 +108,10 @@ nav.gnb
     display: flex
     overflow-x: auto
     gap: rem(2)
-    width: 100%
-    height: rem(33)
     margin: 0
-    margin-bottom: rem(23)
+    padding-bottom: rem(23)
+    width: 100%
+    height: rem(56)
     scroll-behavior: smooth
 
     &:-webkit-scrollbar

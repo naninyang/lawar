@@ -1,0 +1,38 @@
+@import './designSystem'
+
+.aside
+  position: sticky
+  top: 0
+  padding: rem(72) 0 0 rem(25)
+  width: rem(170)
+  height: rem(220)
+
+  html[data-html] &
+    display: none
+
+  ol
+    display: flex
+    flex-direction: column
+    gap: rem(12)
+
+  a
+    display: flex
+    align-items: center
+    gap: rem(5)
+    opacity: .5
+
+  svg
+    width: rem(20)
+    height: rem(20)
+
+  span
+    +col
+    color: $hex-white
+    +fw(400)
+
+  .current
+    a
+      opacity: 1
+
+      span
+        +fw(700)
