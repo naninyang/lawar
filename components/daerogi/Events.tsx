@@ -129,10 +129,10 @@ export default function Alarm() {
   const sendScheduledMention = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedUsers === '' || selectedMessage === '' || selectedHour === '' || selectedMinute === '') {
-      alert('항목 하나라도 선택하지 않으면 설정을 완료할 수 없어요. :(');
-      return;
-    }
+    // if (selectedUsers === '' || selectedMessage === '' || selectedHour === '' || selectedMinute === '') {
+    //   alert('항목 하나라도 선택하지 않으면 설정을 완료할 수 없어요. :(');
+    //   return;
+    // }
 
     setIsSubmitting(true);
 
