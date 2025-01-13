@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
+import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Toolboxes.module.sass';
 
 export type ComponentMap = {
@@ -36,9 +37,15 @@ export default function Toolbox({ toolboxId }: Props) {
   const componentInfo = componentMap[toolboxId];
   if (!componentInfo) return;
   const { title, content: Component } = componentInfo;
-
+  const timestamp = Date.now();
   return (
     <main className={styles.toolboxes}>
+      <Seo
+        pageTitles={`툴박스 - ${originTitle}`}
+        pageTitle="툴박스"
+        pageDescription="라스트워 여러가지 툴박스"
+        pageImg={`https://lawar.dev1stud.io/og-toolboxes.webp?ts=${timestamp}`}
+      />
       {componentInfo && (
         <>
           <h1>{title}</h1>
