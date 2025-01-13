@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '@/styles/Daerogi.module.sass';
+import styles from '@/styles/Toolboxes.module.sass';
 
 const units = ['기본', 'K', 'M', 'G'];
 
@@ -69,9 +69,9 @@ export default function Unit() {
                 ))}
               </select>
             </div>
-            <div className={styles.button}>
-              <button type="submit">계산하기</button>
-            </div>
+          </div>
+          <div className={styles.button}>
+            <button type="submit">계산하기</button>
           </div>
         </fieldset>
       </form>

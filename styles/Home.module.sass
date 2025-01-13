@@ -130,6 +130,20 @@
           display: flex
           justify-content: space-between
 
+          strong
+            display: inline-flex
+            align-items: center
+            gap: rem(7)
+            font-weight: 500
+
+            &::before
+              content: ''
+              display: inline-block
+              width: rem(2)
+              height: rem(2)
+              border-radius: rem(2)
+              background-color: $hex-white
+
         dd
           display: flex
           flex-wrap: wrap
@@ -140,7 +154,7 @@
             border: 1px solid $hex-white
             border-radius: rem(29)
             padding: rem(3) rem(12)
-            font-weight: 500
+            font-weight: 400
             color: $hex-white
             white-space: nowrap
 

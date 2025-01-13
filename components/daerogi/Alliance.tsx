@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import ProgressBar from './ProgressBar';
-import styles from '@/styles/Daerogi.module.sass';
+import styles from '@/styles/Toolboxes.module.sass';
 
 interface Reward {
   item: string;

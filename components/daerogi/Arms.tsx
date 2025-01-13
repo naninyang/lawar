@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from '@/styles/Daerogi.module.sass';
+import styles from '@/styles/Toolboxes.module.sass';
 
 type Reward = {
   item: string;
