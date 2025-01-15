@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import Anchor from './Anchor';
+import { componentMap } from '@/pages/toolboxes/[toolboxId]';
 import styles from '@/styles/Header.module.sass';
 
 export function useMobile() {
@@ -191,6 +192,20 @@ export default function Header() {
                 <span>드론 레벨업</span>
               </Anchor>
             </li>
+            {Object.keys(componentMap).map((toolboxId, index) => {
+              const { title } = componentMap[toolboxId];
+              return (
+                <li
+                  key={toolboxId}
+                  className={router.asPath === `/toolboxes/${toolboxId}` ? styles.current : undefined}
+                  onClick={() => handleMenuClick(`/toolboxes/${toolboxId}`, index + 5)}
+                >
+                  <Anchor href={`/toolboxes/${toolboxId}`}>
+                    <span>{title}</span>
+                  </Anchor>
+                </li>
+              );
+            })}
           </ol>
         </nav>
       )}
