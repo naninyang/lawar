@@ -22,11 +22,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     { level: '27 👉 28', building: '병영', time: '60.1 일', steel: '740 M', gold: '240 M' },
     { level: '28 👉 29', building: '탱크센터', time: '78.1 일', steel: '1 G', gold: '330 M' },
     { level: '29 👉 30', building: '연병장', time: '101.6 일', steel: '1.4 G', gold: '460 M' },
-    { level: '30 👉 31', building: '병영, 탱크센터', time: '?', steel: '?', gold: '?' },
-    { level: '31 👉 32', building: '병영, 탱크센터, 베리어', time: '?', steel: '?', gold: '?' },
-    { level: '32 👉 33', building: '병영, 탱크센터, 병원, 연병장', time: '?', steel: '?', gold: '?' },
-    { level: '33 👉 34', building: '병영, 탱크센터, 베리어, 연맹센터', time: '?', steel: '?', gold: '?' },
-    { level: '34 👉 35', building: '병영, 탱크센터, 병원, 연병장', time: '?', steel: '?', gold: '?' },
+    { level: '30 👉 31', building: '병영, 탱크센터', time: '111 일', steel: '1.4 G', gold: '453.9 M', oil: '1.2 M' },
+    { level: '31 👉 32', building: '병영, 탱크센터, 베리어', time: '?', steel: '?', gold: '?', oil: '?' },
+    { level: '32 👉 33', building: '병영, 탱크센터, 병원, 연병장', time: '?', steel: '?', gold: '?', oil: '?' },
+    { level: '33 👉 34', building: '병영, 탱크센터, 베리어, 연맹센터', time: '?', steel: '?', gold: '?', oil: '?' },
+    { level: '34 👉 35', building: '병영, 탱크센터, 병원, 연병장', time: '?', steel: '?', gold: '?', oil: '?' },
   ];
 
   res.status(200).json(baseData);

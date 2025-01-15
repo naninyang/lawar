@@ -9,6 +9,7 @@ interface BaseData {
   time: string;
   steel: string;
   gold: string;
+  oil: string;
 }
 
 export function useMobile() {
@@ -81,6 +82,7 @@ export default function Base() {
                     <th scope="col">원래 시간</th>
                     <th scope="col">강철/식량</th>
                     <th scope="col">금화</th>
+                    <th scope="col">석유</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -98,6 +100,7 @@ export default function Base() {
                         <td>{row.time}</td>
                         <td>{row.steel}</td>
                         <td>{row.gold}</td>
+                        <td>{row.oil ? row.oil : '-'}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -136,6 +139,10 @@ export default function Base() {
                           <div>
                             <dt>금화</dt>
                             <dd>{row.gold}</dd>
+                          </div>
+                          <div>
+                            <dt>석유</dt>
+                            <dd>{row.oil ? row.oil : '-'}</dd>
                           </div>
                         </dl>
                       </li>
