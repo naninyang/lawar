@@ -592,9 +592,11 @@
 
         +mq(maxExtraSmall)
           flex-direction: column
+          gap: rem(7)
 
       label
-        width: rem(100)!important
+        +mq(minSmall)
+          width: rem(100)!important
 
       select
         background-color: transparent
