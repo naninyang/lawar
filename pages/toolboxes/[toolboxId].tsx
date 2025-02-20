@@ -27,6 +27,11 @@ export const componentMap: ComponentMap = {
     title: '군비 보상 계산기',
     content: dynamic(() => import('@/components/daerogi/Arms')),
   },
+  exp: {
+    name: 'exp',
+    title: '영웅 경험치 계산기',
+    content: dynamic(() => import('@/components/daerogi/Exp')),
+  },
 };
 
 interface Props {
