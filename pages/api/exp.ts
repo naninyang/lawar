@@ -26,7 +26,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const expData = expOriginData.results.map((item: any) => item.properties);
 
-  console.log('expData: ', expData);
-
   res.status(200).json(expData);
 }
