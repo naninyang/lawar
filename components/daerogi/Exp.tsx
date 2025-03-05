@@ -94,7 +94,6 @@ export default function Exp() {
               : totalExp}
         </dd>
       </dl>
-      <p>레벨 140까지만 정리되어 있습니다. 유의하세요.</p>
     </div>
   );
 }
