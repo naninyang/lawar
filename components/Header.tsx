@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import Anchor from './Anchor';
-import { componentMap } from '@/pages/toolboxes/[toolboxId]';
+import { toolboxMap } from '@/pages/toolboxes/[toolboxId]';
 import styles from '@/styles/Header.module.sass';
+import { generalMap } from '@/pages/general/[generalId]';
 
 export function useMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -152,48 +153,22 @@ export default function Header() {
       {router.pathname !== '/' && isMobile && (
         <nav className={styles.gnb}>
           <ol ref={menuRef} className={styles.menu}>
-            <li
-              className={router.pathname === '/themes' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/themes', 0)}
-            >
-              <Anchor href="/themes">
-                <span>오늘의 테마</span>
-              </Anchor>
-            </li>
-            <li
-              className={router.pathname === '/arms' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/arms', 1)}
-            >
-              <Anchor href="/arms">
-                <span>군비 경쟁</span>
-              </Anchor>
-            </li>
-            <li
-              className={router.pathname === '/showdown' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/showdown', 2)}
-            >
-              <Anchor href="/showdown">
-                <span>오늘의 군비 경쟁</span>
-              </Anchor>
-            </li>
-            <li
-              className={router.pathname === '/base' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/base', 3)}
-            >
-              <Anchor href="/base">
-                <span>기지 레벨업</span>
-              </Anchor>
-            </li>
-            <li
-              className={router.pathname === '/drone' ? styles.current : undefined}
-              onClick={() => handleMenuClick('/drone', 4)}
-            >
-              <Anchor href="/drone">
-                <span>드론 레벨업</span>
-              </Anchor>
-            </li>
-            {Object.keys(componentMap).map((toolboxId, index) => {
-              const { title } = componentMap[toolboxId];
+            {Object.keys(generalMap).map((generalId, index) => {
+              const { title } = generalMap[generalId];
+              return (
+                <li
+                  key={generalId}
+                  className={router.asPath === `/general/${generalId}` ? styles.current : undefined}
+                  onClick={() => handleMenuClick(`/general/${generalId}`, index)}
+                >
+                  <Anchor href={`/general/${generalId}`}>
+                    <span>{title}</span>
+                  </Anchor>
+                </li>
+              );
+            })}
+            {Object.keys(toolboxMap).map((toolboxId, index) => {
+              const { title } = toolboxMap[toolboxId];
               return (
                 <li
                   key={toolboxId}

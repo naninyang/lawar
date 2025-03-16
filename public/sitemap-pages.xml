@@ -2,22 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lawar.dev1stud.io</loc>
-    <lastmod>2024-09-01T13:00:00.000Z</lastmod>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
   </url>
   <url>
-    <loc>https://lawar.dev1stud.io/themes</loc>
-    <lastmod>2024-09-01T13:00:00.000Z</lastmod>
+    <loc>https://lawar.dev1stud.io/general/themes</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
   </url>
   <url>
-    <loc>https://lawar.dev1stud.io/arms</loc>
-    <lastmod>2024-09-01T13:00:00.000Z</lastmod>
+    <loc>https://lawar.dev1stud.io/general/arms</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
   </url>
   <url>
-    <loc>https://lawar.dev1stud.io/showdown</loc>
-    <lastmod>2024-09-01T13:00:00.000Z</lastmod>
+    <loc>https://lawar.dev1stud.io/general/showdown</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
   </url>
   <url>
-    <loc>https://lawar.dev1stud.io/base</loc>
-    <lastmod>2024-09-01T13:00:00.000Z</lastmod>
+    <loc>https://lawar.dev1stud.io/general/base</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
   </url>
-</urlset>
+  <url>
+    <loc>https://lawar.dev1stud.io/general/drone</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lawar.dev1stud.io/toolboxes/unit</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lawar.dev1stud.io/toolboxes/alliance</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lawar.dev1stud.io/toolboxes/arms</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lawar.dev1stud.io/toolboxes/exp</loc>
+    <lastmod>2025-03-16T00:00:00.000Z</lastmod>
+  </url>
+  </urlset>

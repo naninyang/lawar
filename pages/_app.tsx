@@ -13,8 +13,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Aside from '@/components/Aside';
 import MoveToTop from '@/components/MoveToTop';
-import DaerogiHeader from '@/components/daerogi/Header';
-import DaerogiFooter from '@/components/daerogi/Footer';
+import DaerogiHeader from '@/components/toolboxes/Header';
+import DaerogiFooter from '@/components/toolboxes/Footer';
 import '@/styles/globals.sass';
 import ToggleMenu from '@/components/ToggleMenu';
 

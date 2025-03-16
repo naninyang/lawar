@@ -17,22 +17,22 @@ export const componentMap: ComponentMap = {
   alarm: {
     name: 'alarm',
     title: '알람',
-    content: dynamic(() => import('@/components/daerogi/Alarm')),
+    content: dynamic(() => import('@/components/toolboxes/Alarm')),
   },
   unit: {
     name: 'unit',
     title: '단위 계산기',
-    content: dynamic(() => import('@/components/daerogi/Unit')),
+    content: dynamic(() => import('@/components/toolboxes/Unit')),
   },
   alliance: {
     name: 'alliance',
     title: '연맹대전 계산기',
-    content: dynamic(() => import('@/components/daerogi/Alliance')),
+    content: dynamic(() => import('@/components/toolboxes/Alliance')),
   },
   arms: {
     name: 'arms',
     title: '군비 보상 계산기',
-    content: dynamic(() => import('@/components/daerogi/Arms')),
+    content: dynamic(() => import('@/components/toolboxes/Arms')),
   },
 };
 

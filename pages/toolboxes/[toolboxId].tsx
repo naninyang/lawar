@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Toolboxes.module.sass';
 
-export type ComponentMap = {
+export type ToolboxMap = {
   [key: string]: {
     name: string;
     title: string;
@@ -11,26 +11,26 @@ export type ComponentMap = {
   };
 };
 
-export const componentMap: ComponentMap = {
+export const toolboxMap: ToolboxMap = {
   unit: {
     name: 'unit',
     title: '단위 계산기',
-    content: dynamic(() => import('@/components/daerogi/Unit')),
+    content: dynamic(() => import('@/components/toolboxes/Unit')),
   },
   alliance: {
     name: 'alliance',
     title: '연맹대전 계산기',
-    content: dynamic(() => import('@/components/daerogi/Alliance')),
+    content: dynamic(() => import('@/components/toolboxes/Alliance')),
   },
   arms: {
     name: 'arms',
     title: '군비 보상 계산기',
-    content: dynamic(() => import('@/components/daerogi/Arms')),
+    content: dynamic(() => import('@/components/toolboxes/Arms')),
   },
   exp: {
     name: 'exp',
     title: '영웅 경험치 계산기',
-    content: dynamic(() => import('@/components/daerogi/Exp')),
+    content: dynamic(() => import('@/components/toolboxes/Exp')),
   },
 };
 
@@ -39,20 +39,20 @@ interface Props {
 }
 
 export default function Toolbox({ toolboxId }: Props) {
-  const componentInfo = componentMap[toolboxId];
+  const componentInfo = toolboxMap[toolboxId];
   if (!componentInfo) return;
-  const { title, content: Component } = componentInfo;
+  const { name, title, content: Component } = componentInfo;
   const timestamp = Date.now();
   return (
     <main className={styles.toolboxes}>
-      <Seo
-        pageTitles={`툴박스 - ${originTitle}`}
-        pageTitle="툴박스"
-        pageDescription="라스트워 여러가지 툴박스"
-        pageImg={`https://lawar.dev1stud.io/og-toolboxes.webp?ts=${timestamp}`}
-      />
       {componentInfo && (
         <>
+          <Seo
+            pageTitles={`${title} [툴박스] - ${originTitle}`}
+            pageTitle={`${title} 툴박스`}
+            pageDescription={`라스트워 툴박스 - ${title}`}
+            pageImg={`https://lawar.dev1stud.io/og-toolboxes-${name}.webp?ts=${timestamp}`}
+          />
           <h1>{title}</h1>
           <Component />
         </>

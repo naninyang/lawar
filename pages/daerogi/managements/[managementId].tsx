@@ -17,12 +17,12 @@ export const managementMap: ManagementMap = {
   members: {
     name: 'members',
     title: '슬랙 멤버 관리',
-    content: dynamic(() => import('@/components/daerogi/Members')),
+    content: dynamic(() => import('@/components/toolboxes/Members')),
   },
   notice: {
     name: 'notice',
     title: '이벤트 공지',
-    content: dynamic(() => import('@/components/daerogi/Notice')),
+    content: dynamic(() => import('@/components/toolboxes/Notice')),
   },
   // now: {
   //   name: 'now',
@@ -32,7 +32,7 @@ export const managementMap: ManagementMap = {
   events: {
     name: 'events',
     title: '사막전 외 이벤트',
-    content: dynamic(() => import('@/components/daerogi/Events')),
+    content: dynamic(() => import('@/components/toolboxes/Events')),
   },
 };
 
