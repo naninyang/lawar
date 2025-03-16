@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '../Anchor';
 import { LawarItem } from '@/pages/daerogi';
-import { componentMap } from '@/pages/daerogi/toolboxes/[toolboxId]';
 import { managementMap } from '@/pages/daerogi/managements/[managementId]';
 import styles from '@/styles/Daerogi.module.sass';
+import { toolboxMap } from '@/pages/toolboxes/[toolboxId]';
 
 export default function DaerogiHeader() {
   const router = useRouter();
@@ -146,8 +146,8 @@ export default function DaerogiHeader() {
       {router.pathname === '/daerogi/toolboxes/[toolboxId]' && (
         <nav className={styles.gnb}>
           <ol ref={menuRef} className={styles.menu}>
-            {Object.keys(componentMap).map((toolboxId, index) => {
-              const { title } = componentMap[toolboxId];
+            {Object.keys(toolboxMap).map((toolboxId, index) => {
+              const { title } = toolboxMap[toolboxId];
               return (
                 <li
                   key={toolboxId}

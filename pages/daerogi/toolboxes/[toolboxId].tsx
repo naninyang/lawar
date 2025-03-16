@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Anchor from '@/components/Anchor';
 import styles from '@/styles/Daerogi.module.sass';
 
-export type ComponentMap = {
+export type ToolboxMap = {
   [key: string]: {
     name: string;
     title: string;
@@ -13,7 +13,7 @@ export type ComponentMap = {
   };
 };
 
-export const componentMap: ComponentMap = {
+export const toolboxMap: ToolboxMap = {
   alarm: {
     name: 'alarm',
     title: '알람',
@@ -54,7 +54,7 @@ export default function Toolbox({ toolboxId }: Props) {
     }
   }, [router]);
 
-  const componentInfo = componentMap[toolboxId];
+  const componentInfo = toolboxMap[toolboxId];
   if (!componentInfo) return;
   const { title, content: Component } = componentInfo;
 

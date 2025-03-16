@@ -34,6 +34,14 @@ export default function Aside() {
                     className={router.asPath === `/general/${generalId}` ? styles.current : undefined}
                   >
                     <Anchor href={`/general/${generalId}`}>
+                      {name === 'summary' && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M13.586 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8.414C20 8.149 19.895 7.894 19.707 7.707L14.293 2.293C14.105 2.105 13.851 2 13.586 2ZM8.5 18H7.5C7.224 18 7 17.776 7 17.5V16.5C7 16.224 7.224 16 7.5 16H8.5C8.776 16 9 16.224 9 16.5V17.5C9 17.776 8.776 18 8.5 18ZM8.5 14H7.5C7.224 14 7 13.776 7 13.5V12.5C7 12.224 7.224 12 7.5 12H8.5C8.776 12 9 12.224 9 12.5V13.5C9 13.776 8.776 14 8.5 14ZM16 18H12C11.448 18 11 17.552 11 17C11 16.448 11.448 16 12 16H16C16.552 16 17 16.448 17 17C17 17.552 16.552 18 16 18ZM16 14H12C11.448 14 11 13.552 11 13C11 12.448 11.448 12 12 12H16C16.552 12 17 12.448 17 13C17 13.552 16.552 14 16 14ZM13 9V3.5L18.5 9H13Z"
+                            fill="white"
+                          />
+                        </svg>
+                      )}
                       {name === 'themes' && (
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path

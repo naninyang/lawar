@@ -237,3 +237,122 @@
     dd
       +col
       font-weight: 700
+
+.summary
+  > p
+    display: flex
+    justify-content: center
+    align-items: center
+    min-height: calc(100vh - rem(254))
+
+  .matching
+    display: flex
+    flex-wrap: wrap
+
+    li
+      padding: rem(7) 0
+      width: 100%
+
+      +mq(minLarge)
+        width: 50%
+
+        &:nth-of-type(odd)
+          padding-right: rem(7)
+
+        &:nth-of-type(even)
+          padding-left: rem(7)
+
+        &:last-of-type
+          width: 100%
+
+      +mq(minXXLarge)
+        width: 33.33%
+
+        &:nth-of-type(odd), &:nth-of-type(even)
+          padding-right: rem(7)
+          padding-left: rem(7)
+
+      .item
+        background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+        display: flex
+        flex-direction: column
+        gap: rem(2)
+        border-radius: rem(3)
+        padding: rem(2)
+        height: 100%
+
+        .week, dl
+          background-color: $hex-bg
+
+        .week
+          display: flex
+          align-items: center
+          padding: 0 rem(12)
+          width: 100%
+          height: rem(43)
+          color: $hex-white
+          text-align: center
+
+          > strong
+            display: flex
+            align-items: center
+            gap: rem(7)
+            font-size: rem(20)
+            font-weight: 500
+
+        dl
+          display: flex
+          flex-direction: column
+          flex-grow: 1
+          padding: rem(12)
+
+          div
+            display: flex
+            flex-direction: column
+            gap: rem(3)
+            border-top: 1px solid rgba($hex-white, .5)
+            padding: rem(12) 0
+
+            &:first-of-type
+              border-top: 0
+              padding-top: 0
+
+            &:last-of-type
+              padding-bottom: 0
+
+            dt, dd
+              display: flex
+              gap: rem(12)
+
+              strong
+                display: flex
+                align-items: center
+                width: rem(110)
+                height: rem(26)
+                font-size: rem(18)
+                font-weight: 500
+                line-height: 1
+                white-space: nowrap
+
+            dt
+              span
+                display: flex
+                flex-wrap: wrap
+                gap: rem(5)
+
+                em
+                  display: inline-flex
+                  margin-right: rem(5)
+                  border-radius: rem(3)
+                  padding: rem(1) rem(7)
+                  background-color: rgba($hex-white, .2)
+                  font-weight: 500
+                  font-style: normal
+                  color: $hex-white
+                  white-space: nowrap
+
+            dd
+              padding-top: 1px
+
+              span
+                +col

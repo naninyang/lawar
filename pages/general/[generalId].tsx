@@ -11,6 +11,11 @@ export type GeneralMap = {
 };
 
 export const generalMap: GeneralMap = {
+  summary: {
+    name: 'summary',
+    title: '연맹점수 요약',
+    content: dynamic(() => import('@/components/general/Summary')),
+  },
   themes: {
     name: 'themes',
     title: '오늘의 테마',

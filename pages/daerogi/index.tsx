@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
 import styles from '@/styles/Daerogi.module.sass';
-import { componentMap } from './toolboxes/[toolboxId]';
+import { toolboxMap } from '../toolboxes/[toolboxId]';
 
 export interface LawarItem {
   id: number;
@@ -66,9 +66,9 @@ export default function DaerogiItems() {
       {loading && <p>데이터를 불러오는 중입니다 :)</p>}
       {error && <p>일시적인 오류입니다. 지속적으로 문제 발생시 아리를 호출하세요.</p>}
       <ul className={styles.toolbox}>
-        {Object.keys(componentMap).map((toolboxId, index) => {
-          const { title } = componentMap[toolboxId];
-          const { name } = componentMap[toolboxId];
+        {Object.keys(toolboxMap).map((toolboxId) => {
+          const { title } = toolboxMap[toolboxId];
+          const { name } = toolboxMap[toolboxId];
           return (
             <li
               key={toolboxId}
