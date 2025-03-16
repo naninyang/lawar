@@ -53,8 +53,8 @@ export default function General({ generalId }: Props) {
         <>
           <Seo
             pageTitles={`${title} [기본정보] - ${originTitle}`}
-            pageTitle={`${title} 기본정보`}
-            pageDescription={`라스트워 기본정보 - ${title}`}
+            pageTitle={`기본정보 - ${title}`}
+            pageDescription={`기본정보 - ${title}`}
             pageImg={`https://lawar.dev1stud.io/og-general-${name}.webp?ts=${timestamp}`}
           />
           <Component />

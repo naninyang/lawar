@@ -97,6 +97,22 @@ header.header
         color: $hex-white
         line-height: 1
 
+.primary
+  position: relative
+  display: flex
+  gap: rem(23)
+  padding: rem(23) rem(23) 0
+
+  button
+    background-color: transparent
+    +fw(400)
+    font-size: rem(20)
+    color: $hex-white
+    opacity: .5
+
+    &.current
+      opacity: 1
+
 nav.gnb
   position: sticky
   top: 0

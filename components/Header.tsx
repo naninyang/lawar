@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from 'react-responsive';
 import Anchor from './Anchor';
 import { toolboxMap } from '@/pages/toolboxes/[toolboxId]';
-import styles from '@/styles/Header.module.sass';
 import { generalMap } from '@/pages/general/[generalId]';
+import styles from '@/styles/Header.module.sass';
 
 export function useMobile() {
   const [isMobile, setIsMobile] = useState(false);
@@ -22,6 +22,12 @@ export default function Header() {
   const menuRef = useRef<HTMLOListElement>(null);
   const [fontSize, setFontSize] = useState<number>(16);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isGeneralPage = router.pathname === `/general/[generalId]` || router.pathname === `/general`;
+  const isToolboxPage = router.pathname === `/toolboxes/[toolboxId]` || router.pathname === `/toolboxes`;
+  const [general, setGeneral] = useState(isGeneralPage);
+  const [toolbox, setToolbox] = useState(isToolboxPage);
+
   const isMobile = useMobile();
 
   const toggleMenu = () => {
@@ -58,6 +64,8 @@ export default function Header() {
       document.documentElement.style.fontSize = `16px`;
     }
   }, []);
+
+  useEffect;
 
   const handleFontSizeChange = (newFontSize: number) => {
     if (newFontSize !== fontSize) {
@@ -151,38 +159,82 @@ export default function Header() {
         </div>
       </header>
       {router.pathname !== '/' && isMobile && (
-        <nav className={styles.gnb}>
-          <ol ref={menuRef} className={styles.menu}>
-            {Object.keys(generalMap).map((generalId, index) => {
-              const { title } = generalMap[generalId];
-              return (
-                <li
-                  key={generalId}
-                  className={router.asPath === `/general/${generalId}` ? styles.current : undefined}
-                  onClick={() => handleMenuClick(`/general/${generalId}`, index)}
-                >
-                  <Anchor href={`/general/${generalId}`}>
-                    <span>{title}</span>
-                  </Anchor>
-                </li>
-              );
-            })}
-            {Object.keys(toolboxMap).map((toolboxId, index) => {
-              const { title } = toolboxMap[toolboxId];
-              return (
-                <li
-                  key={toolboxId}
-                  className={router.asPath === `/toolboxes/${toolboxId}` ? styles.current : undefined}
-                  onClick={() => handleMenuClick(`/toolboxes/${toolboxId}`, index + 5)}
-                >
-                  <Anchor href={`/toolboxes/${toolboxId}`}>
-                    <span>{title}</span>
-                  </Anchor>
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
+        <>
+          <ul className={styles.primary}>
+            <li>
+              <button
+                type="button"
+                className={general ? styles.current : undefined}
+                onClick={() => {
+                  setGeneral(true);
+                  setToolbox(false);
+                }}
+              >
+                기본정보
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className={toolbox ? styles.current : undefined}
+                onClick={() => {
+                  setGeneral(false);
+                  setToolbox(true);
+                }}
+              >
+                툴박스
+              </button>
+            </li>
+          </ul>
+          <nav className={styles.gnb}>
+            <ol ref={menuRef} className={styles.menu}>
+              {general && (
+                <>
+                  <li
+                    className={router.asPath === `/general` ? styles.current : undefined}
+                    onClick={() => handleMenuClick(`/general`, 0)}
+                  >
+                    <Anchor href={`/general/`}>
+                      <span>기본정보 목록</span>
+                    </Anchor>
+                  </li>
+                  {Object.keys(generalMap).map((generalId, index) => {
+                    const { title } = generalMap[generalId];
+                    return (
+                      <li
+                        key={generalId}
+                        className={router.asPath === `/general/${generalId}` ? styles.current : undefined}
+                        onClick={() => handleMenuClick(`/general/${generalId}`, index + 1)}
+                      >
+                        <Anchor href={`/general/${generalId}`}>
+                          <span>{title}</span>
+                        </Anchor>
+                      </li>
+                    );
+                  })}
+                </>
+              )}
+              {toolbox && (
+                <>
+                  {Object.keys(toolboxMap).map((toolboxId, index) => {
+                    const { title } = toolboxMap[toolboxId];
+                    return (
+                      <li
+                        key={toolboxId}
+                        className={router.asPath === `/toolboxes/${toolboxId}` ? styles.current : undefined}
+                        onClick={() => handleMenuClick(`/toolboxes/${toolboxId}`, index)}
+                      >
+                        <Anchor href={`/toolboxes/${toolboxId}`}>
+                          <span>{title}</span>
+                        </Anchor>
+                      </li>
+                    );
+                  })}
+                </>
+              )}
+            </ol>
+          </nav>
+        </>
       )}
     </>
   );

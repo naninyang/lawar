@@ -49,8 +49,8 @@ export default function Toolbox({ toolboxId }: Props) {
         <>
           <Seo
             pageTitles={`${title} [툴박스] - ${originTitle}`}
-            pageTitle={`${title} 툴박스`}
-            pageDescription={`라스트워 툴박스 - ${title}`}
+            pageTitle={`툴박스 - ${title}`}
+            pageDescription={`툴박스 - ${title}`}
             pageImg={`https://lawar.dev1stud.io/og-toolboxes-${name}.webp?ts=${timestamp}`}
           />
           <h1>{title}</h1>

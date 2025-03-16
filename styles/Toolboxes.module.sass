@@ -1,5 +1,40 @@
 @import './designSystem'
 
+.main
+  display: flex
+  justify-content: center
+  align-items: center
+
+  ol
+    display: flex
+    flex-direction: column
+    gap: rem(23)
+    border: rem(2) solid rgba($hex-light, .2)
+    padding-bottom: rem(23)
+    margin-bottom: rem(23)
+
+    li
+      border-top: rem(2) solid rgba($hex-light, .2)
+      padding: rem(23) rem(23) 0
+
+      &:first-of-type
+        border-top: 0
+
+    a
+      display: flex
+      align-items: center
+      gap: rem(5)
+      padding-right: rem(100)
+      color: $hex-white
+
+      svg
+        width: rem(23)
+        height: rem(23)
+
+      span
+        +fw(500)
+        font-size: rem(23)
+
 .toolboxes
   display: flex
   flex-direction: column

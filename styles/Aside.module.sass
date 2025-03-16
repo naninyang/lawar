@@ -5,7 +5,7 @@
   top: 0
   padding: rem(72) rem(72) 0 rem(25)
   width: rem(257)
-  height: rem(348)
+  height: rem(450)
 
   html[data-html] &
     display: none
@@ -25,13 +25,28 @@
     width: rem(20)
     height: rem(20)
 
+  .menu
+    display: flex
+    flex-direction: column
+    gap: rem(23)
+
+    > li
+      display: flex
+      flex-direction: column
+      gap: rem(12)
+
+      > a
+        font-size: rem(20)
+
+      > ol span
+        +col
+
   span
-    +col
     color: $hex-white
     +fw(400)
 
   .current
-    a
+    > a
       opacity: 1
 
       span

@@ -44,12 +44,6 @@ export default function Base() {
   const timestamp = Date.now();
   return (
     <main className={styles.base}>
-      <Seo
-        pageTitles={`기지 업 기본 정보 - ${originTitle}`}
-        pageTitle="기지 업 기본 정보"
-        pageDescription="기지 업에 필요한 기본 정보를 확인하세요"
-        pageImg={`https://lawar.dev1stud.io/og-base.webp?ts=${timestamp}`}
-      />
       <h2>기지 업 기본 정보</h2>
       <ul>
         <li>원하는 구간을 누르시면 좀 더 편하게 보실 수 있습니다.</li>

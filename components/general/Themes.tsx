@@ -66,12 +66,6 @@ export default function Themes() {
 
   return (
     <main className={styles.themes}>
-      <Seo
-        pageTitles={`오늘의 테마 (연맹 대결) - ${originTitle}`}
-        pageTitle="오늘의 테마 (연맹 대결)"
-        pageDescription="오늘의 테마를 확인하세요"
-        pageImg={`https://lawar.dev1stud.io/og-themes.webp?ts=${timestamp}`}
-      />
       <h2>연맹 대결 - 오늘의 테마</h2>
       {Object.keys(themes).length === 0 ? (
         <p>데이터를 불러오는 중입니다 :)</p>

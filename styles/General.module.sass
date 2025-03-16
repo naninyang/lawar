@@ -1,0 +1,239 @@
+@import './designSystem'
+
+.main
+  display: flex
+  flex-direction: column
+  gap: rem(23)
+  padding: rem(52) 0 rem(72)
+
+  p
+    text-align: center
+    font-size: rem(22)
+    font-weight: 600
+
+  ul
+    display: flex
+    flex-wrap: wrap
+    padding: 0 rem(23)
+
+    li
+      padding: rem(7) 0
+      width: 100%
+
+      +mq(minMedium)
+        width: 50%
+
+        &:nth-of-type(1)
+          padding-right: rem(7)
+
+        &:nth-of-type(2)
+          padding-left: rem(7)
+
+        &:nth-of-type(3)
+          width: 100%
+
+        &:nth-of-type(4)
+          padding-right: rem(7)
+
+        &:nth-of-type(5)
+          padding-left: rem(7)
+
+      .item
+        display: flex
+        flex-direction: column
+        border: rem(2) solid rgba($hex-white, .2)
+        border-radius: rem(3)
+        height: 100%
+
+        a
+          display: flex
+          justify-content: space-between
+          align-items: center
+          padding: 0 rem(12)
+          width: 100%
+          height: rem(43)
+          color: $hex-white
+          text-align: center
+
+          > span, > strong
+            display: flex
+            align-items: center
+            gap: rem(7)
+
+          > span
+            span
+              +fw(700)
+              font-size: rem(20)
+
+          > strong
+            span
+              font-size: rem(16)
+              font-weight: 900
+
+          svg
+            width: rem(20)
+            height: rem(20)
+
+        > div
+          border-top: rem(2) solid rgba($hex-white, .2)
+          padding: rem(12)
+
+.currentTheme, .currentArms
+  p
+    color: $hex-accent
+    +fw(800)
+    font-size: rem(18)
+
+  dl
+    display: flex
+    flex-direction: column
+
+    dt, dd
+      font-size: rem(16)
+
+    dt
+      margin-bottom: rem(12)
+      font-weight: 700
+
+    dd
+      display: flex
+      flex-wrap: wrap
+      gap: rem(7)
+
+      strong
+        display: inline-flex
+        border: 1px solid $hex-white
+        border-radius: rem(29)
+        padding: rem(3) rem(12)
+        font-weight: 500
+        color: $hex-white
+        white-space: nowrap
+
+.currentShowdown
+  p
+    color: $hex-accent
+    +fw(800)
+    font-size: rem(18)
+
+  > dl
+    display: flex
+    flex-direction: column
+
+    > dt, > dd
+      font-size: rem(16)
+
+    > dt
+      margin-bottom: rem(12)
+      font-weight: 700
+
+    > dd
+      display: flex
+      flex-direction: column
+      gap: rem(17)
+
+      dl
+        display: flex
+        flex-direction: column
+        gap: rem(12)
+
+        dt
+          display: flex
+          justify-content: space-between
+
+          strong
+            display: inline-flex
+            align-items: center
+            gap: rem(7)
+            font-weight: 500
+
+            &::before
+              content: ''
+              display: inline-block
+              width: rem(2)
+              height: rem(2)
+              border-radius: rem(2)
+              background-color: $hex-white
+
+        dd
+          display: flex
+          flex-wrap: wrap
+          gap: rem(7)
+
+          strong
+            display: inline-flex
+            border: 1px solid $hex-white
+            border-radius: rem(29)
+            padding: rem(3) rem(12)
+            font-weight: 400
+            color: $hex-white
+            white-space: nowrap
+
+.searchBase, .searchDrone
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+  gap: rem(12)
+  padding: rem(12)
+
+  > p
+    color: $hex-accent
+    +fw(800)
+    font-size: rem(18)
+
+  form
+    fieldset
+      +row
+      overflow: hidden
+      border-radius: rem(3)
+
+      legend
+        width: 1px
+
+      select, button
+        padding-right: rem(12)
+        padding-left: rem(12)
+        height: rem(38)
+        font-size: rem(20)
+
+      .selectbox
+        +col
+        background-color: rgba($hex-white, .2)
+
+        select
+          background-color: transparent
+          width: 100%
+
+      .button
+        display: inline-flex
+        width: auto
+
+        button
+          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
+          font-weight: 700
+
+  p
+    display: flex
+    justify-content: center
+    flex-direction: column
+    flex-grow: 1
+    font-size: rem(16)
+    font-weight: 700
+
+  dl
+    +row
+    flex-direction: column
+    gap: rem(5)
+
+    div
+      display: flex
+
+    dt, dd
+      font-size: rem(20)
+
+    dt
+      width: rem(137)
+      font-weight: 400
+
+    dd
+      +col
+      font-weight: 700

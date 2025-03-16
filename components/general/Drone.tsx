@@ -43,12 +43,6 @@ export default function Drone() {
   const timestamp = Date.now();
   return (
     <main className={styles.drone}>
-      <Seo
-        pageTitles={`드론 업 정보 - ${originTitle}`}
-        pageTitle="드론 업 정보"
-        pageDescription="드론 업에 필요한 정보를 확인하세요"
-        pageImg={`https://lawar.dev1stud.io/og-drone.webp?ts=${timestamp}`}
-      />
       <h2>드론 업 정보</h2>
       <ul>
         <li>원하는 레벨을 누르시면 좀 더 편하게 보실 수 있습니다.</li>
