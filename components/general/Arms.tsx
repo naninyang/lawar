@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Seo, { originTitle } from '@/components/Seo';
 import ArmsCurrent from '@/components/amrs/ArmsCurrent';
 import ArmsAll from '@/components/amrs/ArmsAll';
 import styles from '@/styles/Arms.module.sass';

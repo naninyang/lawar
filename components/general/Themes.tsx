@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
 import { Alliance } from '@/types';
-import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Themes.module.sass';
 
 export default function Themes() {

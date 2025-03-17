@@ -8,32 +8,43 @@
   ol
     display: flex
     flex-direction: column
-    gap: rem(23)
+    margin-top: rem(53)
     border: rem(2) solid rgba($hex-light, .2)
-    padding-bottom: rem(23)
+    border-radius: rem(3)
+    padding: rem(5)
     margin-bottom: rem(23)
 
     li
-      border-top: rem(2) solid rgba($hex-light, .2)
-      padding: rem(23) rem(23) 0
+      padding: 0 rem(12)
 
       &:first-of-type
-        border-top: 0
+        a
+          border-top: 0
 
     a
       display: flex
       align-items: center
       gap: rem(5)
-      padding-right: rem(100)
+      position: relative
+      border-top: rem(2) solid rgba($hex-light, .2)
+      padding: rem(12) rem(37) rem(12) 0
       color: $hex-white
 
       svg
-        width: rem(23)
-        height: rem(23)
+        width: rem(18)
+        height: rem(18)
 
       span
         +fw(500)
-        font-size: rem(23)
+        font-size: rem(18)
+
+        & + svg
+          position: absolute
+          top: 50%
+          right: 0
+          transform: translateY(-50%)
+          width: rem(14)
+          height: rem(14)
 
 .toolboxes
   display: flex

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
 import { Themes } from '@/types';
-import styles from '@/styles/Home.module.sass';
+import styles from '@/styles/General.module.sass';
 
 export default function CurrentShowdown() {
   const serverTime = useRecoilValue(serverTimeState);

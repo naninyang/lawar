@@ -30,6 +30,11 @@ export default function Header() {
 
   const isMobile = useMobile();
 
+  useEffect(() => {
+    setGeneral(isGeneralPage);
+    setToolbox(isToolboxPage);
+  }, [router.pathname, isGeneralPage, isToolboxPage]);
+
   const toggleMenu = () => {
     const htmlElement = document.documentElement;
 
@@ -64,8 +69,6 @@ export default function Header() {
       document.documentElement.style.fontSize = `16px`;
     }
   }, []);
-
-  useEffect;
 
   const handleFontSizeChange = (newFontSize: number) => {
     if (newFontSize !== fontSize) {

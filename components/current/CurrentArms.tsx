@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import styles from '@/styles/Home.module.sass';
+import styles from '@/styles/General.module.sass';
 
 interface Theme {
   name: string;

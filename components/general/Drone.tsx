@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/Drone.module.sass';
 
 interface DroneData {

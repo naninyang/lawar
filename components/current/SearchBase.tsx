@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '@/styles/Home.module.sass';
+import styles from '@/styles/General.module.sass';
 
 interface BaseData {
   level: string;

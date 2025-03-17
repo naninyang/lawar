@@ -3,237 +3,126 @@
 .home
   display: flex
   flex-direction: column
-  gap: rem(23)
+  gap: rem(72)
   padding: rem(52) 0 rem(72)
 
-  p
-    text-align: center
-    font-size: rem(22)
-    font-weight: 600
-
-  ul
+  .primary
     display: flex
-    flex-wrap: wrap
-    padding: 0 rem(23)
+    flex-direction: column
+    gap: rem(23)
+    padding-top: rem(52)
+    +fw(500)
 
-    li
-      padding: rem(7) 0
-      width: 100%
+    +mq(minSmall)
+      +fw(700)
 
-      +mq(minMedium)
-        width: 50%
+    h1
+      text-align: center
+      font-size: rem(27)
 
-        &:nth-of-type(1)
-          padding-right: rem(7)
+      +mq(minSmall)
+        font-size: rem(37)
 
-        &:nth-of-type(2)
-          padding-left: rem(7)
+      strong
+        color: $hex-blue
 
-        &:nth-of-type(3)
-          width: 100%
+      span
+        display: block
+        margin-top: rem(7)
 
-        &:nth-of-type(4)
-          padding-right: rem(7)
+    ul
+      display: flex
+      justify-content: center
+      gap: rem(17)
 
-        &:nth-of-type(5)
-          padding-left: rem(7)
+      +mq(minSmall)
+        gap: rem(23)
 
-      .item
+      a
+        transition: all .5s cubic-bezier(.5,0,.2,0)
         display: flex
-        flex-direction: column
-        border: rem(2) solid rgba($hex-white, .2)
+        align-items: center
+        gap: rem(12)
+        border: rem(2) solid rgba($hex-light, .2)
         border-radius: rem(3)
-        height: 100%
+        padding: rem(12) rem(15)
+        color: $hex-light
+        font-size: rem(14)
 
-        a
-          display: flex
-          justify-content: space-between
-          align-items: center
-          padding: 0 rem(12)
-          width: 100%
-          height: rem(43)
-          color: $hex-white
-          text-align: center
+        +mq(minSmall)
+          gap: rem(7)
+          padding: rem(12) rem(17)
+          font-size: rem(23)
 
-          > span, > strong
-            display: flex
-            align-items: center
-            gap: rem(7)
+        svg
+          width: rem(14)
+          height: rem(14)
 
-          > span
-            span
-              +fw(700)
-              font-size: rem(20)
-
-          > strong
-            span
-              font-size: rem(16)
-              font-weight: 900
-
-          svg
+          +mq(minSmall)
             width: rem(20)
             height: rem(20)
 
-        > div
-          border-top: rem(2) solid rgba($hex-white, .2)
-          padding: rem(12)
+          path
+            fill: $hex-light
+            transition: all .5s cubic-bezier(.5,0,.2,0)
 
-.currentTheme, .currentArms
-  p
-    color: $hex-accent
-    +fw(800)
-    font-size: rem(18)
+        &:hover, &:focus
+          background-color: $hex-white
+          border-color: $hex-white
+          color: $hex-black
 
-  dl
-    display: flex
-    flex-direction: column
+          svg
+            path
+              fill: $hex-black
 
-    dt, dd
-      font-size: rem(16)
-
-    dt
-      margin-bottom: rem(12)
-      font-weight: 700
-
-    dd
-      display: flex
-      flex-wrap: wrap
-      gap: rem(7)
-
-      strong
-        display: inline-flex
-        border: 1px solid $hex-white
-        border-radius: rem(29)
-        padding: rem(3) rem(12)
-        font-weight: 500
-        color: $hex-white
-        white-space: nowrap
-
-.currentShowdown
-  p
-    color: $hex-accent
-    +fw(800)
-    font-size: rem(18)
-
-  > dl
-    display: flex
-    flex-direction: column
-
-    > dt, > dd
-      font-size: rem(16)
-
-    > dt
-      margin-bottom: rem(12)
-      font-weight: 700
-
-    > dd
-      display: flex
-      flex-direction: column
-      gap: rem(17)
-
-      dl
-        display: flex
-        flex-direction: column
-        gap: rem(12)
-
-        dt
-          display: flex
-          justify-content: space-between
-
-          strong
-            display: inline-flex
-            align-items: center
-            gap: rem(7)
-            font-weight: 500
-
-            &::before
-              content: ''
-              display: inline-block
-              width: rem(2)
-              height: rem(2)
-              border-radius: rem(2)
-              background-color: $hex-white
-
-        dd
-          display: flex
-          flex-wrap: wrap
-          gap: rem(7)
-
-          strong
-            display: inline-flex
-            border: 1px solid $hex-white
-            border-radius: rem(29)
-            padding: rem(3) rem(12)
-            font-weight: 400
-            color: $hex-white
-            white-space: nowrap
-
-.searchBase, .searchDrone
+.secondary
   display: flex
   flex-direction: column
-  flex-grow: 1
-  gap: rem(12)
-  padding: rem(12)
+  gap: rem(37)
+  +fw(500)
 
-  > p
-    color: $hex-accent
-    +fw(800)
-    font-size: rem(18)
+  +mq(minSmall)
+    +fw(700)
 
-  form
-    fieldset
-      +row
-      overflow: hidden
-      border-radius: rem(3)
-
-      legend
-        width: 1px
-
-      select, button
-        padding-right: rem(12)
-        padding-left: rem(12)
-        height: rem(38)
-        font-size: rem(20)
-
-      .selectbox
-        +col
-        background-color: rgba($hex-white, .2)
-
-        select
-          background-color: transparent
-          width: 100%
-
-      .button
-        display: inline-flex
-        width: auto
-
-        button
-          background: linear-gradient(90deg, $hex-blue 0%, $hex-red 100%)
-          font-weight: 700
-
-  p
+  .resources
     display: flex
-    justify-content: center
     flex-direction: column
-    flex-grow: 1
-    font-size: rem(16)
-    font-weight: 700
+    gap: rem(12)
 
-  dl
-    +row
-    flex-direction: column
-    gap: rem(5)
+    h3
+      text-align: center
+      font-size: rem(23)
 
-    div
+      +mq(minSmall)
+        font-size: rem(27)
+
+    ol
       display: flex
+      flex-wrap: wrap
+      justify-content: center
 
-    dt, dd
-      font-size: rem(20)
+      li
+        font-size: rem(14)
 
-    dt
-      width: rem(137)
-      font-weight: 400
+        +mq(minSmall)
+          font-size: rem(20)
 
-    dd
-      +col
-      font-weight: 700
+        a
+          display: flex
+          align-items: center
+          gap: rem(5)
+          padding: rem(12) rem(15)
+          width: rem(170)
+
+          +mq(minSmall)
+            justify-content: center
+            padding: rem(17) rem(23)
+            width: rem(237)
+
+          span
+            color: $hex-light
+            letter-spacing: -.03em
+
+          svg
+            path
+              fill: $hex-light

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
 import { Alliance } from '@/types';
-import styles from '@/styles/Home.module.sass';
+import styles from '@/styles/General.module.sass';
 
 export default function CurrentTheme() {
   const serverTime = useRecoilValue(serverTimeState);

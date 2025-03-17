@@ -1,6 +1,5 @@
 import { useRecoilValue } from 'recoil';
 import { serverTimeState } from '@/atoms/timeState';
-import Seo from '@/components/Seo';
 import ShowdownToday from '@/components/showdown/Today';
 import styles from '@/styles/Showdown.module.sass';
 

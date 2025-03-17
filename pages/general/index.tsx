@@ -4,7 +4,7 @@ import CurrentShowdown from '@/components/current/CurrentShowdown';
 import CurrentTheme from '@/components/current/CurrentThemes';
 import SearchBase from '@/components/current/SearchBase';
 import SearchDrone from '@/components/current/SearchDrone';
-import Seo from '@/components/Seo';
+import Seo, { originTitle } from '@/components/Seo';
 import styles from '@/styles/General.module.sass';
 
 export default function General() {
@@ -12,9 +12,10 @@ export default function General() {
   return (
     <main className={styles.main}>
       <Seo
-        pageTitle="라스트워 가이드북"
-        pageDescription="즐거운 라스트워 :)"
-        pageImg={`https://lawar.dev1stud.io/og?ts=${timestamp}`}
+        pageTitles={`기본정보 - ${originTitle}`}
+        pageTitle={`기본정보`}
+        pageDescription={`기본정보`}
+        pageImg={`https://lawar.dev1stud.io/og-general.webp?ts=${timestamp}`}
       />
       <p>원하는 정보를 선택하세요 :)</p>
       <ul>
