@@ -97,7 +97,7 @@ export default function Eq() {
           </div>
         </fieldset>
       </form>
-      <dl>
+      <dl className={styles.result}>
         <dt>필요한 금화 및 강화석</dt>
         <dd>
           <strong>금화</strong>{' '}
