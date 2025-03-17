@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import Anchor from '@/components/Anchor';
 import Seo from '@/components/Seo';
 import { generalMap } from './general/[generalId]';
@@ -7,7 +6,6 @@ import styles from '@/styles/Home.module.sass';
 
 export default function Home() {
   const timestamp = Date.now();
-  const router = useRouter();
   return (
     <main className={styles.home}>
       <Seo
