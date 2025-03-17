@@ -13,7 +13,7 @@ export default function Home() {
       <Seo
         pageTitle="라스트워 가이드북"
         pageDescription="즐거운 라스트워 :)"
-        pageImg={`https://lawar.dev1stud.io/og?ts=${timestamp}`}
+        pageImg={`https://lawar.dev1stud.io/og.webp?ts=${timestamp}`}
       />
       <section className={styles.primary}>
         <h1>
