@@ -32,7 +32,7 @@ export const toolboxMap: ToolboxMap = {
     title: '영웅 경험치 계산기',
     content: dynamic(() => import('@/components/toolboxes/Exp')),
   },
-  eqq: {
+  eq: {
     name: 'eq',
     title: '영웅 장비 계산기',
     content: dynamic(() => import('@/components/toolboxes/Eq')),
