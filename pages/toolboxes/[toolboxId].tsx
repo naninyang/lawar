@@ -37,6 +37,11 @@ export const toolboxMap: ToolboxMap = {
     title: '영웅 장비 계산기',
     content: dynamic(() => import('@/components/toolboxes/Eq')),
   },
+  enh: {
+    name: 'enh',
+    title: '스킬 강화 계산기',
+    content: dynamic(() => import('@/components/toolboxes/Enh')),
+  },
 };
 
 interface Props {

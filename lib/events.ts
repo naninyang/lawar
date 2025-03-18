@@ -3,6 +3,7 @@ const EVENTS_API_KEY = process.env.EVENTS_API_KEY!;
 const EVENTS_DATABASE_ID = process.env.EVENTS_DATABASE_ID!;
 const EXP_DATABASE_ID = process.env.EXP_DATABASE_ID!;
 const EQ_DATABASE_ID = process.env.EQ_DATABASE_ID!;
+const ENH_DATABASE_ID = process.env.ENH_DATABASE_ID;
 
 export const fetchEventsData = async () => {
   try {
@@ -53,6 +54,29 @@ export const fetchExpData = async () => {
 export const fetchEqData = async () => {
   try {
     const response = await fetch(`${EVENTS_API_URL}/${EQ_DATABASE_ID}/query`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${EVENTS_API_KEY}`,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching Events API data:', error);
+    return null;
+  }
+};
+
+export const fetchEnhData = async () => {
+  try {
+    const response = await fetch(`${EVENTS_API_URL}/${ENH_DATABASE_ID}/query`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${EVENTS_API_KEY}`,
