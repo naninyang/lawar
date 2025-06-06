@@ -87,12 +87,14 @@ export default function Exp() {
       <dl>
         <dt>필요한 영웅 경험치</dt>
         <dd>
-          {totalExp >= 1_000_000
-            ? `${(totalExp / 1_000_000).toFixed(1)} M`
-            : totalExp >= 1_000
-              ? `${(totalExp / 1_000).toFixed(1)} K`
-              : totalExp}
-        </dd>
+          {totalExp >= 1_000_000_000
+            ? `${(totalExp / 1_000_000_000).toFixed(1)} G`
+            : totalExp >= 1_000_000
+              ? `${(totalExp / 1_000_000).toFixed(1)} M`
+              : totalExp >= 1_000
+                ? `${(totalExp / 1_000).toFixed(1)} K`
+                : totalExp}
+        </dd>{' '}
       </dl>
     </div>
   );

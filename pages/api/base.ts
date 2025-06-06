@@ -23,7 +23,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     { level: '28 👉 29', building: '탱크센터', time: '78.1 일', steel: '1 G', gold: '330 M' },
     { level: '29 👉 30', building: '연병장', time: '101.6 일', steel: '1.4 G', gold: '460 M' },
     { level: '30 👉 31', building: '공통 건물', time: '111 일', steel: '1.4 G', gold: '453.9 M', oil: '1.2 M' },
-    { level: '31 👉 32', building: '성벽 31', time: '122 일', steel: '2.4 G', gold: '800 M', oil: '?' },
+    { level: '31 👉 32', building: '성벽 31', time: '122 일', steel: '1.5 G', gold: '501 M', oil: '2.0 M' },
     { level: '32 👉 33', building: '병원 32, 훈련장 32', time: '135 일', steel: '3.2 G', gold: '1 G', oil: '3.3 M' },
     { level: '33 👉 34', building: '성벽 33, 연맹센터 33', time: '210 일', steel: '4.2 G', gold: '1.4 G', oil: '?' },
     { level: '34 👉 35', building: '병원 34, 연병장 34', time: '240 일', steel: '5.6 G', gold: '1.8 G', oil: '?' },
